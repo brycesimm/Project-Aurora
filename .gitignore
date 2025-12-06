@@ -1,0 +1,57 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+artifacts/
+
+# Roslyn
+.roslyn/
+
+# Rider
+.idea/
+
+# Mac
+.DS_Store
+
+# Test results
+testresults/
+*.trx
+
+# dotnet specific
+project.lock.json
+project.assets.json
+*.nuget.props
+*.nuget.targets
+
+# MSBuild
+.msbuild/
+*.log
+*.zip
+
+# Packages
+*.nupkg
+*.snupkg
+
+# Secrets
+secrets.json
+
+# Tools
+.config/dotnet-tools.json
+
+# Maui
+platforms/
+# Raw assets that are generated as part of the build
+obj/Debug/net6.0-*/resizetizer/
+# dotnet new
+.template.config/
+
+# BinSkim
+*.binskim
