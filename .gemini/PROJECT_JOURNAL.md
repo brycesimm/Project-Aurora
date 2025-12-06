@@ -111,3 +111,19 @@ Created 5-phase planning approach to avoid premature technical decisions:
 
 ### Next Focus
 1. Resume implementation of **Story A-01.2: Vibe of the Day hero card**.
+---
+
+## 2025-12-06 (Continued): Story A-01.2 Completion & XAML Deep Dive
+
+### Summary
+- Successfully completed **Story A-01.2 (Vibe of the Day hero card)**.
+    - Implemented the card's visual container (`Frame`).
+    - Added a `VerticalStackLayout` for internal content arrangement.
+    - Included a title `Label`, an `Image` placeholder, and a descriptive text `Label`.
+- Deep dive into XAML UI controls and properties:
+    - Explained `Frame` and `VerticalStackLayout` concepts and usage.
+    - Detailed `Image` properties: `Source`, `Aspect` (`AspectFill`), `HeightRequest`, `HorizontalOptions` (`FillAndExpand`).
+    - Clarified `AppThemeBinding` and "adaptive TextColor" for light/dark mode compatibility.
+
+### Next Focus
+1. Begin implementation of **Story A-01.3: Daily Picks List**.
