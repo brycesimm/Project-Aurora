@@ -103,7 +103,7 @@
   1. Install VS 2022 “.NET Multi-platform App UI” workload, run `dotnet workload install maui`, and verify `dotnet new maui` builds for `net8.0-android`.
   2. Complete Microsoft Learn’s “Create a .NET MAUI app” tutorial series (search “Build your first app with .NET MAUI” on learn.microsoft.com).
   3. Build throwaway samples (Shell navigation, CollectionView, layouts/styles) via `dotnet new maui` templates in a scratch folder.
-  4. Create the real Aurora shell: home page showing 5-10 mock Daily Picks plus a Vibe-of-the-Day hero card with a placeholder reaction button.
+  4. [x] Create the real Aurora shell (basic structure and title): home page showing 5-10 mock Daily Picks plus a Vibe-of-the-Day hero card with a placeholder reaction button.
   5. Log emulator/signing/tooling hiccups in `.codex/PROJECT_JOURNAL.md`.
 - **Milestone B (Weeks 5-8): Backend/API + curation workflow**
   1. Pick Azure as hosting platform; create resource group, Azure Functions app (C# isolated), and Azure Storage account.
