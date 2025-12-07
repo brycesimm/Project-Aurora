@@ -1,4 +1,4 @@
-namespace Aurora.Models
+namespace Aurora.Shared.Models
 {
     public class ContentItem
     {

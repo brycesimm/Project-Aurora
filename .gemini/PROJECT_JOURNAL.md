@@ -203,3 +203,33 @@ The completion of this story provides a robust and well-defined data contract th
 ### Next Focus
 1.  Begin implementation of **Story B-02.1: Implement Automated JSON Schema Generation**.
 2.  Upon completion of B-02.1, return to **Story B-01.2: Local, HTTP-triggered function for mock content**.
+---
+
+## 2025-12-07 (Session 4): Swagger/OpenAPI Integration & Schema Export Automation Planning
+
+### Summary
+This session primarily tackled Swagger/OpenAPI integration and a persistent `TypeLoadException` caused by `Microsoft.OpenApi` version conflicts, leading to a successful resolution and a refined plan for automated schema export.
+
+Key accomplishments and resolutions include:
+
+1.  **Swagger/OpenAPI Integration in `SchemaBuilder`:**
+    *   Successfully added `Swashbuckle.AspNetCore` and `Microsoft.AspNetCore.OpenApi` NuGet packages.
+    *   Configured Swashbuckle within `src/SchemaBuilder/Program.cs` to enable API exploration, Swagger generation, and Swagger UI.
+    *   Introduced a minimal API endpoint `/schema/contentitem` to expose the `ContentItem` model for schema generation, ensuring `required` properties were correctly initialized.
+    *   Removed the default `WeatherForecast` endpoint to streamline the project.
+
+2.  **Resolution of `TypeLoadException` (Dependency Hell):**
+    *   Diagnosed a `System.TypeLoadException` relating to `Microsoft.OpenApi, Version=2.3.0.0` as a transitive dependency conflict.
+    *   After initial attempts to resolve by adding `Microsoft.AspNetCore.OpenApi` using directive and explicitly forcing `Microsoft.OpenApi` version `2.3.0`, the issue was ultimately resolved by downgrading `Swashbuckle.AspNetCore` to version `6.5.0`. This aligned its transitive `Microsoft.OpenApi` dependency with the `1.6.x` version, which was compatible with the existing `.NET 9` environment and `Microsoft.AspNetCore.OpenApi` 9.0.0, thus eliminating the `TypeLoadException`.
+    *   The successful resolution was verified by the Swagger UI loading correctly in the browser.
+
+3.  **Schema Export & Backlog Refinement:**
+    *   Successfully fetched the Swagger JSON definition from the running `SchemaBuilder` application using `Invoke-WebRequest`.
+    *   Extracted the `ContentItem` schema from the Swagger JSON and wrote it to `content.schema.json`, effectively completing the manual aspect of **Story B-02.1**.
+    *   The initial plan for **Story B-02.1: Implement Automated JSON Schema Generation** was refined and expanded into new, more granular stories under **Feature B-02: Automated JSON Schema Generation**:
+        *   **Story B-02.2: Implement Console Application for Schema Export.**
+        *   **Story B-02.3: Integrate Schema Export into Build Process.**
+    *   An erroneous attempt to create the `SchemaExporter` project prematurely was fully reverted, ensuring the project's state remains consistent with the current branch and backlog.
+
+### Next Focus
+1.  Begin implementation of **Story B-02.2: Implement Console Application for Schema Export**.

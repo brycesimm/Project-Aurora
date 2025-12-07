@@ -64,3 +64,31 @@ If you suspect changes are still not being picked up, create a strong dependency
     - **Symptom:** A known-good icon (like "home") appears, but the desired icon (like "heart") does not, even after fixing colors.
     - **Cause:** The hexadecimal codepoint for the glyph is incorrect for the specific version of the font being used.
     - **Resolution:** Find a reliable, official "cheatsheet" for the exact font library and version you are using (e.g., from `pictogrammers.com` for the community Material Design Icons). Do not assume codepoints are stable between major versions or different font families (e.g., Google's Material Icons vs. Pictogrammers' MDI). In this project, the solid 'heart' glyph (`f2d1`) failed to render, but 'heart-outline' (`F02D5`) worked correctly.
+
+---
+
+## Microsoft.OpenApi TypeLoadException (Swagger Integration)
+
+**Symptom:**
+- Application builds successfully, but at runtime, navigating to `/swagger` or any endpoint configured with `.WithOpenApi()` results in a `System.TypeLoadException`.
+- The exception message typically indicates: `Could not load type 'Microsoft.OpenApi.Models.OpenApiOperation' from assembly 'Microsoft.OpenApi, Version=2.3.0.0...'`.
+- This occurs despite explicit `PackageReference` for `Microsoft.OpenApi 2.3.0` being present.
+
+**Cause:**
+- A versioning conflict (often referred to as "dependency hell") where different NuGet packages (specifically `Swashbuckle.AspNetCore` and `Microsoft.AspNetCore.OpenApi` in this instance) implicitly or explicitly depend on *different* major or incompatible minor versions of the `Microsoft.OpenApi` assembly.
+- Even if a direct `PackageReference` for the desired `Microsoft.OpenApi` version is added, if a transitive dependency *still* resolves to an older, incompatible version during assembly loading, the `TypeLoadException` can occur at runtime.
+- In this specific case, `Microsoft.AspNetCore.OpenApi` 9.0.0 (for .NET 9) expected `Microsoft.OpenApi` 2.3.0, but `Swashbuckle.AspNetCore` 10.0.1 had an internal dependency chain that conflicted or was not fully compatible, causing runtime issues.
+
+**Troubleshooting & Resolution:**
+
+1.  **Identify Conflicting Versions:** The `TypeLoadException` message itself (e.g., `Version=2.3.0.0`) helps identify the problematic assembly and the version being *requested*.
+2.  **Inspect Transitive Dependencies:** Use tools like `dotnet list package --include-transitive` (or examine `obj/project.assets.json`) to see the full dependency graph and identify which packages are pulling in which `Microsoft.OpenApi` versions.
+3.  **Align Compatible Versions:** The most robust solution is to align all conflicting dependencies to a single, compatible version.
+    - Attempting to force the higher version (`Microsoft.OpenApi 2.3.0`) directly did not resolve the `TypeLoadException`.
+    - **Resolution:** Downgraded `Swashbuckle.AspNetCore` from `10.0.1` to `6.5.0`. This specific version of `Swashbuckle.AspNetCore` transitively depends on `Microsoft.OpenApi` 1.6.x, which proved compatible with `Microsoft.AspNetCore.OpenApi` 9.0.0 and resolved the `TypeLoadException`.
+    - *(Note: Future versions of `Swashbuckle.AspNetCore` and `Microsoft.AspNetCore.OpenApi` may resolve this compatibility issue. This resolution is specific to the versions at hand and the .NET 9 target framework.)*
+
+**Verification:**
+- Application builds cleanly after package version adjustments.
+- Running the application and navigating to the `/swagger` endpoint successfully loads the Swagger UI without runtime exceptions.
+- The `/diagnostics/openapi-version` endpoint (if implemented) confirms the expected `Microsoft.OpenApi` assembly version is loaded.

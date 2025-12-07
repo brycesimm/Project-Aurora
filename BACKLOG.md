@@ -41,10 +41,23 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 
 ---
 
-### Feature B-02: Developer Tooling
-*This feature covers the creation of internal tools to improve the development workflow and ensure long-term project maintainability.*
+### Feature B-02: Automated JSON Schema Generation
+*This feature covers the automation of JSON schema generation from C# models, improving developer tooling and ensuring data contract consistency.*
 
-- [ ] **Story B-02.1:** As a developer, I need an automated way to generate the JSON schema from C# models to prevent drift between the backend and the data contract.
-    - **AC 1:** A new console application project (e.g., `Aurora.SchemaGenerator`) is added to the solution.
-    - **AC 2:** The tool uses a NuGet package (e.g., `Newtonsoft.Json.Schema`) to generate the schema.
-    - **AC 3:** Running the tool successfully generates/updates `content.schema.json` based on the `ContentItem` C# class and a root object definition.
+- [x] **Story B-02.1:** As a developer, I need to define the app's content schema so that the front-end and back-end have a shared understanding of the data model.
+    - **AC 1:** A `content.schema.json` file is created to formally define the structure.
+    - **AC 2:** The schema distinguishes between the "Vibe of the Day" and standard "Daily Picks."
+    - **AC 3:** A `sample.content.json` file is created that validates against the schema.
+- [ ] **Story B-02.2:** As a developer, I want a console application to export the content schema so that `content.schema.json` can be automatically updated.
+    - **AC 1:** A new console application project, `SchemaExporter`, exists.
+    - **AC 2:** `SchemaExporter` can be executed independently.
+    - **AC 3:** When executed, `SchemaExporter` starts `SchemaBuilder` on a free port.
+    - **AC 4:** `SchemaExporter` successfully fetches `swagger.json` from the running `SchemaBuilder`.
+    - **AC 5:** `SchemaExporter` extracts the `ContentItem` schema from `swagger.json`.
+    - **AC 6:** `SchemaExporter` updates the `content.schema.json` file in the project root with the extracted schema.
+    - **AC 7:** `SchemaExporter` gracefully terminates the `SchemaBuilder` process.
+    - **AC 8:** The generated `content.schema.json` is a valid JSON schema for `ContentItem`.
+- [ ] **Story B-02.3:** As a developer, I want to integrate schema export into the build process so that `content.schema.json` is always up-to-date.
+    - **AC 1:** Building the `SchemaBuilder` project (or the entire solution) automatically triggers the `SchemaExporter`.
+    - **AC 2:** `content.schema.json` is updated with the latest schema during the build process.
+    - **AC 3:** The build process completes without errors or unexpected user interaction.
