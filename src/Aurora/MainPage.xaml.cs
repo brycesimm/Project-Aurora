@@ -1,4 +1,4 @@
-﻿using Aurora.Models;
+﻿using Aurora.Shared.Models;
 
 namespace Aurora;
 

@@ -1,0 +1,6 @@
+@SchemaBuilder_HostAddress = http://localhost:5194
+
+GET {{SchemaBuilder_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

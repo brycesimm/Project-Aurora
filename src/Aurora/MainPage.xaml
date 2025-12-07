@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:models="clr-namespace:Aurora.Models"
+             xmlns:models="clr-namespace:Aurora.Shared.Models;assembly=Aurora.Shared"
+             xmlns:local="clr-namespace:Aurora"
              x:Class="Aurora.MainPage"
              BackgroundColor="#F0F0F0">
 
@@ -44,9 +45,9 @@
             </Frame>
 
             <!-- Daily Picks List (AC 1, AC 2, AC 3) -->
-            <CollectionView ItemsSource="{Binding DailyPicks}">
+            <CollectionView ItemsSource="{Binding DailyPicks}" x:DataType="local:MainPage">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:DailyPick">
+                    <DataTemplate x:DataType="models:ContentItem">
                         <Frame Padding="15" CornerRadius="10" HasShadow="True" Margin="0,0,0,15">
                             <VerticalStackLayout Spacing="5">
                                 <Label
