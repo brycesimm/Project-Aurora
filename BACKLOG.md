@@ -30,11 +30,21 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 *This milestone covers the definition of our data structure and the creation of a local API endpoint to serve mock content, forming the foundation for our backend.*
 
 ### Feature B-01: Content Structure & API Definition
-- [ ] **Story B-01.1:** As a developer, I need a clearly defined JSON schema for the app's content so that the front-end and back-end have a shared understanding of the data model.
-    - **AC 1:** A `content.schema.json` file is created to formally define the structure, including fields like `id`, `title`, `snippet`, `sourceUrl`, `imageUrl`, and `publicationDate`.
-    - **AC 2:** The schema distinguishes between the "Vibe of the Day" and standard "Daily Picks," allowing for unique fields on the Vibe card.
-    - **AC 3:** A `sample.content.json` file is created that validates against the schema, containing one "Vibe" and at least five "Picks."
+- [x] **Story B-01.1:** As a developer, I need a clearly defined JSON schema for the app's content so that the front-end and back-end have a shared understanding of the data model.
+    - **AC 1:** [x] A `content.schema.json` file is created to formally define the structure, including fields like `id`, `title`, `snippet`, `sourceUrl`, `imageUrl`, and `publicationDate`.
+    - **AC 2:** [x] The schema distinguishes between the "Vibe of the Day" and standard "Daily Picks," allowing for unique fields on the Vibe card.
+    - **AC 3:** [x] A `sample.content.json` file is created that validates against the schema, containing one "Vibe" and at least five "Picks."
 - [ ] **Story B-01.2:** As a developer, I need a local, HTTP-triggered function to serve the mock content, allowing for front-end development without a live cloud environment.
     - **AC 1:** A new, runnable .NET Azure Functions project is added to the solution.
     - **AC 2:** An HTTP GET endpoint named `GetDailyContent` is created within the new project.
     - **AC 3:** When called, the endpoint reads `sample.content.json` and returns its contents with a `200 OK` status and correct `Content-Type` header (`application/json`).
+
+---
+
+### Feature B-02: Developer Tooling
+*This feature covers the creation of internal tools to improve the development workflow and ensure long-term project maintainability.*
+
+- [ ] **Story B-02.1:** As a developer, I need an automated way to generate the JSON schema from C# models to prevent drift between the backend and the data contract.
+    - **AC 1:** A new console application project (e.g., `Aurora.SchemaGenerator`) is added to the solution.
+    - **AC 2:** The tool uses a NuGet package (e.g., `Newtonsoft.Json.Schema`) to generate the schema.
+    - **AC 3:** Running the tool successfully generates/updates `content.schema.json` based on the `ContentItem` C# class and a root object definition.
