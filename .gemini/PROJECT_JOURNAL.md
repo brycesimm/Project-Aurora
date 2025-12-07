@@ -166,3 +166,22 @@ The story is now functionally complete, with the button and a visible `heart-out
 ### Next Focus
 1. Merge the `story/A-01.4-reaction-button` branch into `main`.
 2. Begin planning for **Milestone B: Backend/API + curation workflow**.
+---
+
+## 2025-12-07 (Session 2): Milestone B Planning & Strategy
+
+### Summary
+This session focused on the collaborative planning for **Milestone B: Backend/API + Curation Workflow** after confirming the successful completion of all Milestone A work.
+
+Key activities and decisions include:
+1.  **Milestone A Completion:** Confirmed that all stories for Milestone A were complete, merged, and that the `main` branch was up-to-date.
+2.  **Branching Strategy:** Established a `feature/milestone-b-planning` branch to handle the collaborative definition of the next milestone's scope without impacting the main branch.
+3.  **Collaborative Story Definition:** Mutually agreed upon and defined the initial user stories for **Feature B-01: Content Structure & API Definition**. These stories cover the creation of a formal JSON schema for content and a local API endpoint prototype.
+4.  **Backend Strategy Clarification:** Addressed and clarified the strategic choice of Azure for the backend. Discussed the cost implications and confirmed that the intended use of Azure Functions (Consumption Plan) and Azure Blob Storage would be either free or extremely low-cost for the MVP, alleviating cost concerns.
+5.  **Documentation:** The defined stories for Milestone B were captured in `BACKLOG.md` on the planning branch, pending merge.
+
+This session established a clear, mutually-understood technical foundation and a set of actionable tasks for the commencement of Milestone B development.
+
+### Next Focus
+1. Merge the `feature/milestone-b-planning` branch.
+2. Create a new development branch for **Story B-01.1: Define the Content Schema**.

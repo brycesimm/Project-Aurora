@@ -9,7 +9,7 @@
 ## Planning Phases
 
 ### Phase 1: Vision & Core Definition
-**Status:** In Progress (initial answers captured)
+**Status:** Completed (as of 2025-11-23)
 
 #### Questions to Answer:
 - [x] What specific problem are we solving...
@@ -33,7 +33,7 @@
 ---
 
 ### Phase 2: Feature Prioritization
-**Status:** In Progress
+**Status:** Completed (as of 2025-11-23)
 
 #### Questions to Answer:
 - [x] What is the absolute minimum feature set that delivers value...
@@ -51,7 +51,7 @@
 - Push notifications are "nice-to-have" gated on available weekends; sharing is "must-have" because it amplifies reach without backend overhead.
 
 ### Phase 3: Technical Foundation Research
-**Status:** In Progress
+**Status:** Completed (as of 2025-11-23)
 
 #### Questions to Answer:
 - [x] .NET MAUI vs Flutter: Evaluation criteria
@@ -99,19 +99,10 @@
   - POC ready by Month 5, leaving Month 6 for sentiment interviews and Phase 2 backlog shaping.
 
 #### Roadmap:
-- **Milestone A (Weeks 1-4): MAUI onboarding + shell with mock data**
-  1. Install VS 2022 “.NET Multi-platform App UI” workload, run `dotnet workload install maui`, and verify `dotnet new maui` builds for `net8.0-android`.
-  2. Complete Microsoft Learn’s “Create a .NET MAUI app” tutorial series (search “Build your first app with .NET MAUI” on learn.microsoft.com).
-  3. Build throwaway samples (Shell navigation, CollectionView, layouts/styles) via `dotnet new maui` templates in a scratch folder.
-  4. [x] Create the real Aurora shell (basic structure and title): home page showing 5-10 mock Daily Picks plus a Vibe-of-the-Day hero card with a placeholder reaction button.
-  5. Log emulator/signing/tooling hiccups in `.codex/PROJECT_JOURNAL.md`.
-- **Milestone B (Weeks 5-8): Backend/API + curation workflow**
-  1. Pick Azure as hosting platform; create resource group, Azure Functions app (C# isolated), and Azure Storage account.
-  2. Define JSON schema for Daily Picks + Vibe card (fields: title, snippet, source URL, media type, publish date, tags, attribution) and store sample payloads in Blob Storage or Azure Table.
-  3. Implement HTTP-triggered Azure Function `GET /daily` returning the curated payload from storage, with caching headers for the app.
-  4. Document manual curation workflow: source list (RSS/newsletters), daily selection checklist, steps to update the JSON (could be via VS Code + upload script).
-  5. Add a simple CLI or PowerShell script to push new curated JSON to Blob Storage, ensuring updates take <10 minutes per day.
-  6. Record backend setup steps, connection strings, and deployment commands in `.codex/PROJECT_JOURNAL.md`.
+- **Milestone A (Completed as of 2025-12-07): MAUI onboarding + shell with mock data**
+  - All stories (A-01.1 to A-01.4) related to the initial application shell, mock data display, and UI controls have been implemented, verified, and merged into the `main` branch. This milestone established the foundational UI of the MAUI application.
+- **Milestone B (Planning Complete): Backend/API + curation workflow**
+  - The strategy and initial stories for Milestone B have been collaboratively defined and documented in `BACKLOG.md`. The focus is on creating a local API prototype using Azure Functions to serve a structured JSON payload, decoupling the front-end from the data source. Development is ready to begin.
 - **Milestone C (Weeks 9-14): Live data integration + reactions/sharing/push**
   1. Add typed data services in the MAUI app (e.g., `IDailyFeedService`) using `HttpClient` + Polly retry policy to fetch the Azure Function endpoint.
   2. Implement loading/error states in the home screen; fall back to cached JSON if offline.
