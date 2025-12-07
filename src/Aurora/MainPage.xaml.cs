@@ -25,4 +25,13 @@ public partial class MainPage : ContentPage
 
         this.BindingContext = this;
     }
+
+    /// <summary>
+    /// Handles the click event of the placeholder reaction button.
+    /// In this initial implementation (Story A-01.4), it displays a simple alert.
+    /// </summary>
+    private void OnReactionButtonClicked(object sender, EventArgs e)
+    {
+        DisplayAlert("Feedback", "Thank you for your feedback!", "OK");
+    }
 }
