@@ -1,14 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Aurora.MainPage">
+             x:Class="Aurora.MainPage"
+             BackgroundColor="#F0F0F0">
 
     <ScrollView>
         <VerticalStackLayout
             Padding="20"
             Spacing="25">
 
-            <Label Text="Main content area" />
+            <Frame Padding="15" CornerRadius="10" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label
+                        Text="Vibe of the Day: An Inspiring Story"
+                        FontSize="Large"
+                        FontAttributes="Bold"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}" />
+                    <Image
+                        Source="dotnet_bot.png"
+                        Aspect="AspectFill"
+                        HeightRequest="150"
+                        HorizontalOptions="FillAndExpand" />
+                    <Label
+                        Text="In a heartwarming turn of events, a local community rallied together to transform an abandoned lot into a vibrant urban garden, fostering new connections and providing fresh produce for hundreds of families. This initiative proves that positive change is always possible."
+                        FontSize="Medium"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+                </VerticalStackLayout>
+            </Frame>
 
         </VerticalStackLayout>
     </ScrollView>
