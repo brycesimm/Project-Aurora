@@ -232,4 +232,5 @@ Key accomplishments and resolutions include:
     *   An erroneous attempt to create the `SchemaExporter` project prematurely was fully reverted, ensuring the project's state remains consistent with the current branch and backlog.
 
 ### Next Focus
-1.  Begin implementation of **Story B-02.2: Implement Console Application for Schema Export**.
+1.  Implement **Story B-02.3: Integrate Schema Export into Build Process** to ensure `content.schema.json` is always up-to-date.
+2.  Begin implementation of **Story B-01.2: Local, HTTP-triggered function for mock content**.
