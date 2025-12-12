@@ -69,7 +69,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 - [x] **Story C-01.1:** As a developer, I need to define the data models for the content feed and create an interface for the content service, so that I can establish a clear contract for fetching data.
     - **AC 1:** A `ContentFeed.cs` model is created in `Aurora.Shared` to represent the entire data payload, containing a `VibeOfTheDay` (`ContentItem`) and a list of `DailyPicks` (`List<ContentItem>`).
     - **AC 2:** An `IContentService` interface is created in `Aurora.Shared` with a method `GetDailyContentAsync()` that returns a `Task<ContentFeed>`.
-- [ ] **Story C-01.2:** As a developer, I need a concrete implementation of the content service that fetches data from the local Azure Function so that the MAUI app can retrieve mock content.
+- [x] **Story C-01.2:** As a developer, I need a concrete implementation of the content service that fetches data from the local Azure Function so that the MAUI app can retrieve mock content.
     - **AC 1:** A `ContentService` class is created in the `Aurora` project that implements `IContentService`.
     - **AC 2:** The `ContentService` uses `HttpClient` to call the `GetDailyContent` endpoint of the local Azure Function (`http://localhost:7071/api/GetDailyContent`).
     - **AC 3:** The service correctly deserializes the JSON response into a `ContentFeed` object.
@@ -81,3 +81,21 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 2:** On page load, the app calls `GetDailyContentAsync()` to retrieve the content.
     - **AC 3:** The "Vibe of the Day" card and the "Daily Picks" list are populated with data from the service, replacing the old mock data.
     - **AC 4:** The app handles potential `null` or empty content gracefully (e.g., by displaying a "No content available" message).
+
+---
+
+## Milestone D: Robust Testing Framework & Service Testability
+*This milestone focuses on establishing a comprehensive testing strategy, including architectural refactoring to enable isolated unit testing of services and shared logic.*
+
+### Feature D-01: Service Testability Refactor
+- [ ] **Story D-01.1:** As a developer, I need to refactor core service logic into a dedicated class library so that it can be independently unit tested without MAUI framework dependencies.
+    - **AC 1:** A new `.NET Standard` or `net9.0` class library project (e.g., `Aurora.Core` or `Aurora.Client.Core`) is created.
+    - **AC 2:** All shared service logic, including `ContentService`, is moved into this new project.
+    - **AC 3:** `Aurora.csproj` (MAUI app) is updated to reference the new core project.
+    - **AC 4:** `Aurora.Core.csproj` references `Aurora.Shared.csproj`.
+    - **AC 5:** `Aurora.Tests` project is created and configured to reference `Aurora.Core.csproj`.
+- [ ] **Story D-01.2:** As a developer, I need to implement unit tests for `ContentService` so that its data retrieval and deserialization logic is verified.
+    - **AC 1:** Tests use `Moq` to create a mock `HttpMessageHandler` for `HttpClient`.
+    - **AC 2:** Tests provide a controlled JSON string matching the `ContentFeed` schema.
+    - **AC 3:** Tests assert that `GetDailyContentAsync` correctly deserializes the mock JSON into a `ContentFeed` object, validating key properties.
+    - **AC 4:** All tests pass successfully.
