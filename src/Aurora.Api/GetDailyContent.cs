@@ -5,43 +5,42 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.Reflection;
 
-namespace Aurora.Api
+namespace Aurora.Api;
+
+public class GetDailyContent
 {
-    public class GetDailyContent
+    private readonly ILogger<GetDailyContent> _logger;
+
+    public GetDailyContent(ILogger<GetDailyContent> logger)
     {
-        private readonly ILogger<GetDailyContent> _logger;
+        _logger = logger;
+    }
 
-        public GetDailyContent(ILogger<GetDailyContent> logger)
+    [Function("GetDailyContent")]
+    public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
+    {
+        _logger.LogInformation("C# HTTP trigger function processed a request.");
+
+        var response = req.CreateResponse(System.Net.HttpStatusCode.OK);
+        response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+
+        var exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        if (exePath is null)
         {
-            _logger = logger;
+            _logger.LogError("Could not determine the execution path.");
+            return req.CreateResponse(System.Net.HttpStatusCode.InternalServerError);
+        }
+        var contentPath = Path.Combine(exePath, "sample.content.json");
+        
+        if (!File.Exists(contentPath))
+        {
+            _logger.LogError("sample.content.json not found at {path}", contentPath);
+            return req.CreateResponse(System.Net.HttpStatusCode.NotFound);
         }
 
-        [Function("GetDailyContent")]
-        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
-        {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+        var jsonContent = await File.ReadAllTextAsync(contentPath);
+        await response.WriteStringAsync(jsonContent);
 
-            var response = req.CreateResponse(System.Net.HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-
-            var exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            if (exePath is null)
-            {
-                _logger.LogError("Could not determine the execution path.");
-                return req.CreateResponse(System.Net.HttpStatusCode.InternalServerError);
-            }
-            var contentPath = Path.Combine(exePath, "sample.content.json");
-            
-            if (!File.Exists(contentPath))
-            {
-                _logger.LogError("sample.content.json not found at {path}", contentPath);
-                return req.CreateResponse(System.Net.HttpStatusCode.NotFound);
-            }
-
-            var jsonContent = await File.ReadAllTextAsync(contentPath);
-            await response.WriteStringAsync(jsonContent);
-
-            return response;
-        }
+        return response;
     }
 }
