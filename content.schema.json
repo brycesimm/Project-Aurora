@@ -1,5 +1,13 @@
 {
   "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "snippet",
+    "imageUrl",
+    "articleUrl"
+  ],
   "properties": {
     "id": {
       "type": "string"
@@ -16,12 +24,5 @@
     "articleUrl": {
       "type": "string"
     }
-  },
-  "required": [
-    "id",
-    "title",
-    "snippet",
-    "imageUrl",
-    "articleUrl"
-  ]
+  }
 }

@@ -101,8 +101,8 @@
 #### Roadmap:
 - **Milestone A (Completed as of 2025-12-07): MAUI onboarding + shell with mock data**
   - All stories (A-01.1 to A-01.4) related to the initial application shell, mock data display, and UI controls have been implemented, verified, and merged into the `main` branch. This milestone established the foundational UI of the MAUI application.
-- **Milestone B (In Progress): Backend/API + curation workflow**
-  - The strategy and initial stories for Milestone B have been collaboratively defined and documented in `BACKLOG.md`. The focus is on creating a local API prototype using Azure Functions to serve a structured JSON payload, decoupling the front-end from the data source. **Story B-02.1 (Define the Content Schema)** has been completed, with the manual aspect of generating `content.schema.json` from the Swagger endpoint now in place. Further automation for schema export is planned with **Stories B-02.2 and B-02.3**.
+- **Milestone B (In Progress - Updated 2025-12-12): Backend/API + curation workflow**
+  - The strategy and initial stories for Milestone B have been collaboratively defined and documented in `BACKLOG.md`. The focus is on creating a local API prototype using Azure Functions to serve a structured JSON payload, decoupling the front-end from the data source. **Story B-02.1 (Define the Content Schema)** has been completed. The automation for schema export has been significantly refactored and simplified into a single console application (`SchemaBuilder`) as part of **Story B-02.2**. The next step is to integrate this automation into the build process (**Story B-02.3**).
 - **Milestone C (Weeks 9-14): Live data integration + reactions/sharing/push**
   1. Add typed data services in the MAUI app (e.g., `IDailyFeedService`) using `HttpClient` + Polly retry policy to fetch the Azure Function endpoint.
   2. Implement loading/error states in the home screen; fall back to cached JSON if offline.
@@ -150,6 +150,7 @@
 | 2025-11-23 | Selected .NET MAUI + Azure Functions stack | Aligns with developer expertise while minimizing ops overhead |
 | 2025-11-23 | Validation focuses on qualitative beta feedback and manual curation guardrails | Keeps success criteria realistic for hand-curated MVP |
 | 2025-12-07 | Downgraded Swashbuckle.AspNetCore to 6.5.0 | Resolved `TypeLoadException` and `Microsoft.OpenApi` version conflict with `Microsoft.AspNetCore.OpenApi` 9.0.0 for .NET 9 compatibility. |
+| 2025-12-12 | Refactored schema generation to single project | Simplified and made robust the schema generation process, moving from a two-project system to an in-memory console application using `Newtonsoft.Json` and a custom converter for clean, minimal output. |
 
 ---
 
