@@ -53,7 +53,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 2:** [x] When executed, `SchemaBuilder` generates the OpenAPI schema for the `ContentItem` model in-memory.
     - **AC 3:** [x] `SchemaBuilder` saves the generated schema to the `content.schema.json` file in the project root.
     - **AC 4:** [x] The generated schema is a valid JSON schema for the `ContentItem` model.
-- [ ] **Story B-02.3:** As a developer, I want to integrate schema export into the build process so that `content.schema.json` is always up-to-date.
+- [x] **Story B-02.3:** As a developer, I want to integrate schema export into the build process so that `content.schema.json` is always up-to-date.
     - **AC 1:** Building the `SchemaBuilder` project (or the entire solution) automatically triggers the schema generation.
     - **AC 2:** `content.schema.json` is updated with the latest schema during the build process.
     - **AC 3:** The build process completes without errors or unexpected user interaction.

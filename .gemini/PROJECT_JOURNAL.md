@@ -234,3 +234,28 @@ Key accomplishments and resolutions include:
 ### Next Focus
 1.  Implement **Story B-02.3: Integrate Schema Export into Build Process** to ensure `content.schema.json` is always up-to-date.
 2.  Begin implementation of **Story B-01.2: Local, HTTP-triggered function for mock content**.
+---
+
+## 2025-12-12: Story B-02.3 Completion - Integrate Schema Export into Build Process
+
+### Summary
+This session was dedicated to the implementation of **Story B-02.3: Integrate Schema Export into Build Process**. The goal was to automate the generation of `content.schema.json` whenever the `SchemaBuilder` project is built.
+
+Key accomplishments and resolutions include:
+
+1.  **PostBuildEvent Implementation:**
+    *   Added a `Target` element with a `PostBuildEvent` to the `SchemaBuilder.csproj` file.
+    *   The `PostBuildEvent` was configured to execute the `SchemaBuilder` application using `dotnet $(TargetPath)`. This ensures the `SchemaBuilder` executable is run after a successful build, triggering the schema generation.
+
+2.  **Debugging and Resolution:**
+    *   Initial build attempts failed because the `PostBuildEvent` was attempting to execute the `.dll` directly.
+    *   Resolved this by prefixing the command with `dotnet`, correctly invoking the .NET runtime to execute the assembly.
+
+3.  **Verification:**
+    *   A full solution build was executed, which completed successfully.
+    *   The `content.schema.json` file was verified to be updated with the latest schema, confirming the automation is working as expected.
+
+This story significantly improves the developer workflow by ensuring the `content.schema.json` is always synchronized with the C# `ContentItem` model, preventing potential data contract drift between front-end and back-end development.
+
+### Next Focus
+1. Begin implementation of **Story B-01.2: Local, HTTP-triggered function for mock content**.
