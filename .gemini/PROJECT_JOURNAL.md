@@ -320,3 +320,33 @@ Key accomplishments include:
 ### Next Focus
 1.  Merge `feature/C-01.1-content-models-interface` into `main`.
 2.  Begin **Story C-01.2: Concrete Content Service Implementation**.
+
+---
+
+## 2025-12-12 (Session 4): Story C-01.2 Completion - Content Service Implementation
+
+### Summary
+This session focused on implementing **Story C-01.2: Concrete Content Service Implementation**, including essential refactoring for configuration management and future-proofing.
+
+Key accomplishments include:
+1.  **Branch Creation:** Created `feature/C-01.2-content-service-impl`.
+2.  **ContentService Implementation:**
+    *   Created `src/Aurora/Services/ContentService.cs` implementing `IContentService`.
+    *   It now relies on an `HttpClient` whose `BaseAddress` is configured via DI.
+3.  **Configuration Management:**
+    *   Added `Microsoft.Extensions.Configuration.Json` and `Microsoft.Extensions.Http` NuGet packages to `Aurora.csproj`.
+    *   Created and embedded `src/Aurora/appsettings.json` with the API Base URL.
+    *   Updated `MauiProgram.cs` to load `appsettings.json` and configure the `MauiAppBuilder` with it.
+4.  **HttpClient Configuration (Typed Client Pattern):**
+    *   Implemented the Typed Client pattern by registering `IContentService` and `ContentService` with DI in `MauiProgram.cs`.
+    *   The `HttpClient`'s `BaseAddress` is set from `appsettings.json` during registration.
+    *   Refactored the URL usage in `ContentService.cs` to use the Base URL + relative path pattern for clarity and future-proofing.
+5.  **Verification:** Successfully built the `Aurora` project after all changes.
+
+### Next Focus (Deferred)
+*Initial plan was to create unit tests for `ContentService`, but this was deferred.*
+
+### Decision to Defer Unit Testing:
+During the attempt to create a unit test project (`Aurora.Tests`) for `ContentService`, a target framework incompatibility issue arose due to `Aurora.csproj` being a MAUI application. To properly unit test the service, significant refactoring (moving `ContentService` to a new shared library project) would be required. Given token constraints and the user's preference to prioritize core feature development, the unit testing effort for this story has been *deferred*.
+
+A new milestone/feature will be proposed to address robust testing strategy and architecture for service testability. The current verification of `ContentService`'s functionality will occur during the implementation of **Story C-01.4** (UI integration).

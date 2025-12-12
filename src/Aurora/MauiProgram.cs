@@ -1,4 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
+using Aurora.Services;
+using Aurora.Shared.Interfaces;
 
 namespace Aurora;
 
@@ -15,6 +19,27 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddFont("materialdesignicons-webfont.ttf", "MDI");
 			});
+
+        var assembly = Assembly.GetExecutingAssembly();
+        using var stream = assembly.GetManifestResourceStream("Aurora.appsettings.json");
+
+        if (stream != null)
+        {
+            var config = new ConfigurationBuilder()
+                .AddJsonStream(stream)
+                .Build();
+
+            builder.Configuration.AddConfiguration(config);
+        }
+
+        builder.Services.AddHttpClient<IContentService, ContentService>(client =>
+        {
+            var baseUrl = builder.Configuration["ApiSettings:BaseUrl"];
+            if (!string.IsNullOrEmpty(baseUrl))
+            {
+                client.BaseAddress = new Uri(baseUrl);
+            }
+        });
 
 #if DEBUG
 		builder.Logging.AddDebug();
