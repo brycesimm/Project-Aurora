@@ -23,4 +23,10 @@
     <ProjectReference Include="..\Aurora.Client.Core\Aurora.Client.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="TestData\sample.content.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
