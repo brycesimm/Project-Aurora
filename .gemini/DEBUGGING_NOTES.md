@@ -92,3 +92,33 @@ If you suspect changes are still not being picked up, create a strong dependency
 - Application builds cleanly after package version adjustments.
 - Running the application and navigating to the `/swagger` endpoint successfully loads the Swagger UI without runtime exceptions.
 - The `/diagnostics/openapi-version` endpoint (if implemented) confirms the expected `Microsoft.OpenApi` assembly version is loaded.
+
+---
+
+## Android Emulator Network & Data Binding Issues
+
+**Symptom:**
+- The application runs on the Android emulator but displays no data from the local API (e.g., blank fields or missing images).
+- No error alerts are displayed (silent failure), or "Connection Refused" errors occur.
+- The API is running locally and accessible via browser on `localhost:7071`.
+
+**Causes & Solutions:**
+
+1.  **The "Localhost" Loopback Trap:**
+    - **Cause:** On the Android emulator, `localhost` (127.0.0.1) refers to the *emulator device itself*, not the host machine running the API.
+    - **Solution:** Use `10.0.2.2` to refer to the host machine's loopback interface.
+    - **Implementation:** Add logic in `MauiProgram.cs` to detect `DevicePlatform.Android` and replace "localhost" with "10.0.2.2" in the Base URL.
+
+2.  **Cleartext Traffic Blocking:**
+    - **Cause:** Android 9+ (API 28+) blocks non-SSL (HTTP) traffic by default. Local development usually runs on HTTP.
+    - **Solution:** Explicitly allow cleartext traffic in the Android Manifest.
+    - **Implementation:** Add `android:usesCleartextTraffic="true"` to the `<application>` tag in `AndroidManifest.xml`.
+
+3.  **JSON Deserialization Mismatch:**
+    - **Cause:** The API returns JSON with `snake_case` keys (e.g., `image_url`), but the C# model uses `PascalCase` properties (e.g., `ImageUrl`).
+    - **Solution:** Use `[JsonPropertyName("name")]` attributes or configure the `JsonSerializerOptions` to be case-insensitive.
+    - **Implementation:** We applied `[JsonPropertyName]` attributes to `ContentItem` for explicit mapping.
+
+4.  **Layout Collapse (CollectionView vs ScrollView):**
+    - **Cause:** Nesting a `CollectionView` inside a `ScrollView` often causes the `CollectionView` to render with zero height because it has infinite scrollable space.
+    - **Solution:** Do not nest them. Use the `CollectionView.Header` property to hold the top-of-page content (like hero cards) so the entire page scrolls as a single virtualized list.

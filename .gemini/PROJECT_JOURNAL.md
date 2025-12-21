@@ -350,3 +350,28 @@ Key accomplishments include:
 During the attempt to create a unit test project (`Aurora.Tests`) for `ContentService`, a target framework incompatibility issue arose due to `Aurora.csproj` being a MAUI application. To properly unit test the service, significant refactoring (moving `ContentService` to a new shared library project) would be required. Given token constraints and the user's preference to prioritize core feature development, the unit testing effort for this story has been *deferred*.
 
 A new milestone/feature will be proposed to address robust testing strategy and architecture for service testability. The current verification of `ContentService`'s functionality will occur during the implementation of **Story C-01.4** (UI integration).
+
+---
+
+## 2025-12-21: Milestone C - Live Data Integration
+
+### Summary
+This session successfully completed **Story C-01.4: UI Integration of Live Data**, marking a pivotal transition from mock data to a functional, data-driven application.
+
+Key accomplishments include:
+1.  **UI Integration & Refactor:** 
+    - Connected `MainPage` to `ContentService` to fetch live data from the local API.
+    - Refactored the main UI to use `CollectionView.Header` instead of nested ScrollViews, resolving a critical layout collapse issue and ensuring smooth scrolling performance.
+2.  **Android Networking Fixes:**
+    - Diagnosed and resolved the "Android vs. Localhost" loopback issue by remapping API calls to `10.0.2.2` specifically for Android devices in `MauiProgram.cs`.
+    - Enabled cleartext HTTP traffic in `AndroidManifest.xml` to allow the emulator to communicate with the local development server (non-SSL).
+3.  **Data Contract Hardening:**
+    - Updated the `ContentItem` model with `[JsonPropertyName]` attributes to handle snake_case JSON keys from the API, preventing silent deserialization failures.
+    - Configured the API project to use a fixed port (7071) to match the client configuration reliably.
+4.  **Documentation Update:** formally marked **Story C-01.3** as complete in the backlog.
+
+The application now successfully fetches and displays the "Vibe of the Day" and "Daily Picks" from the local Azure Function on both Windows and Android emulators.
+
+### Next Focus
+1.  Merge the `feature/C-01.4-ui-integration` branch.
+2.  Begin **Milestone D: Robust Testing Framework & Service Testability**, starting with **Story D-01.1: Service Testability Refactor**.

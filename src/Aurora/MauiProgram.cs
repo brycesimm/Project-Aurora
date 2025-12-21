@@ -35,6 +35,13 @@ public static class MauiProgram
         builder.Services.AddHttpClient<IContentService, ContentService>(client =>
         {
             var baseUrl = builder.Configuration["ApiSettings:BaseUrl"];
+            
+            // Android Emulator localhost fix
+            if (DeviceInfo.Platform == DevicePlatform.Android && baseUrl != null && baseUrl.Contains("localhost"))
+            {
+                baseUrl = baseUrl.Replace("localhost", "10.0.2.2");
+            }
+
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 client.BaseAddress = new Uri(baseUrl);

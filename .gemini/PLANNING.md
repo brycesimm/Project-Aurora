@@ -103,7 +103,7 @@
   - All stories (A-01.1 to A-01.4) related to the initial application shell, mock data display, and UI controls have been implemented, verified, and merged into the `main` branch. This milestone established the foundational UI of the MAUI application.
 - **Milestone B (In Progress - Updated 2025-12-12): Backend/API + curation workflow**
   - The strategy and initial stories for Milestone B have been collaboratively defined and documented in `BACKLOG.md`. The focus is on creating a local API prototype using Azure Functions to serve a structured JSON payload, decoupling the front-end from the data source. **Story B-02.1 (Define the Content Schema)** has been completed, as well as **Story B-01.2 (Local, HTTP-triggered function for mock content)**. The automation for schema export has been significantly refactored and simplified into a single console application (`SchemaBuilder`) as part of **Story B-02.2**, and integrated into the build process (**Story B-02.3**).
-- **Milestone C (Weeks 9-14): Live data integration + reactions/sharing/push**
+- **Milestone C (In Progress - Updated 2025-12-21): Live data integration + reactions/sharing/push**
   1. Add typed data services in the MAUI app (e.g., `IDailyFeedService`) using `HttpClient` + Polly retry policy to fetch the Azure Function endpoint.
   2. Implement loading/error states in the home screen; fall back to cached JSON if offline.
   3. Build anonymous reaction endpoint (`POST /react`) storing aggregate counts in Azure Table Storage; wire the MAUI button to call it and display totals (read-only).
