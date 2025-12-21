@@ -422,3 +422,21 @@ Key accomplishments include:
 1.  Commit the changes to `feature/D-01.2-content-service-tests`.
 2.  Merge the feature branch into `main`.
 3.  Continue with **Milestone D**, focusing on refining the testing strategy or moving to UI testing if appropriate.
+
+---
+
+## 2025-12-21 (Session 4): Milestone D Planning Update - CI/CD & Code Style
+
+### Summary
+Following the successful implementation of the first unit tests, a brief strategic review was held to identify high-value workflow improvements.
+
+Key decisions and planning updates include:
+1.  **CI Integration:** Agreed to implement a GitHub Actions workflow to automate the "Verify, Then Trust" mandate. This ensures every PR is built and tested before merging.
+2.  **Code Style Enforcement:** Decided to adopt Roslyn Analyzers (`StyleCop.Analyzers`) and a root `.editorconfig` to programmatically enforce coding conventions and minimize cognitive load during "Contextual Mimicry."
+3.  **Backlog Refinement:** Formally added Stories **D-02.1** and **D-03.1** to Milestone D with focused, lightweight acceptance criteria to avoid scope creep.
+4.  **Roadmap Update:** Synchronized the Phase 4 Roadmap in `PLANNING.md` to reflect these new quality assurance steps.
+
+### Next Focus
+1.  Merge the `feature/D-milestone-planning-updates` branch.
+2.  Implement **Story D-02.1: Implement GitHub Actions CI Pipeline**.
+3.  Implement **Story D-03.1: Enforce Code Styles with Roslyn Analyzers**.
