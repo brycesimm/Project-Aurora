@@ -6,7 +6,7 @@ Thank you for your interest in helping us build a refuge for positive news! This
 
 Before you start, ensure you have the following installed:
 - **.NET 9.0 SDK**
-- **Visual Studio 2022** with the **.NET MAUI development** workload.
+- **Visual Studio** (any version supporting **.NET 9 development**).
 - **Android Emulator** or a physical device for testing.
 - **Azure Functions Core Tools** (Optional, but required for local API changes).
 

@@ -25,7 +25,7 @@ In a world where news feeds are often engineered to maximize outrage and fear, A
 ### Prerequisites
 
 - [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) (with the **.NET MAUI development** workload)
+- [Visual Studio](https://visualstudio.microsoft.com/vs/) (any version supporting **.NET 9 development**)
 - [Azure Functions Core Tools](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local) (for local API development)
 
 ### Running the Application
@@ -56,6 +56,8 @@ Aurora maintains a "Verify, Then Trust" policy.
 - [**Architecture:**](ARCHITECTURE.md) Learn about the system design, project structure, and key patterns.
 - [**Contributing:**](CONTRIBUTING.md) Development workflow, prerequisites, and coding standards.
 
-## 📜 License
+## ⚖️ Legal & Copyright
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details (if applicable).
+**Copyright © 2025 Bryce Simmerman. All Rights Reserved.**
+
+This software is proprietary and confidential. Unauthorized copying, modification, distribution, or use of this software, via any medium, is strictly prohibited for both commercial and private purposes without explicit written permission from the copyright holder.
