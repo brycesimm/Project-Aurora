@@ -3,7 +3,7 @@ using Aurora.Shared.Models;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace Aurora.Services;
+namespace Aurora.Client.Core.Services;
 
 public class ContentService : IContentService
 {

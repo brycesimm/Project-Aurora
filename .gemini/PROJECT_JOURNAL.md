@@ -375,3 +375,27 @@ The application now successfully fetches and displays the "Vibe of the Day" and 
 ### Next Focus
 1.  Merge the `feature/C-01.4-ui-integration` branch.
 2.  Begin **Milestone D: Robust Testing Framework & Service Testability**, starting with **Story D-01.1: Service Testability Refactor**.
+
+---
+
+## 2025-12-21 (Session 2): Story D-01.1 Completion - Service Testability Refactor
+
+### Summary
+This session addressed the architectural decoupling required to enable unit testing for the client's business logic, specifically the `ContentService`.
+
+Key accomplishments include:
+1.  **Architectural Restructuring:** Created a new .NET 9.0 class library project, `Aurora.Client.Core`, to house non-UI business logic.
+2.  **Naming Rationale:** The name `Aurora.Client.Core` was chosen to clearly distinguish client-side logic from shared contracts (`Aurora.Shared`) and the UI layer (`Aurora`), while signaling a dependency-free "Core" layer.
+3.  **Migration & Decoupling:**
+    - Moved `ContentService.cs` from the MAUI project to `Aurora.Client.Core.Services`.
+    - Updated `MauiProgram.cs` to use the new namespace and project reference.
+    - Verified that DI registration (Typed Client pattern) remains functional.
+4.  **Test Infrastructure:** 
+    - Created `Aurora.Client.Core.Tests` (xUnit) targeted at .NET 9.0.
+    - Added a project reference to `Aurora.Client.Core`.
+    - Installed the `Moq` NuGet package to facilitate HTTP mocking.
+5.  **Verification:** A full solution build confirmed all platform targets (Windows, Android, iOS, MacCatalyst) build successfully with the new project structure.
+
+### Next Focus
+1.  Implement **Story D-01.2: Unit tests for ContentService**.
+2.  Refine the testing strategy to include Mocking of `HttpMessageHandler` for `HttpClient` testing.

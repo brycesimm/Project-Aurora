@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
-using Aurora.Services;
+using Aurora.Client.Core.Services;
 using Aurora.Shared.Interfaces;
 
 namespace Aurora;
