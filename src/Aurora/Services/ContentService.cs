@@ -18,7 +18,12 @@ public class ContentService : IContentService
     {
         // The BaseAddress is pre-configured in MauiProgram.cs to the API root.
         // We append the specific endpoint path here.
-        var contentFeed = await _httpClient.GetFromJsonAsync<ContentFeed>("GetDailyContent");
+        var options = new System.Text.Json.JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        var contentFeed = await _httpClient.GetFromJsonAsync<ContentFeed>("GetDailyContent", options);
         return contentFeed ?? new ContentFeed();
     }
 }

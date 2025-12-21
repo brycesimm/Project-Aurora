@@ -2,7 +2,7 @@
   "profiles": {
     "Aurora.Api": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7103",
+      "commandLineArgs": "--port 7071",
       "launchBrowser": false
     }
   }

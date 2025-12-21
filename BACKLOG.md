@@ -76,7 +76,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 - [x] **Story C-01.3:** As a developer, I need to register the content service with the MAUI application's dependency injection container so that it can be easily consumed by other parts of the application.
     - **AC 1:** The `ContentService` is registered as a singleton service for `IContentService` in `MauiProgram.cs`.
     - **AC 2:** The `HttpClient` required by the `ContentService` is also registered with the DI container.
-- [ ] **Story C-01.4:** As a user, I want to see the actual content fetched from the local API displayed in the app so that I can verify the data integration.
+- [x] **Story C-01.4:** As a user, I want to see the actual content fetched from the local API displayed in the app so that I can verify the data integration.
     - **AC 1:** The `MainPage` (or its ViewModel) consumes the `IContentService`.
     - **AC 2:** On page load, the app calls `GetDailyContentAsync()` to retrieve the content.
     - **AC 3:** The "Vibe of the Day" card and the "Daily Picks" list are populated with data from the service, replacing the old mock data.
