@@ -99,3 +99,16 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 2:** [x] Tests provide a controlled JSON string matching the `ContentFeed` schema.
     - **AC 3:** [x] Tests assert that `GetDailyContentAsync` correctly deserializes the mock JSON into a `ContentFeed` object, validating key properties.
     - **AC 4:** [x] All tests pass successfully.
+
+### Feature D-02: Automated Quality Assurance
+- [ ] **Story D-02.1:** As a developer, I want a CI pipeline to automatically build and test my code so that I don't merge broken features.
+    - **AC 1:** A GitHub Actions workflow file (e.g., `.github/workflows/dotnet.yml`) is created.
+    - **AC 2:** The workflow triggers on `push` to `main` and `pull_request` events.
+    - **AC 3:** The workflow sets up .NET 9, builds the solution, and runs all unit tests.
+    - **AC 4:** The workflow completes successfully on the current codebase.
+
+### Feature D-03: Code Style Standardization
+- [ ] **Story D-03.1:** As a developer, I want consistent code style enforced automatically so that the codebase remains uniform without manual policing.
+    - **AC 1:** A `Directory.Build.props` file is created at the solution root to inject `StyleCop.Analyzers` (or similar) into all projects.
+    - **AC 2:** A root `.editorconfig` file is verified or created to define basic conventions (e.g., file-scoped namespaces).
+    - **AC 3:** The solution builds successfully, confirming that the new analyzers are active and not blocking compilation.
