@@ -1,1 +1,61 @@
-# Project-Aurora
+# Project Aurora: A Refuge of Positive News
+
+Project Aurora is a cross-platform mobile application built with .NET MAUI, designed to provide a sanctuary from the often negative and sensationalized traditional media landscape. It delivers a curated stream of uplifting, inspiring, and family-friendly stories.
+
+## 🌟 The Mission
+
+In a world where news feeds are often engineered to maximize outrage and fear, Aurora serves as an oasis of credible optimism. Our goal is to protect mental wellbeing by counterbalancing negativity with narratives that inspire productivity, empathy, and hope for humanity.
+
+## ✨ Key Features
+
+- **Vibe of the Day:** A standout daily feature—one exceptional story, video, or article showcased as a focal point for inspiration.
+- **Daily Picks:** A curated list of 5-10 uplifting news stories delivered daily.
+- **Anonymous Reactions:** Share your positive sentiment (e.g., "Uplifted me") without the friction of user accounts or social media pressure.
+- **Native Sharing:** Seamlessly share inspiring stories with friends and family using your device's native share sheet.
+
+## 🛠 Tech Stack
+
+- **Front-End:** .NET MAUI (C# / XAML) targeting Android, iOS, Windows, and macOS.
+- **Back-End:** Azure Functions (Serverless API).
+- **Architecture:** Decoupled "Core" logic library for business rules and service testability.
+- **Infrastructure:** Automated JSON Schema generation to ensure data contract synchronization.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) (with the **.NET MAUI development** workload)
+- [Azure Functions Core Tools](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local) (for local API development)
+
+### Running the Application
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/brycesimm/Project-Aurora.git
+   cd Project-Aurora
+   ```
+
+2. **Launch the API:**
+   Navigate to `src/Aurora.Api` and start the local host:
+   ```bash
+   func start
+   ```
+
+3. **Run the MAUI Client:**
+   Open `Project-Aurora.sln` in Visual Studio and set the `Aurora` project as the Startup Project. Select your desired target (Emulator or Physical Device) and press F5.
+
+## 🧪 Testing and Quality
+
+Aurora maintains a "Verify, Then Trust" policy. 
+- **Unit Tests:** Business logic is isolated in `Aurora.Client.Core` and tested via xUnit in `Aurora.Client.Core.Tests`.
+- **CI Pipeline:** Every pull request is automatically built and tested via GitHub Actions to ensure stability.
+
+## 📚 Documentation
+
+- [**Architecture:**](ARCHITECTURE.md) Learn about the system design, project structure, and key patterns.
+- [**Contributing:**](CONTRIBUTING.md) Development workflow, prerequisites, and coding standards.
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details (if applicable).
