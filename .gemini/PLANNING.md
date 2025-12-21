@@ -116,7 +116,7 @@
   3. Instrument basic telemetry (App Center or Azure Insights) for crash/error tracking.
   4. Recruit a small beta circle; prepare test script (install instructions, feedback form) and capture sentiment in PROJECT_JOURNAL.
   5. Compile store-readiness checklist (privacy policy draft, screenshot requirements, push notification disclosures) even if launch is later.
-  6. **(New)** Implement GitHub Actions CI pipeline for automated build and test verification.
+  6. **(Completed)** Implement GitHub Actions CI pipeline for automated build and test verification.
   7. **(New)** Standardize code style using Roslyn Analyzers and `.editorconfig`.
   8. Prioritize follow-up items feeding into Phase 5 validation experiments.
 
@@ -153,6 +153,7 @@
 | 2025-11-23 | Validation focuses on qualitative beta feedback and manual curation guardrails | Keeps success criteria realistic for hand-curated MVP |
 | 2025-12-07 | Downgraded Swashbuckle.AspNetCore to 6.5.0 | Resolved `TypeLoadException` and `Microsoft.OpenApi` version conflict with `Microsoft.AspNetCore.OpenApi` 9.0.0 for .NET 9 compatibility. |
 | 2025-12-12 | Refactored schema generation to single project | Simplified and made robust the schema generation process, moving from a two-project system to an in-memory console application using `Newtonsoft.Json` and a custom converter for clean, minimal output. |
+| 2025-12-21 | Implemented GitHub Actions CI | Automates "Verify, Then Trust" mandate; requires successful build/test before merge. |
 
 ---
 

@@ -101,7 +101,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 4:** [x] All tests pass successfully.
 
 ### Feature D-02: Automated Quality Assurance
-- [ ] **Story D-02.1:** As a developer, I want a CI pipeline to automatically build and test my code so that I don't merge broken features.
+- [x] **Story D-02.1:** As a developer, I want a CI pipeline to automatically build and test my code so that I don't merge broken features.
     - **AC 1:** A GitHub Actions workflow file (e.g., `.github/workflows/dotnet.yml`) is created.
     - **AC 2:** The workflow triggers on `push` to `main` and `pull_request` events.
     - **AC 3:** The workflow sets up .NET 9, builds the solution, and runs all unit tests.

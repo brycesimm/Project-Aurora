@@ -47,7 +47,7 @@ secrets.json
 .config/dotnet-tools.json
 
 # Maui
-platforms/
+# platforms/
 # Raw assets that are generated as part of the build
 obj/Debug/net6.0-*/resizetizer/
 # dotnet new
