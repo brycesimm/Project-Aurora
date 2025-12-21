@@ -122,3 +122,22 @@ If you suspect changes are still not being picked up, create a strong dependency
 4.  **Layout Collapse (CollectionView vs ScrollView):**
     - **Cause:** Nesting a `CollectionView` inside a `ScrollView` often causes the `CollectionView` to render with zero height because it has infinite scrollable space.
     - **Solution:** Do not nest them. Use the `CollectionView.Header` property to hold the top-of-page content (like hero cards) so the entire page scrolls as a single virtualized list.
+
+---
+
+## Missing Platform Entry Points (CI Build Failure / CS5001)
+
+**Symptom:**
+- CI build fails on GitHub Actions with `error CS5001: Program does not contain a static 'Main' method suitable for an entry point` for `net9.0-ios`, `net9.0-maccatalyst`, and `net9.0-windows` targets.
+- The local build in Visual Studio works perfectly.
+- The `src/Aurora/Platforms` folder contains the necessary `Program.cs` and `App.xaml` files locally.
+
+**Cause:**
+- The `.gitignore` file contained a rule `platforms/`, intended to ignore build output or template artifacts.
+- However, since git is case-insensitive on Windows (default configuration), this rule matched and ignored the source directory `src/Aurora/Platforms`.
+- Consequently, the entry point files (`Program.cs`, `App.xaml.cs`, etc.) were never committed to the repository, causing the clean CI build to fail.
+
+**Resolution:**
+1.  **Modify .gitignore:** Remove or comment out the `platforms/` line.
+2.  **Force Add:** Use `git add src/Aurora/Platforms` to stage the previously ignored files.
+3.  **Verification:** The CI build passed successfully after these files were pushed.

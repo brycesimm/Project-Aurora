@@ -440,3 +440,23 @@ Key decisions and planning updates include:
 1.  Merge the `feature/D-milestone-planning-updates` branch.
 2.  Implement **Story D-02.1: Implement GitHub Actions CI Pipeline**.
 3.  Implement **Story D-03.1: Enforce Code Styles with Roslyn Analyzers**.
+
+---
+
+## 2025-12-21 (Session 5): Story D-02.1 Completion - CI Pipeline
+
+### Summary
+This session established the Continuous Integration (CI) pipeline, ensuring that all future code changes are automatically verified against the project's build and test standards.
+
+Key accomplishments and resolutions include:
+1.  **Workflow Creation:** Created `.github/workflows/dotnet.yml` targeting `windows-latest` to support the MAUI workloads. It is configured to run `dotnet build` and `dotnet test` on every push to `main` and pull request.
+2.  **CI Debugging (The "Missing Platforms" Issue):**
+    *   Initial CI builds failed with `CS5001` (missing entry point) for iOS, Windows, and MacCatalyst targets.
+    *   **Root Cause:** The project's `.gitignore` contained a `platforms/` rule (intended for build artifacts) that inadvertently ignored the source `src/Aurora/Platforms` directory.
+    *   **Resolution:** Modified `.gitignore` to remove the broad exclusion and explicitly added the platform entry points (`App.xaml`, `Program.cs`, `Info.plist`, etc.) to the repository.
+3.  **Verification:** Validated that the CI pipeline now passes successfully (6.5m execution time).
+4.  **Branch Protection:** Configured GitHub repository settings to require the "build" status check to pass before merging.
+
+### Next Focus
+1.  Merge the `feature/D-02.1-ci-pipeline` PR.
+2.  Begin implementation of **Story D-03.1: Enforce Code Styles with Roslyn Analyzers**.
