@@ -5,8 +5,8 @@
     "id",
     "title",
     "snippet",
-    "imageUrl",
-    "articleUrl"
+    "image_url",
+    "article_url"
   ],
   "properties": {
     "id": {
@@ -18,10 +18,10 @@
     "snippet": {
       "type": "string"
     },
-    "imageUrl": {
+    "image_url": {
       "type": "string"
     },
-    "articleUrl": {
+    "article_url": {
       "type": "string"
     }
   }

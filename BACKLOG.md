@@ -88,12 +88,12 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 *This milestone focuses on establishing a comprehensive testing strategy, including architectural refactoring to enable isolated unit testing of services and shared logic.*
 
 ### Feature D-01: Service Testability Refactor
-- [ ] **Story D-01.1:** As a developer, I need to refactor core service logic into a dedicated class library so that it can be independently unit tested without MAUI framework dependencies.
-    - **AC 1:** A new `.NET Standard` or `net9.0` class library project (e.g., `Aurora.Core` or `Aurora.Client.Core`) is created.
-    - **AC 2:** All shared service logic, including `ContentService`, is moved into this new project.
-    - **AC 3:** `Aurora.csproj` (MAUI app) is updated to reference the new core project.
-    - **AC 4:** `Aurora.Core.csproj` references `Aurora.Shared.csproj`.
-    - **AC 5:** `Aurora.Tests` project is created and configured to reference `Aurora.Core.csproj`.
+- [x] **Story D-01.1:** As a developer, I need to refactor core service logic into a dedicated class library so that it can be independently unit tested without MAUI framework dependencies.
+    - **AC 1:** [x] A new `.NET 9.0` class library project (`Aurora.Client.Core`) is created.
+    - **AC 2:** [x] All shared service logic, including `ContentService`, is moved into this new project.
+    - **AC 3:** [x] `Aurora.csproj` (MAUI app) is updated to reference the new core project.
+    - **AC 4:** [x] `Aurora.Client.Core.csproj` references `Aurora.Shared.csproj`.
+    - **AC 5:** [x] `Aurora.Client.Core.Tests` project is created and configured to reference `Aurora.Client.Core.csproj`.
 - [ ] **Story D-01.2:** As a developer, I need to implement unit tests for `ContentService` so that its data retrieval and deserialization logic is verified.
     - **AC 1:** Tests use `Moq` to create a mock `HttpMessageHandler` for `HttpClient`.
     - **AC 2:** Tests provide a controlled JSON string matching the `ContentFeed` schema.

@@ -73,6 +73,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Aurora.Shared\Aurora.Shared.csproj" />
+	  <ProjectReference Include="..\Aurora.Client.Core\Aurora.Client.Core.csproj" />
 	</ItemGroup>
 
 </Project>
