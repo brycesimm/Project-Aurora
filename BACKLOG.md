@@ -73,7 +73,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 1:** A `ContentService` class is created in the `Aurora` project that implements `IContentService`.
     - **AC 2:** The `ContentService` uses `HttpClient` to call the `GetDailyContent` endpoint of the local Azure Function (`http://localhost:7071/api/GetDailyContent`).
     - **AC 3:** The service correctly deserializes the JSON response into a `ContentFeed` object.
-- [ ] **Story C-01.3:** As a developer, I need to register the content service with the MAUI application's dependency injection container so that it can be easily consumed by other parts of the application.
+- [x] **Story C-01.3:** As a developer, I need to register the content service with the MAUI application's dependency injection container so that it can be easily consumed by other parts of the application.
     - **AC 1:** The `ContentService` is registered as a singleton service for `IContentService` in `MauiProgram.cs`.
     - **AC 2:** The `HttpClient` required by the `ContentService` is also registered with the DI container.
 - [ ] **Story C-01.4:** As a user, I want to see the actual content fetched from the local API displayed in the app so that I can verify the data integration.
