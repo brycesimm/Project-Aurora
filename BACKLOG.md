@@ -94,8 +94,8 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 3:** [x] `Aurora.csproj` (MAUI app) is updated to reference the new core project.
     - **AC 4:** [x] `Aurora.Client.Core.csproj` references `Aurora.Shared.csproj`.
     - **AC 5:** [x] `Aurora.Client.Core.Tests` project is created and configured to reference `Aurora.Client.Core.csproj`.
-- [ ] **Story D-01.2:** As a developer, I need to implement unit tests for `ContentService` so that its data retrieval and deserialization logic is verified.
-    - **AC 1:** Tests use `Moq` to create a mock `HttpMessageHandler` for `HttpClient`.
-    - **AC 2:** Tests provide a controlled JSON string matching the `ContentFeed` schema.
-    - **AC 3:** Tests assert that `GetDailyContentAsync` correctly deserializes the mock JSON into a `ContentFeed` object, validating key properties.
-    - **AC 4:** All tests pass successfully.
+- [x] **Story D-01.2:** As a developer, I need to implement unit tests for `ContentService` so that its data retrieval and deserialization logic is verified.
+    - **AC 1:** [x] Tests use `Moq` to create a mock `HttpMessageHandler` for `HttpClient`.
+    - **AC 2:** [x] Tests provide a controlled JSON string matching the `ContentFeed` schema.
+    - **AC 3:** [x] Tests assert that `GetDailyContentAsync` correctly deserializes the mock JSON into a `ContentFeed` object, validating key properties.
+    - **AC 4:** [x] All tests pass successfully.

@@ -1,0 +1,46 @@
+{
+  "VibeOfTheDay": {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "title": "World's First Fully Sustainable Floating City Unveiled",
+    "snippet": "A groundbreaking architectural achievement, this city runs entirely on renewable energy and produces zero waste.",
+    "image_url": "https://picsum.photos/seed/city/800/600",
+    "article_url": "https://example.com/floating-city"
+  },
+  "DailyPicks": [
+    {
+      "id": "b1c2d3e4-f5g6-7890-1234-567890abcde0",
+      "title": "Scientists Discover Enzyme That Breaks Down Plastic in Hours",
+      "snippet": "A newly found microbial enzyme offers a revolutionary solution to the global plastic pollution crisis.",
+      "image_url": "https://picsum.photos/seed/science/800/600",
+      "article_url": "https://example.com/plastic-enzyme"
+    },
+    {
+      "id": "c1d2e3f4-g5h6-7890-1234-567890abcde1",
+      "title": "Global Literacy Rates Reach All-Time High",
+      "snippet": "UNESCO reports a significant increase in literacy, especially among young women in developing nations.",
+      "image_url": "https://picsum.photos/seed/books/800/600",
+      "article_url": "https://example.com/literacy-high"
+    },
+    {
+      "id": "d1e2f3g4-h5i6-7890-1234-567890abcde2",
+      "title": "Community Gardens Lead to 20% Reduction in Neighborhood Crime",
+      "snippet": "A multi-year study shows a direct correlation between urban green spaces and a decrease in local crime rates.",
+      "image_url": "https://picsum.photos/seed/garden/800/600",
+      "article_url": "https://example.com/garden-crime"
+    },
+    {
+      "id": "e1f2g3h4-i5j6-7890-1234-567890abcde3",
+      "title": "Teenager's Water Filtration Invention Wins International Acclaim",
+      "snippet": "A 17-year-old's simple, low-cost device can provide clean drinking water for hundreds of people.",
+      "image_url": "https://picsum.photos/seed/water/800/600",
+      "article_url": "https://example.com/water-filter"
+    },
+    {
+      "id": "f1g2h3i4-j5k6-7890-1234-567890abcde4",
+      "title": "Cross-Cultural Music Collaboration Tops Charts Worldwide",
+      "snippet": "Artists from three different continents have created a viral hit that celebrates unity and shared heritage.",
+      "image_url": "https://picsum.photos/seed/music/800/600",
+      "article_url": "https://example.com/music-hit"
+    }
+  ]
+}

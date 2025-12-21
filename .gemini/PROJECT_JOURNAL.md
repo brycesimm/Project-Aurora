@@ -399,3 +399,26 @@ Key accomplishments include:
 ### Next Focus
 1.  Implement **Story D-01.2: Unit tests for ContentService**.
 2.  Refine the testing strategy to include Mocking of `HttpMessageHandler` for `HttpClient` testing.
+
+---
+
+## 2025-12-21 (Session 3): Story D-01.2 Completion - ContentService Unit Tests
+
+### Summary
+This session successfully implemented **Story D-01.2: Unit tests for ContentService**, establishing a robust, data-driven testing pattern for the application's core logic.
+
+Key accomplishments include:
+1.  **Testing Environment Initialization:** Created the feature branch `feature/D-01.2-content-service-tests` and organized the `Aurora.Client.Core.Tests` project.
+2.  **Test Data Externalization:** Isolated test materials by creating a `TestData` directory within the test project and copying `sample.content.json` into it. Configured the project to ensure this data is deployed to the build output for reliable file access during test execution.
+3.  **ContentService Unit Testing:**
+    *   Renamed the default test scaffold to `ContentServiceTests.cs`.
+    *   Implemented a sophisticated mocking strategy using `Moq` and `HttpMessageHandler` to simulate network responses without actual HTTP overhead.
+    *   **Success Verification:** Developed a test case that confirms the `ContentService` correctly deserializes the "Vibe of the Day" and "Daily Picks" from a JSON payload, ensuring our snake_case to PascalCase mapping is robust.
+    *   **Error Handling:** Implemented a failure case to verify that the service correctly propagates `HttpRequestException` when encountering server errors (e.g., 404 Not Found).
+4.  **Verification:** Executed the test suite via `dotnet test`, with all tests passing successfully.
+5.  **Version Control:** All changes, including the file rename, new test data, and test implementations, have been staged and are ready for final commitment to the repository.
+
+### Next Focus
+1.  Commit the changes to `feature/D-01.2-content-service-tests`.
+2.  Merge the feature branch into `main`.
+3.  Continue with **Milestone D**, focusing on refining the testing strategy or moving to UI testing if appropriate.
