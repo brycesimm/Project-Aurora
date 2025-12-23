@@ -484,3 +484,22 @@ Key accomplishments include:
 ### Next Focus
 1.  Merge the `feature/D-03.1-code-style-enforcement` branch into `main`.
 2.  Begin planning for **Milestone E: Advanced Features & Polish**.
+
+## 2025-12-23 (Session 2): Milestone E Planning - The Interactive Shift
+
+### Summary
+A strategic review of the roadmap revealed that while Milestone D (Architecture/Testing) was successful, the application was missing the core interactive features originally planned for Milestone C (Reactions & Sharing).
+
+### Decisions & Rationale
+1.  **Define Milestone E: Core Interactions & Polish:**
+    - Dedicated to finishing the "User Loop" (Read -> React -> Share).
+    - Defers complex "Growth" features (Push Notifications) to a later milestone to focus on MVP utility.
+
+2.  **Adopt Azure Table Storage & Azurite:**
+    - **Requirement:** User reactions ("Uplifted Me") require persistence; static JSON is no longer sufficient.
+    - **Selection:** Azure Table Storage was chosen for its low cost, high performance for simple key-value data, and simplicity (NoSQL).
+    - **Tooling:** Azurite (local emulator) will be used for development, allowing a "offline-first" dev experience that mirrors the cloud environment.
+
+### Next Focus
+1.  Merge the `planning/milestone-e-definition` branch.
+2.  Begin **Story E-01.1: Data Model Evolution** to add reaction counts to the schema.

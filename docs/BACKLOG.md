@@ -112,3 +112,45 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 1:** A `Directory.Build.props` file is created at the solution root to enable native `.NET Analyzers` (AnalysisLevel: latest-all).
     - **AC 2:** A root `.editorconfig` file defines basic conventions (tabs, file-scoped namespaces).
     - **AC 3:** The solution builds successfully with **zero warnings**, ensuring a pristine codebase.
+
+---
+
+## Milestone E: Core Interactions & Polish
+*This milestone transforms the application from a read-only prototype into an interactive experience, completing the core "Uplift" loop and ensuring visual consistency.*
+
+### Feature E-01: User Reactions
+*This feature enables the anonymous "Uplift" reaction system, requiring backend state persistence.*
+
+- [ ] **Story E-01.1:** As a developer, I need to update the data model to track reaction counts so that the UI can display how many people have been uplifted.
+    - **AC 1:** `ContentItem.cs` includes a new integer property `UpliftCount`.
+    - **AC 2:** `content.schema.json` is updated via `SchemaBuilder` to include `uplift_count`.
+    - **AC 3:** `sample.content.json` is updated with mock values for testing.
+- [ ] **Story E-01.2:** As a developer, I need a backend storage service to persist reaction counts so that data survives app restarts.
+    - **AC 1:** `Aurora.Api` includes the `Azure.Data.Tables` package.
+    - **AC 2:** A `TableStorageService` is implemented to Handle `Get` and `Upsert` operations for reaction entities.
+    - **AC 3:** The service is configured to use Azurite (local emulator) for development.
+- [ ] **Story E-01.3:** As a developer, I need an API endpoint to handle reactions so that the client can submit user feedback.
+    - **AC 1:** A new HTTP POST endpoint `/api/articles/{id}/react` is created.
+    - **AC 2:** The endpoint increments the count in Table Storage and returns the new total.
+    - **AC 3:** The endpoint is anonymous (no user login required).
+- [ ] **Story E-01.4:** As a user, I want to click the "Uplift" button to register my positive sentiment and see the count increase.
+    - **AC 1:** The "Uplift" button in `MainPage` is wired to the `ContentService`.
+    - **AC 2:** Clicking the button immediately increments the count visually (optimistic update).
+    - **AC 3:** The app sends the request to the API in the background.
+    - **AC 4:** If the API fails, the count is rolled back or an error is logged (silent failure preferred for UX).
+
+### Feature E-02: Native Sharing
+*This feature leverages the device's native capabilities to share content externally.*
+
+- [ ] **Story E-02.1:** As a user, I want to share a story with friends so that I can spread positivity.
+    - **AC 1:** A "Share" icon button is added to the "Vibe of the Day" card and each "Daily Pick".
+    - **AC 2:** Clicking the button opens the native OS share sheet (iOS/Android).
+    - **AC 3:** The shared content includes the Story Title and the Article URL.
+
+### Feature E-03: Visual Polish
+*This feature ensures the application looks professional and consistent.*
+
+- [ ] **Story E-03.1:** As a user, I want a consistent visual experience so that the app feels polished and trustworthy.
+    - **AC 1:** Margins, padding, and corner radii are standardized via `Styles.xaml`.
+    - **AC 2:** Color palette is reviewed to ensure high contrast in both Light and Dark modes.
+    - **AC 3:** Font sizes are verified for readability on small screens.
