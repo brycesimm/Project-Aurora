@@ -52,9 +52,11 @@ public class ContentServiceTests
 		// Validating against the specific data in sample.content.json
 		Assert.Equal("a1b2c3d4-e5f6-7890-1234-567890abcdef", result.VibeOfTheDay.Id);
 		Assert.Equal("World's First Fully Sustainable Floating City Unveiled", result.VibeOfTheDay.Title);
+		Assert.Equal(1250, result.VibeOfTheDay.UpliftCount);
 
 		Assert.NotEmpty(result.DailyPicks);
 		Assert.Equal("b1c2d3e4-f5g6-7890-1234-567890abcde0", result.DailyPicks[0].Id);
+		Assert.Equal(845, result.DailyPicks[0].UpliftCount);
 	}
 
 	[Fact]
