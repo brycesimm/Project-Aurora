@@ -125,7 +125,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 1:** `ContentItem.cs` includes a new integer property `UpliftCount`.
     - **AC 2:** `content.schema.json` is updated via `SchemaBuilder` to include `uplift_count`.
     - **AC 3:** `sample.content.json` is updated with mock values for testing.
-- [ ] **Story E-01.2:** As a developer, I need a backend storage service to persist reaction counts so that data survives app restarts.
+- [x] **Story E-01.2:** As a developer, I need a backend storage service to persist reaction counts so that data survives app restarts.
     - **AC 1:** `Aurora.Api` includes the `Azure.Data.Tables` package.
     - **AC 2:** A `TableStorageService` is implemented to Handle `Get` and `Upsert` operations for reaction entities.
     - **AC 3:** The service is configured to use Azurite (local emulator) for development.

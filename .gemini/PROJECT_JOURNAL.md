@@ -516,5 +516,25 @@ Key accomplishments include:
 3.  **Documentation Update:** Marked the story as complete in the backlog and updated the project journal.
 
 ### Next Focus
-1.  Begin implementation of **Story E-01.2: Backend storage service**.
-2.  Configure Azurite for local development of Azure Table Storage.
+1.  Implement **Story E-01.3: API endpoint for reactions**.
+2.  Verify end-to-end functionality with the local Azurite emulator.
+
+---
+
+## 2025-12-23 (Session 4): Story E-01.2 Completion - Backend Storage Service
+
+### Summary
+This session focused on the implementation of **Story E-01.2: Backend storage service**, adding persistent state management to the API layer.
+
+Key accomplishments include:
+1.  **Service Implementation:** Created `ReactionStorageService` in `Aurora.Api` using `Azure.Data.Tables`.
+2.  **Dependency Injection:** Configured the service and `TableServiceClient` in `Program.cs`, targeting Azurite for local development.
+3.  **Testing Strategy:**
+    *   Created a new test project `Aurora.Api.Tests` (xUnit).
+    *   Implemented unit tests using `Moq` to verify retrieval and increment logic, including handling of missing entities (404).
+    *   Verified the CI pipeline will automatically execute these tests.
+4.  **Documentation:** Updated the backlog and journal to reflect the completion of this story.
+
+### Next Focus
+1.  Implement **Story E-01.3: API endpoint for reactions**.
+2.  Verify end-to-end functionality with the local Azurite emulator.
