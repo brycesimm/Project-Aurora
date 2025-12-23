@@ -119,6 +119,13 @@
   6. **(Completed)** Implement GitHub Actions CI pipeline for automated build and test verification.
   7. **(Completed)** Standardize code style using Roslyn Analyzers and `.editorconfig`.
   8. Prioritize follow-up items feeding into Phase 5 validation experiments.
+- **Milestone E (In Progress): Core Interactions & Polish**
+  1. **(Completed)** Data Model Evolution: Update schema and models to support reaction counts (`UpliftCount`).
+  2. **(Completed)** Backend Persistence: Implement Azure Table Storage service for tracking reactions.
+  3. API Endpoint: Create serverless endpoint to handle reaction submissions.
+  4. UI Integration: Connect "Uplift" button to backend and display live counts.
+  5. Native Sharing: Implement share sheet integration.
+  6. Visual Polish: Standardize styling and ensure accessibility compliance.
 
 ### Phase 5: Validation Strategy
 **Status:** In Progress
@@ -154,6 +161,7 @@
 | 2025-12-07 | Downgraded Swashbuckle.AspNetCore to 6.5.0 | Resolved `TypeLoadException` and `Microsoft.OpenApi` version conflict with `Microsoft.AspNetCore.OpenApi` 9.0.0 for .NET 9 compatibility. |
 | 2025-12-12 | Refactored schema generation to single project | Simplified and made robust the schema generation process, moving from a two-project system to an in-memory console application using `Newtonsoft.Json` and a custom converter for clean, minimal output. |
 | 2025-12-21 | Implemented GitHub Actions CI | Automates "Verify, Then Trust" mandate; requires successful build/test before merge. |
+| 2025-12-23 | Adopted Azure Table Storage & Azurite | Selected for low cost, simplicity, and ease of local offline-first development for reaction persistence. |
 
 ---
 
@@ -180,4 +188,4 @@
 
 ---
 
-**Last Updated:** 2025-12-21
+**Last Updated:** 2025-12-23

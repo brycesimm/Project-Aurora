@@ -25,9 +25,13 @@ Aurora follows a decoupled, multi-project architecture designed for maximum code
 4.  **`src/Aurora.Api` (Azure Functions):**
     - The serverless backend.
     - Serves content payloads via HTTP-triggered functions.
-    - Currently serves local mock data, prepared for cloud deployment.
+    - Manages data persistence for user interactions (Reactions) using Azure Table Storage.
 
-5.  **`src/SchemaBuilder` (Console App):**
+5.  **`src/Aurora.Api.Tests` (xUnit Project):**
+    - Dedicated unit test project for the API layer.
+    - Verifies service logic and storage interactions using mocked dependencies (`Moq`).
+
+6.  **`src/SchemaBuilder` (Console App):**
     - A specialized build-time tool.
     - Generates `content.schema.json` directly from the C# `ContentItem` models.
     - Ensures that our documentation and data contracts are always synchronized with the code.
@@ -39,6 +43,11 @@ To avoid the complexities of testing within a mobile framework, all core logic i
 - **Typed Clients:** We use the `HttpClient` Factory pattern in `MauiProgram.cs` to inject pre-configured clients into our services.
 - **Interface Segregation:** The UI depends on interfaces from `Aurora.Shared`, allowing for easy mocking during UI development or testing.
 
+### Cloud-Native Persistence (Local & Remote)
+For handling user reactions, we utilize **Azure Table Storage** for its performance and cost-effectiveness.
+- **Abstraction:** The `ReactionStorageService` encapsulates all database interactions, preventing leakage of storage concerns into the HTTP trigger layer.
+- **Local Development:** We use **Azurite**, an open-source emulator, to mirror the Azure Table Storage API locally. This ensures our "Cloud Native" code works offline without modification.
+
 ### Automated Schema Synchronization
 We treat our C# models as the "Single Source of Truth." 
 - The `SchemaBuilder` project is integrated into the build process.
@@ -49,9 +58,16 @@ To accommodate the unique networking environment of mobile emulators (specifical
 
 ## 📊 Data Flow
 
+### Content Delivery (Read)
 1.  **Build Time:** Models -> `SchemaBuilder` -> `content.schema.json`.
 2.  **Runtime:** 
     - `Aurora` (UI) requests data via `IContentService`.
     - `ContentService` (Core) fetches JSON from `Aurora.Api`.
     - JSON is deserialized using PascalCase-to-snake_case mapping.
     - UI updates via Data Binding.
+
+### User Interaction (Write - Upcoming)
+1.  User clicks "Uplift" button.
+2.  `ContentService` sends POST request to `Aurora.Api`.
+3.  `ReactionStorageService` interacts with Azure Table Storage (or Azurite) to increment counts.
+4.  Updated count is returned to Client and UI updates optimistically.

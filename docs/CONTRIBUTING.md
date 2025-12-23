@@ -9,13 +9,15 @@ Before you start, ensure you have the following installed:
 - **Visual Studio** (any version supporting **.NET 9 development**).
 - **Android Emulator** or a physical device for testing.
 - **Azure Functions Core Tools** (Optional, but required for local API changes).
+- **Azurite** (or Azure Storage Emulator) for local database emulation.
 
 ## 🚀 Local Development Workflow
 
 ### 1. Running the Backend
-The MAUI app fetches data from an Azure Function. For local development:
-1.  Navigate to `src/Aurora.Api`.
-2.  Run `func start` to host the mock API locally (usually at `http://localhost:7071`).
+The MAUI app fetches data from an Azure Function and persists reactions to Table Storage. For local development:
+1.  Start **Azurite** (e.g., via Visual Studio Service Dependencies or command line `azurite --silent`).
+2.  Navigate to `src/Aurora.Api`.
+3.  Run `func start` to host the mock API locally (usually at `http://localhost:7071`).
 
 ### 2. Running the Client
 1.  Open `Project-Aurora.sln` in Visual Studio.
@@ -42,8 +44,11 @@ We follow a strict **"Branching First"** and **"Verify, Then Trust"** mandate:
 
 ## 🧪 Testing
 
-New features should include unit tests in the `Aurora.Client.Core.Tests` project.
-To run tests locally:
+New features should include unit tests.
+- **Client Logic:** Add tests to `Aurora.Client.Core.Tests`.
+- **Backend/API Logic:** Add tests to `Aurora.Api.Tests`.
+
+To run all tests locally:
 ```bash
 dotnet test
 ```

@@ -1,4 +1,4 @@
-﻿# Project Aurora - Planning Framework
+# Project Aurora - Planning Framework
 
 **Project Codename:** Aurora
 **Mission:** A positive news application that provides refuge from negativity, fear-mongering, and divisive media
@@ -9,7 +9,7 @@
 ## Planning Phases
 
 ### Phase 1: Vision & Core Definition
-**Status:** In Progress (initial answers captured)
+**Status:** Completed (as of 2025-11-23)
 
 #### Questions to Answer:
 - [x] What specific problem are we solving...
@@ -33,7 +33,7 @@
 ---
 
 ### Phase 2: Feature Prioritization
-**Status:** In Progress
+**Status:** Completed (as of 2025-11-23)
 
 #### Questions to Answer:
 - [x] What is the absolute minimum feature set that delivers value...
@@ -51,7 +51,7 @@
 - Push notifications are "nice-to-have" gated on available weekends; sharing is "must-have" because it amplifies reach without backend overhead.
 
 ### Phase 3: Technical Foundation Research
-**Status:** In Progress
+**Status:** Completed (as of 2025-11-23)
 
 #### Questions to Answer:
 - [x] .NET MAUI vs Flutter: Evaluation criteria
@@ -99,33 +99,26 @@
   - POC ready by Month 5, leaving Month 6 for sentiment interviews and Phase 2 backlog shaping.
 
 #### Roadmap:
-- **Milestone A (Weeks 1-4): MAUI onboarding + shell with mock data**
-  1. Install VS 2022 “.NET Multi-platform App UI” workload, run `dotnet workload install maui`, and verify `dotnet new maui` builds for `net8.0-android`.
-  2. Complete Microsoft Learn’s “Create a .NET MAUI app” tutorial series (search “Build your first app with .NET MAUI” on learn.microsoft.com).
-  3. Build throwaway samples (Shell navigation, CollectionView, layouts/styles) via `dotnet new maui` templates in a scratch folder.
-  4. Create the real Aurora shell: home page showing 5-10 mock Daily Picks plus a Vibe-of-the-Day hero card with a placeholder reaction button.
-  5. Log emulator/signing/tooling hiccups in `.codex/PROJECT_JOURNAL.md`.
-- **Milestone B (Weeks 5-8): Backend/API + curation workflow**
-  1. Pick Azure as hosting platform; create resource group, Azure Functions app (C# isolated), and Azure Storage account.
-  2. Define JSON schema for Daily Picks + Vibe card (fields: title, snippet, source URL, media type, publish date, tags, attribution) and store sample payloads in Blob Storage or Azure Table.
-  3. Implement HTTP-triggered Azure Function `GET /daily` returning the curated payload from storage, with caching headers for the app.
-  4. Document manual curation workflow: source list (RSS/newsletters), daily selection checklist, steps to update the JSON (could be via VS Code + upload script).
-  5. Add a simple CLI or PowerShell script to push new curated JSON to Blob Storage, ensuring updates take <10 minutes per day.
-  6. Record backend setup steps, connection strings, and deployment commands in `.codex/PROJECT_JOURNAL.md`.
-- **Milestone C (Weeks 9-14): Live data integration + reactions/sharing/push**
+- **Milestone A (Completed as of 2025-12-07): MAUI onboarding + shell with mock data**
+  - All stories (A-01.1 to A-01.4) related to the initial application shell, mock data display, and UI controls have been implemented, verified, and merged into the `main` branch. This milestone established the foundational UI of the MAUI application.
+- **Milestone B (In Progress - Updated 2025-12-12): Backend/API + curation workflow**
+  - The strategy and initial stories for Milestone B have been collaboratively defined and documented in `BACKLOG.md`. The focus is on creating a local API prototype using Azure Functions to serve a structured JSON payload, decoupling the front-end from the data source. **Story B-02.1 (Define the Content Schema)** has been completed, as well as **Story B-01.2 (Local, HTTP-triggered function for mock content)**. The automation for schema export has been significantly refactored and simplified into a single console application (`SchemaBuilder`) as part of **Story B-02.2**, and integrated into the build process (**Story B-02.3**).
+- **Milestone C (Completed as of 2025-12-21): Live data integration + reactions/sharing/push**
   1. Add typed data services in the MAUI app (e.g., `IDailyFeedService`) using `HttpClient` + Polly retry policy to fetch the Azure Function endpoint.
   2. Implement loading/error states in the home screen; fall back to cached JSON if offline.
   3. Build anonymous reaction endpoint (`POST /react`) storing aggregate counts in Azure Table Storage; wire the MAUI button to call it and display totals (read-only).
   4. Integrate native sharing via `Share.Default.RequestAsync`, formatting a message with Vibe title + link.
   5. Configure Firebase Cloud Messaging for Android: create Firebase project, upload google-services.json, register device tokens, and create a server-side push trigger (can reuse Azure Function with HTTP POST) to send the daily notification.
   6. Smoke-test the full loop end-to-end: update JSON, trigger notification, confirm app displays new data and reactions persist.
-- **Milestone D (Weeks 15-20): Polish, testing, beta feedback**
+- **Milestone D (In Progress): Robust Testing Framework & Service Testability**
   1. Apply consistent theming (typography, color palette) and ensure accessibility basics (font scaling, contrast checks).
   2. Test on multiple device sizes/emulators; document layout issues and fixes.
   3. Instrument basic telemetry (App Center or Azure Insights) for crash/error tracking.
   4. Recruit a small beta circle; prepare test script (install instructions, feedback form) and capture sentiment in PROJECT_JOURNAL.
   5. Compile store-readiness checklist (privacy policy draft, screenshot requirements, push notification disclosures) even if launch is later.
-  6. Prioritize follow-up items feeding into Phase 5 validation experiments.
+  6. **(Completed)** Implement GitHub Actions CI pipeline for automated build and test verification.
+  7. **(Completed)** Standardize code style using Roslyn Analyzers and `.editorconfig`.
+  8. Prioritize follow-up items feeding into Phase 5 validation experiments.
 
 ### Phase 5: Validation Strategy
 **Status:** In Progress
@@ -158,6 +151,9 @@
 | 2025-11-23 | MVP scope defined (daily curated list, Vibe of the Day, anonymous reactions, sharing) | Lean feature set maximizes value vs effort |
 | 2025-11-23 | Selected .NET MAUI + Azure Functions stack | Aligns with developer expertise while minimizing ops overhead |
 | 2025-11-23 | Validation focuses on qualitative beta feedback and manual curation guardrails | Keeps success criteria realistic for hand-curated MVP |
+| 2025-12-07 | Downgraded Swashbuckle.AspNetCore to 6.5.0 | Resolved `TypeLoadException` and `Microsoft.OpenApi` version conflict with `Microsoft.AspNetCore.OpenApi` 9.0.0 for .NET 9 compatibility. |
+| 2025-12-12 | Refactored schema generation to single project | Simplified and made robust the schema generation process, moving from a two-project system to an in-memory console application using `Newtonsoft.Json` and a custom converter for clean, minimal output. |
+| 2025-12-21 | Implemented GitHub Actions CI | Automates "Verify, Then Trust" mandate; requires successful build/test before merge. |
 
 ---
 
@@ -184,4 +180,4 @@
 
 ---
 
-**Last Updated:** 2025-11-23
+**Last Updated:** 2025-12-23
