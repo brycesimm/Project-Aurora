@@ -36,4 +36,10 @@ public class ContentItem
 	/// </summary>
 	[JsonPropertyName("article_url")]
 	public required string ArticleUrl { get; set; }
+
+	/// <summary>
+	/// Gets or sets the number of users who found this content uplifting.
+	/// </summary>
+	[JsonPropertyName("uplift_count")]
+	public int UpliftCount { get; set; }
 }

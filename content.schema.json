@@ -6,7 +6,8 @@
     "title",
     "snippet",
     "image_url",
-    "article_url"
+    "article_url",
+    "uplift_count"
   ],
   "properties": {
     "id": {
@@ -23,6 +24,9 @@
     },
     "article_url": {
       "type": "string"
+    },
+    "uplift_count": {
+      "type": "integer"
     }
   }
 }
