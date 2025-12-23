@@ -117,7 +117,7 @@
   4. Recruit a small beta circle; prepare test script (install instructions, feedback form) and capture sentiment in PROJECT_JOURNAL.
   5. Compile store-readiness checklist (privacy policy draft, screenshot requirements, push notification disclosures) even if launch is later.
   6. **(Completed)** Implement GitHub Actions CI pipeline for automated build and test verification.
-  7. **(New)** Standardize code style using Roslyn Analyzers and `.editorconfig`.
+  7. **(Completed)** Standardize code style using Roslyn Analyzers and `.editorconfig`.
   8. Prioritize follow-up items feeding into Phase 5 validation experiments.
 
 ### Phase 5: Validation Strategy

@@ -50,6 +50,20 @@ dotnet test
 
 ## 📐 Coding Standards
 
-- **File-Scoped Namespaces:** Use `namespace MyNamespace;` at the top of the file.
-- **Primary Constructors:** Prefer C# 12 primary constructors for Dependency Injection where appropriate.
-- **Analyzers:** We use Roslyn Analyzers to enforce code style. Ensure your code is free of warnings before submitting a PR.
+Project Aurora enforces strict coding standards to maintain a high-quality codebase. We use **native .NET 9 Analyzers** configured via a root `.editorconfig` file.
+
+### Core Rules
+1.  **Zero Warnings Policy:** The solution must build with **0 warnings**. Any new warning is considered a blocker and must be resolved before merging.
+2.  **Indentation:** We use **Tabs** (set to 4-character width) for indentation.
+3.  **Namespaces:** Use **File-Scoped Namespaces** (`namespace Aurora.Shared;`) to reduce nesting depth.
+4.  **Documentation:** All public members (classes, methods, properties) must have XML documentation (`/// summary`).
+5.  **Using Directives:** Place `using` directives **outside** the namespace declaration at the top of the file.
+
+### Quality & Analysis
+- **Implicit Analysis:** We use the `<AnalysisLevel>latest-all</AnalysisLevel>` property to enable the full suite of Microsoft's code quality rules.
+- **Auto-Formatting:** You can (and should) run `dotnet format` locally to automatically fix whitespace and style violations before pushing.
+
+### Best Practices
+- **Primary Constructors:** Prefer C# 12 primary constructors for Dependency Injection classes.
+- **Async/Await:** Always use `async`/`await` for I/O operations. In library code (Core/Shared), use `.ConfigureAwait(false)` to prevent deadlocks.
+- **DTOs:** Data Transfer Objects (in `Shared.Models`) should favor initialization-friendly properties but avoid complex logic.

@@ -11,7 +11,7 @@ Console.WriteLine("Starting schema generation...");
 var services = new ServiceCollection();
 services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Project Aurora Schema", Version = "v1" });
+	options.SwaggerDoc("v1", new OpenApiInfo { Title = "Project Aurora Schema", Version = "v1" });
 });
 
 var serviceProvider = services.BuildServiceProvider();
@@ -27,9 +27,9 @@ schema.Required = new HashSet<string>(schema.Properties.Keys); // Manually mark 
 // 3. Serialize the generated schema to a JSON string using Newtonsoft.Json
 var settings = new JsonSerializerSettings
 {
-    Formatting = Formatting.Indented,
-    NullValueHandling = NullValueHandling.Ignore,
-    Converters = { new OpenApiSchemaJsonConverter() }
+	Formatting = Formatting.Indented,
+	NullValueHandling = NullValueHandling.Ignore,
+	Converters = { new OpenApiSchemaJsonConverter() }
 };
 
 var schemaJson = JsonConvert.SerializeObject(schema, settings);
@@ -38,8 +38,8 @@ var schemaJson = JsonConvert.SerializeObject(schema, settings);
 var solutionRoot = FindSolutionRoot(AppContext.BaseDirectory);
 if (solutionRoot == null)
 {
-    Console.Error.WriteLine("Error: Could not find the solution root directory (containing Project-Aurora.sln).");
-    return 1;
+	Console.Error.WriteLine("Error: Could not find the solution root directory (containing Project-Aurora.sln).");
+	return 1;
 }
 
 var outputPath = Path.Combine(solutionRoot, "content.schema.json");
@@ -51,10 +51,10 @@ return 0;
 
 static string? FindSolutionRoot(string startPath)
 {
-    var currentPath = new DirectoryInfo(startPath);
-    while (currentPath != null && !currentPath.GetFiles("Project-Aurora.sln").Any())
-    {
-        currentPath = currentPath.Parent;
-    }
-    return currentPath?.FullName;
+	var currentPath = new DirectoryInfo(startPath);
+	while (currentPath != null && currentPath.GetFiles("Project-Aurora.sln").Length == 0)
+	{
+		currentPath = currentPath.Parent;
+	}
+	return currentPath?.FullName;
 }
