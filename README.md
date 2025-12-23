@@ -53,8 +53,8 @@ Aurora maintains a "Verify, Then Trust" policy.
 
 ## 📚 Documentation
 
-- [**Architecture:**](ARCHITECTURE.md) Learn about the system design, project structure, and key patterns.
-- [**Contributing:**](CONTRIBUTING.md) Development workflow, prerequisites, and coding standards.
+- [**Architecture:**](docs/ARCHITECTURE.md) Learn about the system design, project structure, and key patterns.
+- [**Contributing:**](docs/CONTRIBUTING.md) Development workflow, prerequisites, and coding standards.
 
 ## ⚖️ Legal & Copyright
 
