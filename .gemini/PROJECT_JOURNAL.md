@@ -501,5 +501,20 @@ A strategic review of the roadmap revealed that while Milestone D (Architecture/
     - **Tooling:** Azurite (local emulator) will be used for development, allowing a "offline-first" dev experience that mirrors the cloud environment.
 
 ### Next Focus
-1.  Merge the `planning/milestone-e-definition` branch.
-2.  Begin **Story E-01.1: Data Model Evolution** to add reaction counts to the schema.
+1.  Implement **Story E-01.2: Backend storage service** using Azure Table Storage and Azurite.
+
+---
+
+## 2025-12-23 (Session 3): Story E-01.1 Completion - Data Model Evolution
+
+### Summary
+This session confirmed the completion of **Story E-01.1: Data Model Evolution**, which was implemented to support the upcoming reaction system.
+
+Key accomplishments include:
+1.  **Model Update:** Added the `UpliftCount` property to the `ContentItem` class in `Aurora.Shared`.
+2.  **Schema & Data Sync:** Updated `content.schema.json` and `sample.content.json` to include the new `uplift_count` field, ensuring the API and Client remain in sync.
+3.  **Documentation Update:** Marked the story as complete in the backlog and updated the project journal.
+
+### Next Focus
+1.  Begin implementation of **Story E-01.2: Backend storage service**.
+2.  Configure Azurite for local development of Azure Table Storage.
