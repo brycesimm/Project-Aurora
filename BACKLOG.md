@@ -108,7 +108,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 4:** The workflow completes successfully on the current codebase.
 
 ### Feature D-03: Code Style Standardization
-- [ ] **Story D-03.1:** As a developer, I want consistent code style enforced automatically so that the codebase remains uniform without manual policing.
-    - **AC 1:** A `Directory.Build.props` file is created at the solution root to inject `StyleCop.Analyzers` (or similar) into all projects.
-    - **AC 2:** A root `.editorconfig` file is verified or created to define basic conventions (e.g., file-scoped namespaces).
-    - **AC 3:** The solution builds successfully, confirming that the new analyzers are active and not blocking compilation.
+- [x] **Story D-03.1:** As a developer, I want consistent code style enforced automatically so that the codebase remains uniform without manual policing.
+    - **AC 1:** A `Directory.Build.props` file is created at the solution root to enable native `.NET Analyzers` (AnalysisLevel: latest-all).
+    - **AC 2:** A root `.editorconfig` file defines basic conventions (tabs, file-scoped namespaces).
+    - **AC 3:** The solution builds successfully with **zero warnings**, ensuring a pristine codebase.

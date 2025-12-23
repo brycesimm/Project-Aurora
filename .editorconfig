@@ -1,0 +1,59 @@
+root = true
+
+[*]
+indent_style = tab
+indent_size = 4
+tab_width = 4
+insert_final_newline = true
+charset = utf-8
+trim_trailing_whitespace = true
+
+[*.cs]
+# C# Coding Conventions
+dotnet_diagnostic.IDE0055.severity = warning # Fix formatting
+
+# Formatting - Indentation
+csharp_indent_labels = one_less_than_current
+csharp_using_directive_placement = outside_namespace:warning
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_style_namespace_declarations = file_scoped:warning
+
+# Language Rules
+csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+csharp_style_expression_bodied_constructors = when_on_single_line:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_expression_bodied_accessors = true:suggestion
+
+# Naming Conventions
+dotnet_naming_rule.interface_should_be_begun_with_i.severity = suggestion
+dotnet_naming_rule.interface_should_be_begun_with_i.symbols = interface
+dotnet_naming_rule.interface_should_be_begun_with_i.style = begun_with_i
+
+dotnet_naming_symbols.interface.applicable_kinds = interface
+dotnet_naming_symbols.interface.applicable_accessibilities = *
+
+dotnet_naming_style.begun_with_i.required_prefix = I
+dotnet_naming_style.begun_with_i.capitalization = pascal_case
+
+# Documentation
+dotnet_diagnostic.CS1591.severity = warning
+
+# CA Rules (Quality) - Suppressions
+dotnet_diagnostic.CA1056.severity = suggestion # URI properties (Optional)
+dotnet_diagnostic.CA1716.severity = none # Shared namespace conflict
+dotnet_diagnostic.CA1515.severity = none # Public types internal
+dotnet_diagnostic.CA1711.severity = none # Delegate suffix
+dotnet_diagnostic.CA1724.severity = none # App namespace conflict
+dotnet_diagnostic.CA2227.severity = none # Collection properties should be read only (DTOs)
+dotnet_diagnostic.CA1002.severity = none # Do not expose generic lists (DTOs)
+dotnet_diagnostic.CA1848.severity = none # Use LoggerMessage delegates (Premature optimization)
+dotnet_diagnostic.CA1303.severity = none # Do not pass literals as localized parameters
+dotnet_diagnostic.ASP0000.severity = none # Do not call BuildServiceProvider
+dotnet_diagnostic.CA5392.severity = none # DefaultDllImportSearchPaths
+
+# Test Project Suppressions
+[**/*Tests/*.cs]
+dotnet_diagnostic.CA1707.severity = none # Underscores in test names are standard
+dotnet_diagnostic.CA2000.severity = none # Dispose objects before losing scope (Less critical in tests)
+dotnet_diagnostic.CA1001.severity = none # Types owning disposable fields should be disposable (Less critical in tests)
+dotnet_diagnostic.xUnit1030.severity = none # Do not call ConfigureAwait (We want to control this)

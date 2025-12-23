@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Aurora.Client.Core.Services;
@@ -20,33 +20,33 @@ public static class MauiProgram
 				fonts.AddFont("materialdesignicons-webfont.ttf", "MDI");
 			});
 
-        var assembly = Assembly.GetExecutingAssembly();
-        using var stream = assembly.GetManifestResourceStream("Aurora.appsettings.json");
+		var assembly = Assembly.GetExecutingAssembly();
+		using var stream = assembly.GetManifestResourceStream("Aurora.appsettings.json");
 
-        if (stream != null)
-        {
-            var config = new ConfigurationBuilder()
-                .AddJsonStream(stream)
-                .Build();
+		if (stream != null)
+		{
+			var config = new ConfigurationBuilder()
+				.AddJsonStream(stream)
+				.Build();
 
-            builder.Configuration.AddConfiguration(config);
-        }
+			builder.Configuration.AddConfiguration(config);
+		}
 
-        builder.Services.AddHttpClient<IContentService, ContentService>(client =>
-        {
-            var baseUrl = builder.Configuration["ApiSettings:BaseUrl"];
-            
-            // Android Emulator localhost fix
-            if (DeviceInfo.Platform == DevicePlatform.Android && baseUrl != null && baseUrl.Contains("localhost"))
-            {
-                baseUrl = baseUrl.Replace("localhost", "10.0.2.2");
-            }
+		builder.Services.AddHttpClient<IContentService, ContentService>(client =>
+		{
+			var baseUrl = builder.Configuration["ApiSettings:BaseUrl"];
 
-            if (!string.IsNullOrEmpty(baseUrl))
-            {
-                client.BaseAddress = new Uri(baseUrl);
-            }
-        });
+			// Android Emulator localhost fix
+			if (DeviceInfo.Platform == DevicePlatform.Android && baseUrl != null && baseUrl.Contains("localhost", StringComparison.OrdinalIgnoreCase))
+			{
+				baseUrl = baseUrl.Replace("localhost", "10.0.2.2", StringComparison.OrdinalIgnoreCase);
+			}
+
+			if (!string.IsNullOrEmpty(baseUrl))
+			{
+				client.BaseAddress = new Uri(baseUrl);
+			}
+		});
 
 #if DEBUG
 		builder.Logging.AddDebug();
