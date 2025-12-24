@@ -75,4 +75,4 @@ To ensure a responsive and "live" user experience, especially during interactive
 1.  User clicks "Uplift" button.
 2.  `ContentService` sends POST request to `Aurora.Api` (`/api/articles/{id}/react`).
 3.  `ReactionStorageService` interacts with Azure Table Storage (or Azurite) to increment counts.
-4.  Updated count is returned to Client and UI updates optimistically. (Note: Client-side integration pending).
+4.  Updated count is returned to Client and UI updates optimistically.
