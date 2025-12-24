@@ -66,8 +66,8 @@ To accommodate the unique networking environment of mobile emulators (specifical
     - JSON is deserialized using PascalCase-to-snake_case mapping.
     - UI updates via Data Binding.
 
-### User Interaction (Write - Upcoming)
+### User Interaction (Write)
 1.  User clicks "Uplift" button.
-2.  `ContentService` sends POST request to `Aurora.Api`.
+2.  `ContentService` sends POST request to `Aurora.Api` (`/api/articles/{id}/react`).
 3.  `ReactionStorageService` interacts with Azure Table Storage (or Azurite) to increment counts.
-4.  Updated count is returned to Client and UI updates optimistically.
+4.  Updated count is returned to Client and UI updates optimistically. (Note: Client-side integration pending).

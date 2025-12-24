@@ -129,7 +129,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 1:** `Aurora.Api` includes the `Azure.Data.Tables` package.
     - **AC 2:** A `TableStorageService` is implemented to Handle `Get` and `Upsert` operations for reaction entities.
     - **AC 3:** The service is configured to use Azurite (local emulator) for development.
-- [ ] **Story E-01.3:** As a developer, I need an API endpoint to handle reactions so that the client can submit user feedback.
+- [x] **Story E-01.3:** As a developer, I need an API endpoint to handle reactions so that the client can submit user feedback.
     - **AC 1:** A new HTTP POST endpoint `/api/articles/{id}/react` is created.
     - **AC 2:** The endpoint increments the count in Table Storage and returns the new total.
     - **AC 3:** The endpoint is anonymous (no user login required).

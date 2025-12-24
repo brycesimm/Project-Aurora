@@ -122,7 +122,7 @@
 - **Milestone E (In Progress): Core Interactions & Polish**
   1. **(Completed)** Data Model Evolution: Update schema and models to support reaction counts (`UpliftCount`).
   2. **(Completed)** Backend Persistence: Implement Azure Table Storage service for tracking reactions.
-  3. API Endpoint: Create serverless endpoint to handle reaction submissions.
+  3. **(Completed)** API Endpoint: Create serverless endpoint to handle reaction submissions.
   4. UI Integration: Connect "Uplift" button to backend and display live counts.
   5. Native Sharing: Implement share sheet integration.
   6. Visual Polish: Standardize styling and ensure accessibility compliance.
@@ -188,4 +188,4 @@
 
 ---
 
-**Last Updated:** 2025-12-23
+**Last Updated:** 2025-12-24

@@ -55,3 +55,6 @@ obj/Debug/net6.0-*/resizetizer/
 
 # BinSkim
 *.binskim
+
+# Local Storage
+.azurite/
