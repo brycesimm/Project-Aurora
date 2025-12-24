@@ -71,4 +71,5 @@ Project Aurora enforces strict coding standards to maintain a high-quality codeb
 ### Best Practices
 - **Primary Constructors:** Prefer C# 12 primary constructors for Dependency Injection classes.
 - **Async/Await:** Always use `async`/`await` for I/O operations. In library code (Core/Shared), use `.ConfigureAwait(false)` to prevent deadlocks.
+- **Reactive Models:** Any data models in `Aurora.Shared` that are bound to the UI must implement `INotifyPropertyChanged` to ensure reliable visual updates during data mutations.
 - **DTOs:** Data Transfer Objects (in `Shared.Models`) should favor initialization-friendly properties but avoid complex logic.
