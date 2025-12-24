@@ -28,7 +28,7 @@ public class ContentServiceTests
 	public async Task GetDailyContentAsync_ReturnsPopulatedFeed_OnSuccess()
 	{
 		// Arrange
-		var jsonResponse = await File.ReadAllTextAsync(Path.Combine("TestData", "sample.content.json"));
+		var jsonResponse = await File.ReadAllTextAsync(Path.Combine("TestData", "sample.content.json")).ConfigureAwait(false);
 
 		_handlerMock
 			.Protected()
@@ -44,7 +44,7 @@ public class ContentServiceTests
 			});
 
 		// Act
-		var result = await _service.GetDailyContentAsync();
+		var result = await _service.GetDailyContentAsync().ConfigureAwait(false);
 
 		// Assert
 		Assert.NotNull(result);
@@ -76,6 +76,35 @@ public class ContentServiceTests
 			});
 
 		// Act & Assert
-		await Assert.ThrowsAsync<HttpRequestException>(() => _service.GetDailyContentAsync());
+		await Assert.ThrowsAsync<HttpRequestException>(() => _service.GetDailyContentAsync()).ConfigureAwait(false);
+	}
+
+	[Fact]
+	public async Task ReactToContentAsync_ReturnsNewCount_OnSuccess()
+	{
+		// Arrange
+		var contentId = "test-id";
+		var expectedCount = 42;
+
+		_handlerMock
+			.Protected()
+			.Setup<Task<HttpResponseMessage>>(
+				"SendAsync",
+				ItExpr.Is<HttpRequestMessage>(req =>
+					req.Method == HttpMethod.Post &&
+					req.RequestUri != null &&
+					req.RequestUri.ToString().EndsWith($"articles/{contentId}/react")),
+				ItExpr.IsAny<CancellationToken>()
+			)
+			.ReturnsAsync(new HttpResponseMessage
+			{
+				StatusCode = HttpStatusCode.OK,
+				Content = JsonContent.Create(new { uplift_count = expectedCount })
+			});
+
+		// Act
+		var result = await _service.ReactToContentAsync(contentId).ConfigureAwait(false);
+		// Assert
+		Assert.Equal(expectedCount, result);
 	}
 }

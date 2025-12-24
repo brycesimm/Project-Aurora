@@ -13,4 +13,11 @@ public interface IContentService
 	/// </summary>
 	/// <returns>A task representing the asynchronous operation, containing the <see cref="ContentFeed"/>.</returns>
 	Task<ContentFeed> GetDailyContentAsync();
+
+	/// <summary>
+	/// Asynchronously submits a positive reaction for a specific content item.
+	/// </summary>
+	/// <param name="contentId">The unique identifier of the content item.</param>
+	/// <returns>A task representing the asynchronous operation, containing the updated reaction count.</returns>
+	Task<int> ReactToContentAsync(string contentId);
 }

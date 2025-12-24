@@ -26,4 +26,18 @@ public class ContentService : IContentService
 		var contentFeed = await _httpClient.GetFromJsonAsync<ContentFeed>("GetDailyContent", options).ConfigureAwait(false);
 		return contentFeed ?? new ContentFeed();
 	}
+
+	public async Task<int> ReactToContentAsync(string contentId)
+	{
+		var response = await _httpClient.PostAsync(new Uri($"articles/{contentId}/react", UriKind.Relative), null).ConfigureAwait(false);
+		response.EnsureSuccessStatusCode();
+
+		var result = await response.Content.ReadFromJsonAsync<ReactionResponse>().ConfigureAwait(false);
+		return result?.UpliftCount ?? 0;
+	}
+
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated via JSON deserialization")]
+	private sealed record ReactionResponse(
+		[property: System.Text.Json.Serialization.JsonPropertyName("uplift_count")] int UpliftCount
+	);
 }

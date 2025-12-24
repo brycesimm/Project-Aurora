@@ -69,11 +69,49 @@ public partial class MainPage : ContentPage
 	}
 
 	/// <summary>
-	/// Handles the click event of the placeholder reaction button.
-	/// In this initial implementation (Story A-01.4), it displays a simple alert.
+	/// Handles the click event of the reaction button (both Vibe and Daily Picks).
 	/// </summary>
-	private void OnReactionButtonClicked(object sender, EventArgs e)
+	private async void OnReactionButtonClicked(object sender, EventArgs e)
 	{
-		DisplayAlert("Feedback", "Thank you for your feedback!", "OK");
+		if (sender is not Button button)
+		{
+			return;
+		}
+
+		// Determine which item was clicked
+		ContentItem? item = null;
+
+		if (button == ReactionButton)
+		{
+			// Vibe of the Day button (bound to Page context)
+			item = VibeOfTheDay;
+		}
+		else
+		{
+			// Daily Picks button (bound to Item context)
+			item = button.BindingContext as ContentItem;
+		}
+
+		if (item != null)
+		{
+			// Optimistic Update - Now triggers UI automatically via INotifyPropertyChanged
+			item.UpliftCount++;
+
+			try
+			{
+				var newCount = await _contentService.ReactToContentAsync(item.Id).ConfigureAwait(false);
+
+				// Confirm count from server (in case of race conditions)
+				item.UpliftCount = newCount;
+			}
+#pragma warning disable CA1031 // Do not catch general exception types
+			catch (Exception ex)
+			{
+				// Rollback on failure
+				item.UpliftCount--;
+				System.Diagnostics.Debug.WriteLine($"Reaction failed: {ex.Message}");
+			}
+#pragma warning restore CA1031 // Do not catch general exception types
+		}
 	}
 }
