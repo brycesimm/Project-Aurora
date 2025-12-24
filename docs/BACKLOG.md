@@ -147,10 +147,19 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 2:** Clicking the button opens the native OS share sheet (iOS/Android).
     - **AC 3:** The shared content includes the Story Title and the Article URL.
 
-### Feature E-03: Visual Polish
-*This feature ensures the application looks professional and consistent.*
+### Feature E-03: Visual Design System
+*This feature covers the definition and implementation of a cohesive visual language.*
 
-- [ ] **Story E-03.1:** As a user, I want a consistent visual experience so that the app feels polished and trustworthy.
-    - **AC 1:** Margins, padding, and corner radii are standardized via `Styles.xaml`.
-    - **AC 2:** Color palette is reviewed to ensure high contrast in both Light and Dark modes.
-    - **AC 3:** Font sizes are verified for readability on small screens.
+- [x] **Story E-03.1: Define Design System & Palette**
+    - **AC 1:** `docs/DESIGN_SYSTEM.md` is populated with a finalized color palette (Primary, Background, Surface) for Light and Dark modes.
+    - **AC 2:** Typography scale (Headings, Body, Caption) is defined and documented.
+    - **AC 3:** Corner radius and spacing standards are defined.
+- [ ] **Story E-03.2: Implement Color & Theme Resources**
+    - **AC 1:** `Colors.xaml` is updated with the new palette, replacing default MAUI colors.
+    - **AC 2:** Semantic resource keys (e.g., `PrimaryBrush`, `SurfaceBrush`) are created to abstract raw hex values.
+    - **AC 3:** `Styles.xaml` is updated to apply these resources globally to common controls.
+- [ ] **Story E-03.3: Apply Design System to Main Page**
+    - **AC 1:** The "Vibe of the Day" card uses the new Surface color, corner radius, and shadow elevation.
+    - **AC 2:** Typography styles are applied to all Labels (Hero Title vs. Body Text).
+    - **AC 3:** Buttons (Uplift, Share) use the new primary/secondary styling.
+    - **AC 4:** Spacing (Margins/Padding) is audited to match the defined grid (e.g., 8pt multiples).

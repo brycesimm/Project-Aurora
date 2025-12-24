@@ -126,6 +126,9 @@
   4. UI Integration: Connect "Uplift" button to backend and display live counts.
   5. **(Completed)** Native Sharing: Implement share sheet integration.
   6. Visual Polish: Standardize styling and ensure accessibility compliance.
+      - **(Completed)** Define Design System & Palette (Morning Mist).
+      - Implement Color & Theme Resources.
+      - Apply Design System to Main Page.
 
 ### Phase 5: Validation Strategy
 **Status:** In Progress
@@ -162,6 +165,7 @@
 | 2025-12-12 | Refactored schema generation to single project | Simplified and made robust the schema generation process, moving from a two-project system to an in-memory console application using `Newtonsoft.Json` and a custom converter for clean, minimal output. |
 | 2025-12-21 | Implemented GitHub Actions CI | Automates "Verify, Then Trust" mandate; requires successful build/test before merge. |
 | 2025-12-23 | Adopted Azure Table Storage & Azurite | Selected for low cost, simplicity, and ease of local offline-first development for reaction persistence. |
+| 2025-12-24 | Established "Morning Mist" Design System | Adopted a pastel, rounded, "Cozy & Warm" aesthetic (Nunito font, soft corners) to align with the "Refuge from Negativity" mission. |
 
 ---
 
