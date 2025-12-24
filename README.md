@@ -54,6 +54,7 @@ Aurora maintains a "Verify, Then Trust" policy.
 ## 📚 Documentation
 
 - [**Architecture:**](docs/ARCHITECTURE.md) Learn about the system design, project structure, and key patterns.
+- [**Design System:**](docs/DESIGN_SYSTEM.md) Explore the "Morning Mist" visual language, color palette, and typography standards.
 - [**Contributing:**](docs/CONTRIBUTING.md) Development workflow, prerequisites, and coding standards.
 
 ## ⚖️ Legal & Copyright
