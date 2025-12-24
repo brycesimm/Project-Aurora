@@ -199,3 +199,20 @@ If you suspect changes are still not being picked up, create a strong dependency
 **Resolution:**
 - **Best Practice:** Implement `INotifyPropertyChanged` on the data model. Ensure the setters call `OnPropertyChanged()`. This allows the UI binding engine to react directly to property changes without any manual collection manipulation.
 - **Alternative:** If the model cannot be changed, you must replace the item with a *new* object instance (clone) to force the `ObservableCollection` to signal a change, though this is less efficient and can cause visual flickers.
+
+---
+
+## Azurite Not Starting in Multiple Startup Projects
+
+**Symptom:**
+- API calls requiring storage (e.g., Reactions) fail with "Connection Refused" (127.0.0.1:10002).
+- Azurite process is not running, despite being configured in "Connected Services".
+- "Service Dependencies" output pane is empty.
+
+**Cause:**
+- Visual Studio only reliably triggers the "Connected Services" initialization (which starts Azurite) for the projects at the top of the startup list. If a project without the dependency (like the MAUI UI project) is listed first, the orchestrator may skip or delay the auxiliary service startup.
+
+**Resolution:**
+- Open **Solution Properties > Startup Project**.
+- Ensure the **`Aurora.Api`** project is moved to the **top** of the "Multiple Startup Projects" list.
+- This ensures the API's service dependencies (Azurite) are fully initialized before the UI layer attempts to communicate with the backend.
