@@ -154,11 +154,11 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 1:** `docs/DESIGN_SYSTEM.md` is populated with a finalized color palette (Primary, Background, Surface) for Light and Dark modes.
     - **AC 2:** Typography scale (Headings, Body, Caption) is defined and documented.
     - **AC 3:** Corner radius and spacing standards are defined.
-- [ ] **Story E-03.2: Implement Color & Theme Resources**
+- [x] **Story E-03.2: Implement Color & Theme Resources**
     - **AC 1:** `Colors.xaml` is updated with the new palette, replacing default MAUI colors.
     - **AC 2:** Semantic resource keys (e.g., `PrimaryBrush`, `SurfaceBrush`) are created to abstract raw hex values.
     - **AC 3:** `Styles.xaml` is updated to apply these resources globally to common controls.
-- [ ] **Story E-03.3: Apply Design System to Main Page**
+- [x] **Story E-03.3: Apply Design System to Main Page**
     - **AC 1:** The "Vibe of the Day" card uses the new Surface color, corner radius, and shadow elevation.
     - **AC 2:** Typography styles are applied to all Labels (Hero Title vs. Body Text).
     - **AC 3:** Buttons (Uplift, Share) use the new primary/secondary styling.
