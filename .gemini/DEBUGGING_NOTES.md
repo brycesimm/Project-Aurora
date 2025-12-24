@@ -141,3 +141,38 @@ If you suspect changes are still not being picked up, create a strong dependency
 1.  **Modify .gitignore:** Remove or comment out the `platforms/` line.
 2.  **Force Add:** Use `git add src/Aurora/Platforms` to stage the previously ignored files.
 3.  **Verification:** The CI build passed successfully after these files were pushed.
+
+---
+
+## API JSON Structure Mismatch (Deserialization Failures)
+
+**Symptom:**
+- The application makes an API call (e.g., `POST /react`), and the backend logs show a successful `200 OK` response with a JSON body.
+- However, the client application either crashes, rolls back state, or fails to update the UI with the returned values.
+- No explicit `JsonException` is visible in the console if caught by a broad `catch` block.
+
+**Cause:**
+- The client code uses `ReadFromJsonAsync<T>()` expecting a primitive type (e.g., `int`), but the API returns a structured JSON object (e.g., `{"uplift_count": 5}`).
+- Deserializing a JSON object into a primitive `int` fails silently or throws an exception depending on the serializer configuration.
+
+**Resolution:**
+- Create a specific DTO or a `sealed record` that matches the JSON structure returned by the API.
+- Use `[JsonPropertyName]` attributes to map snake_case JSON keys to PascalCase C# properties.
+- Ensure the client calls `ReadFromJsonAsync<MyResponseDto>()` and extracts the value from the DTO.
+
+---
+
+## CollectionView Item Refresh (Static vs. Reactive UI)
+
+**Symptom:**
+- An item within a `CollectionView` (like a "Daily Pick" card) is updated in code-behind, but the UI does not reflect the change.
+- Re-assigning the item to the `ObservableCollection` (e.g., `myList[index] = item`) does not trigger a refresh.
+
+**Cause:**
+- The data model (e.g., `ContentItem`) is a standard C# class and does not implement `INotifyPropertyChanged`.
+- `CollectionView` and `ObservableCollection` only listen for *collection* changes (add/remove/reset), not for property changes on the objects *within* the collection.
+- Re-assigning the same object reference to the same index in an `ObservableCollection` is often optimized away by the UI engine and does not force a re-render.
+
+**Resolution:**
+- **Best Practice:** Implement `INotifyPropertyChanged` on the data model. Ensure the setters call `OnPropertyChanged()`. This allows the UI binding engine to react directly to property changes without any manual collection manipulation.
+- **Alternative:** If the model cannot be changed, you must replace the item with a *new* object instance (clone) to force the `ObservableCollection` to signal a change, though this is less efficient and can cause visual flickers.

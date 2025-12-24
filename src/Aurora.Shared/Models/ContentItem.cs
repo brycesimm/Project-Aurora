@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 
 namespace Aurora.Shared.Models;
@@ -5,8 +7,15 @@ namespace Aurora.Shared.Models;
 /// <summary>
 /// Represents a single piece of content (news story, video, etc.) in the Aurora feed.
 /// </summary>
-public class ContentItem
+public class ContentItem : INotifyPropertyChanged
 {
+	private int _upliftCount;
+
+	/// <summary>
+	/// Occurs when a property value changes.
+	/// </summary>
+	public event PropertyChangedEventHandler? PropertyChanged;
+
 	/// <summary>
 	/// Gets or sets the unique identifier for the content item.
 	/// </summary>
@@ -41,5 +50,25 @@ public class ContentItem
 	/// Gets or sets the number of users who found this content uplifting.
 	/// </summary>
 	[JsonPropertyName("uplift_count")]
-	public int UpliftCount { get; set; }
+	public int UpliftCount
+	{
+		get => _upliftCount;
+		set
+		{
+			if (_upliftCount != value)
+			{
+				_upliftCount = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	/// <summary>
+	/// Raises the <see cref="PropertyChanged"/> event.
+	/// </summary>
+	/// <param name="propertyName">The name of the property that changed.</param>
+	protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
 }

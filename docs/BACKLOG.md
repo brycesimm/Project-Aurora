@@ -133,7 +133,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 1:** A new HTTP POST endpoint `/api/articles/{id}/react` is created.
     - **AC 2:** The endpoint increments the count in Table Storage and returns the new total.
     - **AC 3:** The endpoint is anonymous (no user login required).
-- [ ] **Story E-01.4:** As a user, I want to click the "Uplift" button to register my positive sentiment and see the count increase.
+- [x] **Story E-01.4:** As a user, I want to click the "Uplift" button to register my positive sentiment and see the count increase.
     - **AC 1:** The "Uplift" button in `MainPage` is wired to the `ContentService`.
     - **AC 2:** Clicking the button immediately increments the count visually (optimistic update).
     - **AC 3:** The app sends the request to the API in the background.

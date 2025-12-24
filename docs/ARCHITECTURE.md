@@ -56,6 +56,11 @@ We treat our C# models as the "Single Source of Truth."
 ### Platform-Specific Networking
 To accommodate the unique networking environment of mobile emulators (specifically Android's `10.0.2.2` loopback), we utilize platform-detection logic within our Dependency Injection setup to automatically remap local API calls to the correct host machine interface.
 
+### Reactive UI Models
+To ensure a responsive and "live" user experience, especially during interactive operations like reactions, we utilize the **Observer Pattern** via `INotifyPropertyChanged`. 
+- **Automatic Sync:** Data models in `Aurora.Shared` that are bound to the UI implement this interface. 
+- **Direct Interaction:** This allows service-layer updates (like an optimistic increment or a server confirmation) to reflect instantly in the UI without the need for manual view-model or collection refreshes.
+
 ## 📊 Data Flow
 
 ### Content Delivery (Read)
