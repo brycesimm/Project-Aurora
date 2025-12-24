@@ -3,16 +3,8 @@ name: .NET CI
 on:
   push:
     branches: [ "main" ]
-    paths-ignore:
-      - 'docs/**'
-      - '**.md'
-      - '.gemini/**'
   pull_request:
     branches: [ "main" ]
-    paths-ignore:
-      - 'docs/**'
-      - '**.md'
-      - '.gemini/**'
 
 jobs:
   build:
@@ -21,19 +13,35 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Check for source code changes
+      uses: dorny/paths-filter@v2
+      id: changes
+      with:
+        filters: |
+          src:
+            - 'src/**'
+            - '*.sln'
+            - 'Directory.Build.props'
+            - '.editorconfig'
+
     - name: Setup .NET
+      if: steps.changes.outputs.src == 'true'
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
 
     - name: Install MAUI Workload
+      if: steps.changes.outputs.src == 'true'
       run: dotnet workload install maui
 
     - name: Restore dependencies
+      if: steps.changes.outputs.src == 'true'
       run: dotnet restore
 
     - name: Build
+      if: steps.changes.outputs.src == 'true'
       run: dotnet build --no-restore
 
     - name: Test
+      if: steps.changes.outputs.src == 'true'
       run: dotnet test --no-build --verbosity normal
