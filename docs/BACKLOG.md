@@ -142,7 +142,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 ### Feature E-02: Native Sharing
 *This feature leverages the device's native capabilities to share content externally.*
 
-- [ ] **Story E-02.1:** As a user, I want to share a story with friends so that I can spread positivity.
+- [x] **Story E-02.1:** As a user, I want to share a story with friends so that I can spread positivity.
     - **AC 1:** A "Share" icon button is added to the "Vibe of the Day" card and each "Daily Pick".
     - **AC 2:** Clicking the button opens the native OS share sheet (iOS/Android).
     - **AC 3:** The shared content includes the Story Title and the Article URL.

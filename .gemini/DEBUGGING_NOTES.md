@@ -63,7 +63,30 @@ If you suspect changes are still not being picked up, create a strong dependency
 4.  **Verify the Glyph Codepoint:**
     - **Symptom:** A known-good icon (like "home") appears, but the desired icon (like "heart") does not, even after fixing colors.
     - **Cause:** The hexadecimal codepoint for the glyph is incorrect for the specific version of the font being used.
-    - **Resolution:** Find a reliable, official "cheatsheet" for the exact font library and version you are using (e.g., from `pictogrammers.com` for the community Material Design Icons). Do not assume codepoints are stable between major versions or different font families (e.g., Google's Material Icons vs. Pictogrammers' MDI). In this project, the solid 'heart' glyph (`f2d1`) failed to render, but 'heart-outline' (`F02D5`) worked correctly.
+    - **Resolution:** Find a reliable, official "cheatsheet" for the exact font library and version you are using (e.g., from `pictogrammers.com` for the community Material Design Icons). Do not assume codepoints are stable between major versions or different font families (e.g., Google's Material Icons vs. Pictogrammers' MDI). In this project, the solid 'heart' glyph (`f2d1`) failed to render, but 'heart-outline' (`F02D5`) worked correctly. The 'share-variant' icon uses `F0497`.
+
+---
+
+## .NET 9 Deprecations & Modernization
+
+**Symptom:**
+- XAML warnings (green squigglies) indicating that certain controls or properties are obsolete in .NET 9.
+
+**Issues & Resolutions:**
+
+1.  **`Frame` is Obsolete:**
+    - **Resolution:** Use the `Border` control instead.
+    - **Migration:**
+        - `Frame.CornerRadius` -> `Border.StrokeShape="RoundRectangle <radius>"`
+        - `Frame.HasShadow` -> `Border.Shadow` (add a `Shadow` object).
+        - `Frame.BorderColor` -> `Border.Stroke`.
+        - `Frame.Padding` is supported on `Border`.
+        - Note: `Border` requires an explicit `Background` (usually an `AppThemeBinding`) to match `Frame`'s adaptive behavior.
+
+2.  **`AndExpand` Layout Options Deprecated:**
+    - **Symptom:** Warnings on `HorizontalOptions="FillAndExpand"` or `VerticalOptions="CenterAndExpand"`.
+    - **Cause:** Expansion options were used in the original `StackLayout` to manage how extra space was distributed. In modern `VerticalStackLayout` and `HorizontalStackLayout`, these options are ignored.
+    - **Resolution:** Use `Fill`, `Start`, `Center`, or `End` without the `AndExpand` suffix. If precise space distribution is needed, use a `Grid`.
 
 ---
 

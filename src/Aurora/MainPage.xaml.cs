@@ -114,4 +114,35 @@ public partial class MainPage : ContentPage
 #pragma warning restore CA1031 // Do not catch general exception types
 		}
 	}
+	/// <summary>
+	/// Handles the click event of the share button.
+	/// </summary>
+	private async void OnShareClicked(object sender, EventArgs e)
+	{
+		if (sender is not Button button)
+		{
+			return;
+		}
+
+		ContentItem? item = null;
+
+		if (button == ShareVibeButton)
+		{
+			item = VibeOfTheDay;
+		}
+		else
+		{
+			item = button.BindingContext as ContentItem;
+		}
+
+		if (item != null)
+		{
+			await Share.Default.RequestAsync(new ShareTextRequest
+			{
+				Title = item.Title,
+				Text = item.Title,
+				Uri = item.ArticleUrl
+			}).ConfigureAwait(false);
+		}
+	}
 }
