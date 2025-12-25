@@ -38,10 +38,24 @@ public static class MauiProgram
 		{
 			var baseUrl = builder.Configuration["ApiSettings:BaseUrl"];
 
-			// Android Emulator localhost fix
+			// Android Network Configuration
 			if (DeviceInfo.Platform == DevicePlatform.Android && baseUrl != null && baseUrl.Contains("localhost", StringComparison.OrdinalIgnoreCase))
 			{
-				baseUrl = baseUrl.Replace("localhost", "10.0.2.2", StringComparison.OrdinalIgnoreCase);
+				if (DeviceInfo.DeviceType == DeviceType.Virtual)
+				{
+					// Android Emulator
+					baseUrl = baseUrl.Replace("localhost", "10.0.2.2", StringComparison.OrdinalIgnoreCase);
+				}
+				else
+				{
+					// Physical Device - Use "LocalOverrideIp" from appsettings if available,
+					// otherwise fallback to localhost (which will fail on physical devices without a tunnel).
+					var overrideIp = builder.Configuration["ApiSettings:LocalOverrideIp"];
+					if (!string.IsNullOrEmpty(overrideIp))
+					{
+						baseUrl = baseUrl.Replace("localhost", overrideIp, StringComparison.OrdinalIgnoreCase);
+					}
+				}
 			}
 
 			if (!string.IsNullOrEmpty(baseUrl))

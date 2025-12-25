@@ -148,6 +148,39 @@ If you suspect changes are still not being picked up, create a strong dependency
 
 ---
 
+## Physical Device Connectivity (Android)
+
+**Symptom:**
+- Application works in the Android Emulator but fails to load data when deployed to a physical Android device.
+- Browser on the phone cannot reach `http://localhost:7071/api/...` or `http://<PC-IP>:7071/api/...`.
+- `adb reverse tcp:7071 tcp:7071` does not seem to work reliably (Site Can't Be Reached).
+
+**Causes & Solutions:**
+
+1.  **"Localhost" is Local to the Device:**
+    - **Cause:** On a physical phone, `localhost` refers to the phone itself. It cannot "see" the PC's `localhost` without a tunnel or explicit IP.
+    - **Solution:** Use the PC's actual LAN IP address (e.g., `10.0.0.x`) instead of localhost.
+    - **Implementation:**
+        - In `MauiProgram.cs`, detect `DeviceInfo.DeviceType == DeviceType.Physical` and swap `localhost` for the hardcoded PC IP (for development only).
+        - *Long term:* Host the API in the cloud.
+
+2.  **Azure Functions Host Binding:**
+    - **Cause:** By default, `func start` or `dotnet run` binds only to `127.0.0.1` (localhost). It rejects external connections from the LAN (Wi-Fi).
+    - **Solution:** Force the host to listen on all interfaces (`0.0.0.0`).
+    - **Implementation:** Update `launchSettings.json` command line arguments: `--port 7071 --host 0.0.0.0`.
+
+3.  **Windows Firewall Blocking:**
+    - **Cause:** Even with the host listening on `0.0.0.0`, Windows Firewall drops inbound TCP packets from the local network (subnet).
+    - **Solution:** Create a specific Inbound Rule.
+    - **Command (Admin PowerShell):** `New-NetFirewallRule -DisplayName "Allow Aurora API Port 7071" -Direction Inbound -LocalPort 7071 -Protocol TCP -Action Allow`
+
+4.  **UI Crash on Startup (DisplayAlert):**
+    - **Symptom:** The app crashes immediately on launch with `TargetInvocationException` if the network is unreachable.
+    - **Cause:** Calling `DisplayAlert` from a background thread (the `catch` block of an async data fetch) or too early in the lifecycle causes a crash on Android.
+    - **Solution:** Wrap UI interactions in `MainThread.BeginInvokeOnMainThread`.
+
+---
+
 ## Missing Platform Entry Points (CI Build Failure / CS5001)
 
 **Symptom:**
