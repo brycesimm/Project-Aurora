@@ -96,7 +96,6 @@ Created 5-phase planning approach to avoid premature technical decisions:
 ### Next Focus
 1. Execute Milestone A (MAUI environment setup + shell prototype) and log findings.
 2. Start drafting Azure Function schema for Daily Picks once MAUI shell stabilizes.
-
 ---
 
 ## 2025-12-06: Environment Debugging & Workflow Refinement
@@ -112,7 +111,6 @@ Created 5-phase planning approach to avoid premature technical decisions:
 
 ### Next Focus
 1. Resume implementation of **Story A-01.2: Vibe of the Day hero card**.
-
 ---
 
 ## 2025-12-06 (Continued): Story A-01.2 Completion & XAML Deep Dive
@@ -129,7 +127,6 @@ Created 5-phase planning approach to avoid premature technical decisions:
 
 ### Next Focus
 1. Begin implementation of **Story A-01.3: Daily Picks List**.
-
 ---
 
 ## 2025-12-07: Story A-01.3 Completion - Daily Picks List
@@ -148,7 +145,6 @@ The `story/A-01.3-daily-picks-list` branch now contains a complete and verified 
 
 ### Next Focus
 1. Begin implementation of **Story A-01.4: Placeholder Reaction Button**.
-
 ---
 
 ## 2025-12-07 (Continued): Story A-01.4 Completion - Reaction Button & Font Icons
@@ -170,7 +166,6 @@ The story is now functionally complete, with the button and a visible `heart-out
 ### Next Focus
 1. Merge the `story/A-01.4-reaction-button` branch into `main`.
 2. Begin planning for **Milestone B: Backend/API + curation workflow**.
-
 ---
 
 ## 2025-12-07 (Session 2): Milestone B Planning & Strategy
@@ -190,7 +185,6 @@ This session established a clear, mutually-understood technical foundation and a
 ### Next Focus
 1. Merge the `feature/milestone-b-planning` branch.
 2. Create a new development branch for **Story B-01.1: Define the Content Schema**.
-
 ---
 
 ## 2025-12-07 (Session 3): Story B-01.1 Completion - Data Contract Definition
@@ -209,7 +203,6 @@ The completion of this story provides a robust and well-defined data contract th
 ### Next Focus
 1.  Begin implementation of **Story B-02.1: Implement Automated JSON Schema Generation**.
 2.  Upon completion of B-02.1, return to **Story B-01.2: Local, HTTP-triggered function for mock content**.
-
 ---
 
 ## 2025-12-07 (Session 4): Swagger/OpenAPI Integration & Schema Export Automation Planning
@@ -241,7 +234,6 @@ Key accomplishments and resolutions include:
 ### Next Focus
 1.  Implement **Story B-02.3: Integrate Schema Export into Build Process** to ensure `content.schema.json` is always up-to-date.
 2.  Begin implementation of **Story B-01.2: Local, HTTP-triggered function for mock content**.
-
 ---
 
 ## 2025-12-12: Story B-02.3 Completion - Integrate Schema Export into Build Process
@@ -267,7 +259,6 @@ This story significantly improves the developer workflow by ensuring the `conten
 
 ### Next Focus
 1. Begin implementation of **Story B-01.2: Local, HTTP-triggered function for mock content**.
-
 ---
 
 ## 2025-12-12: Story B-01.2 Completion - Local, HTTP-triggered function for mock content
@@ -494,8 +485,6 @@ Key accomplishments include:
 1.  Merge the `feature/D-03.1-code-style-enforcement` branch into `main`.
 2.  Begin planning for **Milestone E: Advanced Features & Polish**.
 
----
-
 ## 2025-12-23 (Session 2): Milestone E Planning - The Interactive Shift
 
 ### Summary
@@ -512,8 +501,7 @@ A strategic review of the roadmap revealed that while Milestone D (Architecture/
     - **Tooling:** Azurite (local emulator) will be used for development, allowing a "offline-first" dev experience that mirrors the cloud environment.
 
 ### Next Focus
-1.  Merge the planning/milestone-e-definition branch.
-2.  Begin Story E-01.1: Data Model Evolution to add reaction counts to the schema.
+1.  Implement **Story E-01.2: Backend storage service** using Azure Table Storage and Azurite.
 
 ---
 
@@ -528,5 +516,150 @@ Key accomplishments include:
 3.  **Documentation Update:** Marked the story as complete in the backlog and updated the project journal.
 
 ### Next Focus
-1.  Begin implementation of **Story E-01.2: Backend storage service**.
-2.  Configure Azurite for local development of Azure Table Storage.
+1.  Implement **Story E-01.3: API endpoint for reactions**.
+2.  Verify end-to-end functionality with the local Azurite emulator.
+
+---
+
+## 2025-12-23 (Session 4): Story E-01.2 Completion - Backend Storage Service
+
+### Summary
+This session focused on the implementation of **Story E-01.2: Backend storage service**, adding persistent state management to the API layer.
+
+Key accomplishments include:
+1.  **Service Implementation:** Created `ReactionStorageService` in `Aurora.Api` using `Azure.Data.Tables`.
+2.  **Dependency Injection:** Configured the service and `TableServiceClient` in `Program.cs`, targeting Azurite for local development.
+3.  **Testing Strategy:**
+    *   Created a new test project `Aurora.Api.Tests` (xUnit).
+    *   Implemented unit tests using `Moq` to verify retrieval and increment logic, including handling of missing entities (404).
+    *   Verified the CI pipeline will automatically execute these tests.
+4.  **Documentation:** Updated the backlog and journal to reflect the completion of this story.
+
+### Next Focus
+1.  Implement **Story E-01.3: API endpoint for reactions**.
+2.  Verify end-to-end functionality with the local Azurite emulator.
+
+---
+
+## 2025-12-24: Story E-01.3 Completion - Reaction API Endpoint
+
+### Summary
+This session successfully implemented and verified the API endpoint for user reactions, a critical component of the Milestone E "Interactive Shift."
+
+Key accomplishments include:
+1.  **Reaction Endpoint Implementation:** Created the `ReactToContent` Azure Function (`POST /api/articles/{id}/react`). The function leverages the `ReactionStorageService` to increment "Uplift" counts in Azure Table Storage.
+2.  **Zero-Warning Compliance:** Refined the implementation to address `CA1031` (generic exception handling) via specific catch blocks and targeted suppression, maintaining the project's high code quality standards.
+3.  **Local Verification:** Successfully verified the full backend loop using Azurite (local storage emulator) and the Azure Functions Core Tools. End-to-end testing confirmed that POST requests correctly increment and persist counts in the local "Reactions" table.
+4.  **Developer Tooling Integration:** Demonstrated the use of Azure Storage Explorer to inspect and manage local storage data.
+
+### Next Focus
+1.  Merge the `feature/E-01.3-reaction-endpoint` branch.
+2.  Implement **Story E-01.4: UI Integration for Reactions**, connecting the MAUI "Uplift" button to this new endpoint.
+
+---
+
+## 2025-12-24 (Session 2): Story E-01.4 Completion - Reaction UI Integration
+
+### Summary
+This session completed the "User Loop" by connecting the mobile client to the backend API, enabling functional user reactions.
+
+Key accomplishments include:
+1.  **Frontend Logic:** Implemented the `ReactToContentAsync` method in `ContentService` and its interface, including proper `Uri` construction to satisfy static analysis.
+2.  **UI Wiring:** Updated `MainPage.xaml` and `MainPage.xaml.cs` to handle reaction button clicks for both the "Vibe of the Day" and "Daily Picks."
+    -   Implemented optimistic UI updates to ensure immediate user feedback.
+    -   Added robust error handling to rollback the count if the API call fails.
+    -   Exposed the reaction count in the UI via the button text.
+3.  **Testing:** Added a new unit test, `ReactToContentAsync_ReturnsNewCount_OnSuccess`, to `Aurora.Client.Core.Tests` to verify the service layer logic.
+4.  **Quality Assurance:** Verified that all tests pass and the solution maintains a zero-warning state.
+5.  **Reactive Architecture:** Refactored `ContentItem` to implement `INotifyPropertyChanged`, ensuring reliable and efficient UI updates without manual collection manipulation.
+
+### Next Focus
+1.  Merge the `feature/E-01.4-reaction-ui-integration` branch.
+2.  Implement **Story E-02.1: Native Sharing**, the final core interaction for Milestone E.
+
+---
+
+## 2025-12-24 (Session 3): Story E-02.1 Completion - Native Sharing & .NET 9 Modernization
+
+### Summary
+This session added native sharing capabilities to the application and modernized the UI layer by addressing .NET 9 deprecations.
+
+Key accomplishments include:
+1.  **UI Implementation:** Added a "Share" button with a `share-variant` MDI icon (`\U000f0497`) to both the "Vibe of the Day" card and the "Daily Picks" list in `MainPage.xaml`.
+2.  **Layout Refinement:** Grouped the new Share button with the existing Uplift button using `HorizontalStackLayout` for a cleaner UI.
+3.  **Code-Behind Logic:** Implemented `OnShareClicked` in `MainPage.xaml.cs`, utilizing the `Microsoft.Maui.ApplicationModel.DataTransfer.Share` API to invoke the device's native share sheet. The shared content includes the story's title and its source URL.
+4.  **Modernization Refactor:** Addressed .NET 9 deprecation warnings by:
+    -   Replacing `Frame` with `Border` and adding explicit `Shadow` objects.
+    -   Updating `StrokeShape` to `RoundRectangle 10` for consistent corner radii.
+    -   Removing deprecated `AndExpand` suffixes from `HorizontalOptions`.
+5.  **Verification:** Successfully verified the functional share sheet and icon rendering in the Android emulator. Confirmed a zero-warning build for the MAUI project.
+
+## 2025-12-24 (Session 4): Milestone E - Design System Definition
+
+### Summary
+This session established the foundational design language for Project Aurora, transitioning from default styling to a custom-tailored "Cozy & Warm" aesthetic.
+
+Key accomplishments include:
+1.  **Design System Definition:** Created `docs/DESIGN_SYSTEM.md` defining the **"Morning Mist"** palette. This system prioritizes soft pastel colors (Periwinkle, Apricot, Pastel Pink, and Teal) and rounded geometry (16dp corners) to create a welcoming, non-clinical user experience.
+2.  **Interactive Palette Preview:** Developed `docs/visual/palette_preview.html`, a functional HTML mockup that demonstrates the design system's typography (Nunito) and color palette in both Light and Dark modes.
+3.  **Backlog Refinement:** Updated `docs/BACKLOG.md` to decompose the "Visual Polish" feature into three actionable stories (E-03.1 through E-03.3), ensuring a structured implementation phase.
+4.  **Workflow Management:** Created and worked within the `planning/E-03-visual-design` branch to isolate design decisions from the main codebase.
+
+### Next Focus
+1.  Merge the `planning/E-03-visual-design` branch into `main`.
+2.  Begin **Story E-03.2: Implement Color & Theme Resources**, which involves implementing the `Nunito` font and updating the MAUI `Colors.xaml` and `Styles.xaml` to match the approved design system.
+
+---
+
+## 2025-12-24 (Session 5): Story E-03.2 & E-03.3 Completion - "Morning Mist" Design & Infrastructure Fixes
+
+### Summary
+This session focused on implementing the "Morning Mist" design system and resolving critical infrastructure issues related to the local Azure emulator.
+
+Key accomplishments include:
+1.  **Visual Overhaul:**
+    *   Integrated Nunito Variable Fonts (Regular & Italic) into the solution.
+    *   Implemented the "Morning Mist" palette in `Colors.xaml`, defining semantic brushes (Uplift, Vibe, Share).
+    *   Modernized `Styles.xaml` using .NET 9 `Border` and `Shadow` controls to achieve the "Cozy & Warm" aesthetic (16dp rounded corners, soft shadows).
+2.  **UI Refinement (`MainPage.xaml`):**
+    *   Implemented a "Vibe of the Day" pill tag.
+    *   Added a primary "READ" button to cards.
+    *   Streamlined interaction buttons (Uplift/Share) to use icons and labels without verbose text, improving visual balance.
+3.  **Infrastructure Stability (Azurite):**
+    *   Diagnosed a "Connection Refused" error caused by Azurite not starting in "Multiple Startup Projects" mode.
+    *   **Root Cause:** Visual Studio only triggers "Connected Services" dependencies for the first project in the startup list.
+    *   **Fix:** Configured `Aurora.Api` with `serviceDependencies.json` and documented the requirement to place the API project at the top of the startup list in `DEBUGGING_NOTES.md`.
+4.  **Version Control:** Pushed `feature/E-03.2-theme-resources` to remote, ready for PR.
+
+### Next Focus
+1.  Merge the `feature/E-03.2-theme-resources` PR.
+2.  Review the backlog for any final Milestone E polish items before moving to Phase 5.
+
+---
+
+## 2025-12-24 (Session 6): Physical Device Deployment & Debugging
+
+### Summary
+This session was dedicated to verifying the application on a physical Android device (S24 Ultra) to assess the visual design in a real-world context. This process revealed and resolved significant networking challenges related to local development.
+
+Key accomplishments and resolutions include:
+1.  **Smart Connectivity Implementation:**
+    *   Resolved the "Localhost" connectivity issue where the phone could not reach the PC's API.
+    *   Implemented logic in `MauiProgram.cs` to automatically detect the device type:
+        *   **Emulator:** Uses `10.0.2.2` (Standard Android loopback).
+        *   **Physical Device:** Uses a hardcoded local IP (`10.0.0.23`) for this session (pending cloud deployment).
+    *   This allows the same codebase to run on both the emulator and the physical phone without manual config swapping.
+2.  **Infrastructure Configuration:**
+    *   Configured the Azure Functions host (`launchSettings.json`) to listen on all interfaces (`0.0.0.0`) instead of just `localhost`.
+    *   Added a Windows Firewall rule to allow inbound traffic on TCP port 7071.
+3.  **Crash Prevention:**
+    *   Fixed a crash in `MainPage.xaml.cs` caused by calling `DisplayAlert` on a background thread during data load failures. Wrapped the alert in `MainThread.BeginInvokeOnMainThread`.
+4.  **Visual Verification:**
+    *   Successfully deployed the app to the S24 Ultra.
+    *   Identified the need for further typographic and iconographic refinement on physical screens.
+5.  **Backlog Update:**
+    *   Added **Story E-03.4: Visual Refinements (Mobile Verification)** to the backlog to capture the design feedback.
+
+### Next Focus
+1.  Merge the `fix/device-connectivity-support` branch.
+2.  Implement **Story E-03.4: Visual Refinements (Mobile Verification)**.

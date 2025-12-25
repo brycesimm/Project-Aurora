@@ -4,6 +4,7 @@ This directory contains project documentation, decision logs, and development no
 
 ## Contents
 
+- **DEBUGGING_NOTES.md** - Technical issues, troubleshooting steps, and solutions for recurring problems
 - **PLANNING.md** - Structured planning framework tracking progress through 5 development phases
 - **PROJECT_JOURNAL.md** - Chronological log of development sessions, discussions, and decisions
 - **README.md** - This file; explains the purpose of the .claude directory
