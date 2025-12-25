@@ -200,6 +200,44 @@ If you suspect changes are still not being picked up, create a strong dependency
 
 ---
 
+## XAML Formatting Limitations
+
+**Symptom:**
+- Running `dotnet format` standardizes C# files but leaves XAML files (`.xaml`) with inconsistent indentation, extra blank lines, or erratic attribute alignment.
+- `.editorconfig` rules for indentation (e.g., `indent_style = tab`) do not seem to be automatically applied to XAML files during CLI-based formatting.
+
+**Cause:**
+- `dotnet format` primarily utilizes the Roslyn compiler and is designed for C# and MSBuild project files. It does not natively include a robust XAML/XML formatter.
+- Standard `.editorconfig` support in the .NET CLI is currently limited for XAML-specific rules compared to its deep integration with C#.
+
+**Resolution:**
+1.  **Manual Oversight:** Carefully review XAML changes to ensure they match the project's tab-based indentation standard.
+2.  **Visual Studio Tools:** Use Visual Studio's "Format Document" (`Ctrl+K, Ctrl+D`) which has better built-in XAML awareness, or consider a dedicated extension like **XAMLStyler** for team-wide consistency.
+3.  **Atomic Rewrites:** When correcting erratic XAML formatting, a full file rewrite (ensuring consistent tabs) is often more reliable than incremental line-based replacements.
+
+---
+
+## Variable Font Rendering Issues (Android)
+
+**Symptom:**
+- A variable font (e.g., `Nunito-VariableFont_wght.ttf`) is registered and used in the application.
+- Setting `FontAttributes="Bold"` has no visible effect, or the text appears much thinner than expected (Regular weight).
+- The same font renders correctly on Windows but fails on Android emulators or physical devices.
+
+**Cause:**
+- The Android font renderer (specifically in certain versions of MAUI or the OS) may fail to correctly interpolate the weight axis of a variable font when requested via the standard `FontAttributes` enum.
+- The renderer often falls back to the "Regular" (400) weight because it cannot resolve the "Bold" (700) coordinate within the variable file.
+
+**Resolution:**
+1.  **Use Static Fonts:** Instead of a single variable font file, import the full suite of static `.ttf` files (e.g., `Nunito-Regular.ttf`, `Nunito-Bold.ttf`, `Nunito-ExtraBold.ttf`).
+2.  **Explicit Registration:** Register each weight with a unique alias in `MauiProgram.cs`:
+    - `fonts.AddFont("Nunito-Bold.ttf", "NunitoBold");`
+3.  **Explicit Application:** Use the alias directly in XAML and **remove** `FontAttributes="Bold"`, as the font file itself is already bold:
+    - `<Label FontFamily="NunitoBold" ... />`
+4.  **Verification:** This ensures the renderer loads the exact glyph shapes for that weight without attempting interpolation, providing a robust and consistent look across all platforms.
+
+---
+
 ## API JSON Structure Mismatch (Deserialization Failures)
 
 **Symptom:**
