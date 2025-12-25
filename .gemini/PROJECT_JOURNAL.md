@@ -634,3 +634,32 @@ Key accomplishments include:
 ### Next Focus
 1.  Merge the `feature/E-03.2-theme-resources` PR.
 2.  Review the backlog for any final Milestone E polish items before moving to Phase 5.
+
+---
+
+## 2025-12-24 (Session 6): Physical Device Deployment & Debugging
+
+### Summary
+This session was dedicated to verifying the application on a physical Android device (S24 Ultra) to assess the visual design in a real-world context. This process revealed and resolved significant networking challenges related to local development.
+
+Key accomplishments and resolutions include:
+1.  **Smart Connectivity Implementation:**
+    *   Resolved the "Localhost" connectivity issue where the phone could not reach the PC's API.
+    *   Implemented logic in `MauiProgram.cs` to automatically detect the device type:
+        *   **Emulator:** Uses `10.0.2.2` (Standard Android loopback).
+        *   **Physical Device:** Uses a hardcoded local IP (`10.0.0.23`) for this session (pending cloud deployment).
+    *   This allows the same codebase to run on both the emulator and the physical phone without manual config swapping.
+2.  **Infrastructure Configuration:**
+    *   Configured the Azure Functions host (`launchSettings.json`) to listen on all interfaces (`0.0.0.0`) instead of just `localhost`.
+    *   Added a Windows Firewall rule to allow inbound traffic on TCP port 7071.
+3.  **Crash Prevention:**
+    *   Fixed a crash in `MainPage.xaml.cs` caused by calling `DisplayAlert` on a background thread during data load failures. Wrapped the alert in `MainThread.BeginInvokeOnMainThread`.
+4.  **Visual Verification:**
+    *   Successfully deployed the app to the S24 Ultra.
+    *   Identified the need for further typographic and iconographic refinement on physical screens.
+5.  **Backlog Update:**
+    *   Added **Story E-03.4: Visual Refinements (Mobile Verification)** to the backlog to capture the design feedback.
+
+### Next Focus
+1.  Merge the `fix/device-connectivity-support` branch.
+2.  Implement **Story E-03.4: Visual Refinements (Mobile Verification)**.

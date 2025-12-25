@@ -129,6 +129,8 @@
       - **(Completed)** Define Design System & Palette (Morning Mist).
       - **(Completed)** Implement Color & Theme Resources.
       - **(Completed)** Apply Design System to Main Page.
+  7.  Visual Refinements:
+      - **(In Progress)** Adjust typography and spacing for physical devices (Story E-03.4).
 
 ### Phase 5: Validation Strategy
 **Status:** In Progress
@@ -166,6 +168,7 @@
 | 2025-12-21 | Implemented GitHub Actions CI | Automates "Verify, Then Trust" mandate; requires successful build/test before merge. |
 | 2025-12-23 | Adopted Azure Table Storage & Azurite | Selected for low cost, simplicity, and ease of local offline-first development for reaction persistence. |
 | 2025-12-24 | Established "Morning Mist" Design System | Adopted a pastel, rounded, "Cozy & Warm" aesthetic (Nunito font, soft corners) to align with the "Refuge from Negativity" mission. |
+| 2025-12-24 | Enabled Local LAN Testing | Configured API to listen on 0.0.0.0 and opened Firewall port 7071 to allow physical device testing over Wi-Fi, superior to emulator. |
 
 ---
 

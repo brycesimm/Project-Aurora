@@ -42,8 +42,58 @@ In a world where news feeds are often engineered to maximize outrage and fear, A
    func start
    ```
 
-3. **Run the MAUI Client:**
-   Open `Project-Aurora.sln` in Visual Studio and set the `Aurora` project as the Startup Project. Select your desired target (Emulator or Physical Device) and press F5.
+3. **Run the MAUI Client (Visual Studio):**
+   Open `Project-Aurora.sln`, set `Aurora` as the Startup Project, select your target device, and press **F5**.
+
+### 📱 Android CLI Workflow (Manual Install & ADB)
+
+If you prefer the command line or need to troubleshoot deployment:
+
+**1. Enable Developer Mode:**
+   - Go to `Settings > About Phone` on your Android device.
+   - Tap `Build Number` 7 times to enable Developer Options.
+   - In `Developer Options`, enable **USB Debugging**.
+
+**2. Verify Connection:**
+   Connect via USB and run:
+   ```powershell
+   adb devices
+   # Ensure your device is listed and authorized
+   ```
+
+**3. Install the APK:**
+   Use the .NET CLI to build and install directly to the connected device:
+   ```powershell
+   dotnet build src/Aurora/Aurora.csproj -f net9.0-android -t:Install
+   ```
+
+**4. Launch via ADB:**
+   You can launch the app from the device screen or use ADB to force-start it:
+   ```powershell
+   adb shell monkey -p com.companyname.aurora -c android.intent.category.LAUNCHER 1
+   ```
+
+**5. Debugging Crashes:**
+   If the app closes immediately, view the crash logs:
+   ```powershell
+   adb logcat -d -s AndroidRuntime:E
+   ```
+
+### 📡 Physical Device Connectivity (Wi-Fi)
+
+To allow your phone to reach the local API (`localhost`) over Wi-Fi:
+1.  **Firewall:** Allow inbound traffic on port 7071 (Admin PowerShell):
+    `New-NetFirewallRule -DisplayName "Allow Aurora API Port 7071" -Direction Inbound -LocalPort 7071 -Protocol TCP -Action Allow`
+- **Configure IP:** Find your PC's local IP (via `ipconfig`) and add it to `src/Aurora/appsettings.json` under a new key `LocalOverrideIp`.
+    ```json
+    "ApiSettings": {
+      "BaseUrl": "http://localhost:7071/api/",
+      "LocalOverrideIp": "192.168.1.5"
+    }
+    ```
+    - *Note:* The app automatically detects physical devices and swaps `localhost` for this override IP. This key should be kept for local development and **not committed** to the repository.
+- **Deployment:** Connect via USB for the initial installation. Once running, the app communicates with the API over Wi-Fi.
+3.  **Host Binding:** Ensure the API is started with `func start --host 0.0.0.0`.
 
 ## 🧪 Testing and Quality
 

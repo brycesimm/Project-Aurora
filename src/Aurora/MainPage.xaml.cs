@@ -63,7 +63,10 @@ public partial class MainPage : ContentPage
 		catch (Exception ex)
 		{
 			System.Diagnostics.Debug.WriteLine($"Error loading data: {ex.Message}");
-			await DisplayAlert("Error", $"Data Load Failed: {ex.Message}", "OK").ConfigureAwait(false);
+			MainThread.BeginInvokeOnMainThread(async () =>
+			{
+				await DisplayAlert("Error", $"Data Load Failed: {ex.Message}", "OK").ConfigureAwait(false);
+			});
 		}
 #pragma warning restore CA1031 // Do not catch general exception types
 	}
