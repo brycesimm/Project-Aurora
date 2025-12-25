@@ -14,10 +14,10 @@ The interface should feel like a comfortable refuge. We avoid harsh contrasts, s
 
 ### Scale
 - **Display (Hero Title):** Nunito ExtraBold, 24sp
-- **Heading 1 (Section Headers):** Nunito Bold, 20sp
-- **Body 1 (Article Text):** Nunito SemiBold, 16sp (Increased weight for readability)
+- **Heading 1 (Section Headers):** Nunito ExtraBold, 20sp
+- **Body 1 (Article Text):** Nunito SemiBold, 16sp, Line Height 1.25
 - **Body 2 (Secondary/Metadata):** Nunito Regular, 14sp
-- **Button:** Nunito Bold, 14sp, Uppercase
+- **Button:** Nunito ExtraBold / Black, 14-16sp
 
 ---
 
@@ -36,13 +36,14 @@ The interface should feel like a comfortable refuge. We avoid harsh contrasts, s
 - **Surface (Cards):** `#37474F` (Blue Grey 800)
 - **Primary (Action):** `#9FA8DA` (Indigo 200 - Lighter periwinkle for contrast)
 - **OnPrimary:** `#263238`
-- **Text Primary:** `#ECEFF1` (Blue Grey 50 - Soft white)
-- **Text Secondary:** `#B0BEC5` (Blue Grey 200)
+- **Text Primary:** `#FFFFFF` (Pure White - High Contrast)
+- **Text Secondary:** `#E0E0E0` (Light Gray - High Contrast)
 
 ### Semantic Accents (Pastels)
 - **Uplift (Heart):** `#F48FB1` (Pastel Pink)
-- **Vibe Accent:** `#FFAB91` (Pastel Peach/Coral)
+- **Vibe Accent:** `#FFCC80` (Sun-Kissed Apricot)
 - **Share:** `#80CBC4` (Pastel Teal)
+- **Comment:** `#CE93D8` (Lavender Mist)
 
 ---
 
@@ -51,8 +52,11 @@ The interface should feel like a comfortable refuge. We avoid harsh contrasts, s
 ### Corner Radii
 *Everything is soft.*
 - **Cards/Containers:** `16dp`
-- **Buttons:** `24dp` (Full Pill shape)
-- **Images:** `16dp` (Consistent with card)
+- **Buttons:** `22-24dp` (Pill/Circle)
+- **Images:** `12dp` (Consistent with inner borders)
+
+### Button Style: "Tinted Outline"
+Buttons use a colored pastel background with a darker, high-contrast 2.0dp border (Stroke) and matching text/icon color. This provides an illustrative, comic-book-like clarity.
 
 ### Spacing (8pt Grid)
 - **Small:** `8dp` (Standard padding)

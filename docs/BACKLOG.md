@@ -163,7 +163,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 2:** Typography styles are applied to all Labels (Hero Title vs. Body Text).
     - **AC 3:** Buttons (Uplift, Share) use the new primary/secondary styling.
     - **AC 4:** Spacing (Margins/Padding) is audited to match the defined grid (e.g., 8pt multiples).
-- [ ] **Story E-03.4: Visual Refinements (Mobile Verification)**
+- [x] **Story E-03.4: Visual Refinements (Mobile Verification)**
     - **AC 1:** Title font sizes and weights are adjusted for better legibility on physical devices.
     - **AC 2:** Paragraph line heights and spacing are tuned for comfortable reading on small screens.
     - **AC 3:** Button icons and text labels are aligned and spaced correctly to avoid cramping.

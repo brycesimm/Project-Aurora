@@ -118,34 +118,43 @@ public partial class MainPage : ContentPage
 		}
 	}
 	/// <summary>
-	/// Handles the click event of the share button.
+	/// Handles the click event for sharing a content item.
 	/// </summary>
 	private async void OnShareClicked(object sender, EventArgs e)
 	{
-		if (sender is not Button button)
+		// Support both Button (old style) and Border (new optically aligned style)
+		if (sender is Element element)
 		{
-			return;
-		}
+			ContentItem? itemToShare = null;
 
-		ContentItem? item = null;
-
-		if (button == ShareVibeButton)
-		{
-			item = VibeOfTheDay;
-		}
-		else
-		{
-			item = button.BindingContext as ContentItem;
-		}
-
-		if (item != null)
-		{
-			await Share.Default.RequestAsync(new ShareTextRequest
+			if (element.BindingContext is ContentItem item)
 			{
-				Title = item.Title,
-				Text = item.Title,
-				Uri = item.ArticleUrl
-			}).ConfigureAwait(false);
+				// Daily Pick (List Item context)
+				itemToShare = item;
+			}
+			else if (element.BindingContext is MainPage page && page.VibeOfTheDay != null)
+			{
+				// Vibe Card (Page context)
+				itemToShare = page.VibeOfTheDay;
+			}
+
+			if (itemToShare != null)
+			{
+				await Share.Default.RequestAsync(new ShareTextRequest
+				{
+					Title = itemToShare.Title,
+					Text = itemToShare.Title,
+					Uri = itemToShare.ArticleUrl
+				}).ConfigureAwait(false);
+			}
 		}
+	}
+
+	/// <summary>
+	/// Handles the click event for the placeholder comment button.
+	/// </summary>
+	private async void OnCommentClicked(object sender, EventArgs e)
+	{
+		await DisplayAlert("Coming Soon", "Comments are not yet available.", "OK").ConfigureAwait(false);
 	}
 }

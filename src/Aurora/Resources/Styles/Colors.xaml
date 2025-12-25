@@ -16,19 +16,21 @@
     <Color x:Key="MistBackgroundDark">#263238</Color>
     <Color x:Key="MistSurfaceDark">#37474F</Color>
     <Color x:Key="MistPrimaryDark">#9FA8DA</Color>
-    <Color x:Key="MistTextPrimaryDark">#ECEFF1</Color>
-    <Color x:Key="MistTextSecondaryDark">#B0BEC5</Color>
+    <Color x:Key="MistTextPrimaryDark">#FFFFFF</Color>
+    <Color x:Key="MistTextSecondaryDark">#E0E0E0</Color>
 
     <!-- Semantic Accents -->
     <Color x:Key="UpliftAccent">#F48FB1</Color>
     <Color x:Key="VibeAccent">#FFCC80</Color> <!-- Sun-Kissed Apricot -->
     <Color x:Key="ShareAccent">#80CBC4</Color>
+    <Color x:Key="CommentAccent">#CE93D8</Color> <!-- Lavender Mist -->
 
     <!-- On-Accent Text Colors (for contrast) -->
     <Color x:Key="OnVibeLight">#3E2723</Color>
     <Color x:Key="OnPrimaryDark">#263238</Color>
     <Color x:Key="OnUpliftDark">#3E2723</Color>
     <Color x:Key="OnShareDark">#004D40</Color>
+    <Color x:Key="OnCommentDark">#4A148C</Color>
 
     <!-- Generic Helpers -->
     <Color x:Key="White">White</Color>

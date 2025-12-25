@@ -18,8 +18,13 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddFont("materialdesignicons-webfont.ttf", "MDI");
-				fonts.AddFont("Nunito-VariableFont_wght.ttf", "Nunito");
-				fonts.AddFont("Nunito-Italic-VariableFont_wght.ttf", "NunitoItalic");
+
+				// Static Nunito Fonts for reliable weight rendering
+				fonts.AddFont("Nunito-Regular.ttf", "Nunito");
+				fonts.AddFont("Nunito-SemiBold.ttf", "NunitoSemiBold");
+				fonts.AddFont("Nunito-Bold.ttf", "NunitoBold");
+				fonts.AddFont("Nunito-ExtraBold.ttf", "NunitoExtraBold");
+				fonts.AddFont("Nunito-Black.ttf", "NunitoBlack");
 			});
 
 		var assembly = Assembly.GetExecutingAssembly();

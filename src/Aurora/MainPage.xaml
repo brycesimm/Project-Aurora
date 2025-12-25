@@ -1,140 +1,191 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:models="clr-namespace:Aurora.Shared.Models;assembly=Aurora.Shared"
-             xmlns:local="clr-namespace:Aurora"
-             x:Class="Aurora.MainPage"
-             Title="Aurora">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:models="clr-namespace:Aurora.Shared.Models;assembly=Aurora.Shared"
+			 xmlns:local="clr-namespace:Aurora"
+			 x:Class="Aurora.MainPage"
+			 Title="Aurora">
 
-    <CollectionView ItemsSource="{Binding DailyPicks}" 
-                    x:DataType="local:MainPage"
-                    SelectionMode="None">
-        
-        <CollectionView.Header>
-            <VerticalStackLayout Padding="24" Spacing="24">
-                <Border Padding="20">
-                    <VerticalStackLayout Spacing="12">
-                        <!-- Vibe Tag Pill -->
-                        <Border BackgroundColor="{StaticResource VibeAccent}"
-                                StrokeShape="RoundRectangle 20"
-                                Padding="12,4"
-                                HorizontalOptions="Start"
-                                StrokeThickness="0">
-                            <Label Text="VIBE OF THE DAY"
-                                   Style="{StaticResource TagLabel}" />
-                        </Border>
-                        
-                        <Label
-                            Text="{Binding VibeOfTheDay.Title}"
-                            Style="{StaticResource DisplayTitle}" />
-                        
-                        <Border StrokeShape="RoundRectangle 12" Padding="0" Margin="0,4">
-                           <Image
-                               Source="{Binding VibeOfTheDay.ImageUrl}"
-                               Aspect="AspectFill"
-                               HeightRequest="180"
-                               HorizontalOptions="Fill" />
-                        </Border>
+	<Shell.TitleView>
+		<Label Text="Aurora"
+			   FontFamily="NunitoExtraBold"
+			   FontSize="20"
+			   VerticalOptions="Center"
+			   TextColor="{AppThemeBinding Light={StaticResource MistTextPrimaryLight}, Dark={StaticResource MistTextPrimaryDark}}" />
+	</Shell.TitleView>
 
-                        <Label
-                            Text="{Binding VibeOfTheDay.Snippet}"
-                            Style="{StaticResource Body1}" />
+	<CollectionView ItemsSource="{Binding DailyPicks}"
+					x:DataType="local:MainPage"
+					SelectionMode="None">
 
-                        <HorizontalStackLayout Spacing="12" Margin="0,8,0,0">
-                            <!-- READ Button -->
-                            <Button 
-                                Text="READ"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource MistPrimaryLight}, Dark={StaticResource MistPrimaryDark}}"
-                                TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnPrimaryDark}}" />
+		<CollectionView.Header>
+			<VerticalStackLayout Padding="24"
+								 Spacing="24">
+				<Border Padding="20">
+					<VerticalStackLayout Spacing="12">
+						<!-- Vibe Tag Pill -->
+						<Border BackgroundColor="{StaticResource VibeAccent}"
+								Stroke="{StaticResource OnVibeLight}"
+								StrokeShape="RoundRectangle 20"
+								Padding="12,4"
+								HorizontalOptions="Start"
+								StrokeThickness="2">
+							<Label Text="VIBE OF THE DAY"
+								   Style="{StaticResource TagLabel}" />
+						</Border>
 
-                            <!-- UPLIFT Button (Icon + Count) -->
-                            <Button 
-                                x:Name="ReactionButton"
-                                Text="{Binding VibeOfTheDay.UpliftCount}"
-                                Clicked="OnReactionButtonClicked"
-                                BackgroundColor="{StaticResource UpliftAccent}"
-                                TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnUpliftDark}}">
-                                <Button.ImageSource>
-                                    <FontImageSource 
-                                        FontFamily="MDI"
-                                        Glyph="&#xF02D5;"
-                                        Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnUpliftDark}}" />
-                                </Button.ImageSource>
-                            </Button>
-                            
-                            <!-- SHARE Button -->
-                            <Button 
-                                x:Name="ShareVibeButton"
-                                Text="SHARE"
-                                Clicked="OnShareClicked"
-                                BackgroundColor="{StaticResource ShareAccent}"
-                                TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnShareDark}}">
-                                <Button.ImageSource>
-                                    <FontImageSource 
-                                        FontFamily="MDI"
-                                        Glyph="&#xF0497;"
-                                        Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnShareDark}}" />
-                                </Button.ImageSource>
-                            </Button>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </Border>
-                
-                <Label Text="Daily Picks" 
-                       Style="{StaticResource Heading1}"
-                       Margin="4,8,0,0" />
-            </VerticalStackLayout>
-        </CollectionView.Header>
+						<Label Text="{Binding VibeOfTheDay.Title}"
+							   Style="{StaticResource DisplayTitle}" />
 
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="models:ContentItem">
-                <VerticalStackLayout Padding="24,0,24,16">
-                    <Border Padding="20">
-                        <VerticalStackLayout Spacing="8">
-                            <Label
-                                Text="{Binding Title}"
-                                Style="{StaticResource DisplayTitle}" />
-                            <Label
-                                Text="{Binding Snippet}"
-                                Style="{StaticResource Body1}" />
-                            
-                            <HorizontalStackLayout Spacing="12" Margin="0,8,0,0">
-                                <Button 
-                                    Text="READ"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource MistPrimaryLight}, Dark={StaticResource MistPrimaryDark}}"
-                                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnPrimaryDark}}" />
+						<Border StrokeShape="RoundRectangle 12"
+								Padding="0"
+								Margin="0,4">
+							<Image Source="{Binding VibeOfTheDay.ImageUrl}"
+								   Aspect="AspectFill"
+								   HeightRequest="180"
+								   HorizontalOptions="Fill" />
+						</Border>
 
-                                <Button 
-                                    Text="{Binding UpliftCount}"
-                                    Clicked="OnReactionButtonClicked"
-                                    BackgroundColor="{StaticResource UpliftAccent}"
-                                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnUpliftDark}}">
-                                    <Button.ImageSource>
-                                        <FontImageSource 
-                                            FontFamily="MDI"
-                                            Glyph="&#xF02D5;"
-                                            Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnUpliftDark}}" />
-                                    </Button.ImageSource>
-                                </Button>
+						<Label Text="{Binding VibeOfTheDay.Snippet}"
+							   Style="{StaticResource Body1}" />
 
-                                <Button 
-                                    Text="SHARE"
-                                    Clicked="OnShareClicked"
-                                    BackgroundColor="{StaticResource ShareAccent}"
-                                    TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnShareDark}}">
-                                    <Button.ImageSource>
-                                        <FontImageSource 
-                                            FontFamily="MDI"
-                                            Glyph="&#xF0497;"
-                                            Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OnShareDark}}" />
-                                    </Button.ImageSource>
-                                </Button>
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-                </VerticalStackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+						<Grid ColumnDefinitions="Auto,*,Auto"
+							  ColumnSpacing="12"
+							  Margin="0,12,0,0">
+							<!-- UPLIFT Button (Pill: Icon + Count Right) -->
+							<Button Grid.Column="0"
+									x:Name="ReactionButton"
+									HorizontalOptions="Start"
+									Padding="16,0"
+									FontSize="14"
+									FontFamily="NunitoExtraBold"
+									Clicked="OnReactionButtonClicked"
+									Style="{StaticResource IconButtonStyle}"
+									Text="{Binding VibeOfTheDay.UpliftCount}"
+									ImageSource="{FontImageSource FontFamily=MDI, Glyph='&#xF02D5;', Size=20, Color={StaticResource OnUpliftDark}}"
+									BackgroundColor="{StaticResource UpliftAccent}"
+									BorderColor="{StaticResource OnUpliftDark}"
+									TextColor="{StaticResource OnUpliftDark}" />
+
+							<!-- READ Button (Pill: Icon + Text) -->
+							<Button Grid.Column="1"
+									HorizontalOptions="Center"
+									Padding="16,0"
+									FontSize="14"
+									FontFamily="NunitoExtraBold"
+									Style="{StaticResource IconButtonStyle}"
+									Text="READ"
+									ImageSource="{FontImageSource FontFamily=MDI, Glyph='&#xF1004;', Size=20, Color={AppThemeBinding Light={StaticResource OnPrimaryDark}, Dark={StaticResource OnPrimaryDark}}}"
+									BackgroundColor="{AppThemeBinding Light={StaticResource MistPrimaryLight}, Dark={StaticResource MistPrimaryDark}}"
+									BorderColor="{AppThemeBinding Light={StaticResource OnPrimaryDark}, Dark={StaticResource OnPrimaryDark}}"
+									TextColor="{AppThemeBinding Light={StaticResource OnPrimaryDark}, Dark={StaticResource OnPrimaryDark}}" />
+
+							<!-- Right Actions: Comment + Share -->
+							<HorizontalStackLayout Grid.Column="2"
+												   Spacing="8"
+												   HorizontalOptions="End">
+								<!-- COMMENT Button (Optically Aligned via Padding) -->
+								<Button WidthRequest="44"
+										Clicked="OnCommentClicked"
+										Style="{StaticResource IconButtonStyle}"
+										Padding="0,0,2,0"
+										Text="&#xF173E;"
+										BackgroundColor="{StaticResource CommentAccent}"
+										BorderColor="{StaticResource OnCommentDark}"
+										TextColor="{StaticResource OnCommentDark}" />
+
+								<!-- SHARE Button (Optically Aligned via Padding) -->
+								<Button WidthRequest="44"
+										x:Name="ShareVibeButton"
+										Clicked="OnShareClicked"
+										Style="{StaticResource IconButtonStyle}"
+										Padding="0,0,0,3"
+										Text="&#xF0496;"
+										BackgroundColor="{StaticResource ShareAccent}"
+										BorderColor="{StaticResource OnShareDark}"
+										TextColor="{StaticResource OnShareDark}" />
+							</HorizontalStackLayout>
+						</Grid>
+					</VerticalStackLayout>
+				</Border>
+
+				<Label Text="Daily Picks"
+					   Style="{StaticResource Heading1}"
+					   Margin="4,8,0,0" />
+			</VerticalStackLayout>
+		</CollectionView.Header>
+
+		<CollectionView.ItemTemplate>
+			<DataTemplate x:DataType="models:ContentItem">
+				<VerticalStackLayout Padding="24,0,24,16">
+					<Border Padding="20">
+						<VerticalStackLayout Spacing="8">
+							<Label Text="{Binding Title}"
+								   Style="{StaticResource DisplayTitle}" />
+							<Label Text="{Binding Snippet}"
+								   Style="{StaticResource Body1}" />
+
+							<Grid ColumnDefinitions="Auto,*,Auto"
+								  ColumnSpacing="12"
+								  Margin="0,12,0,0">
+								<!-- UPLIFT Button (Pill: Icon + Count Right) -->
+								<Button Grid.Column="0"
+										HorizontalOptions="Start"
+										Padding="16,0"
+										FontSize="14"
+										FontFamily="NunitoExtraBold"
+										Clicked="OnReactionButtonClicked"
+										Style="{StaticResource IconButtonStyle}"
+										Text="{Binding UpliftCount}"
+										ImageSource="{FontImageSource FontFamily=MDI, Glyph='&#xF02D5;', Size=20, Color={StaticResource OnUpliftDark}}"
+										BackgroundColor="{StaticResource UpliftAccent}"
+										BorderColor="{StaticResource OnUpliftDark}"
+										TextColor="{StaticResource OnUpliftDark}" />
+
+								<!-- READ Button (Pill: Icon + Text) -->
+								<Button Grid.Column="1"
+										HorizontalOptions="Center"
+										Padding="16,0"
+										FontSize="14"
+										FontFamily="NunitoExtraBold"
+										Style="{StaticResource IconButtonStyle}"
+										Text="READ"
+										ImageSource="{FontImageSource FontFamily=MDI, Glyph='&#xF1004;', Size=20, Color={AppThemeBinding Light={StaticResource OnPrimaryDark}, Dark={StaticResource OnPrimaryDark}}}"
+										BackgroundColor="{AppThemeBinding Light={StaticResource MistPrimaryLight}, Dark={StaticResource MistPrimaryDark}}"
+										BorderColor="{AppThemeBinding Light={StaticResource OnPrimaryDark}, Dark={StaticResource OnPrimaryDark}}"
+										TextColor="{AppThemeBinding Light={StaticResource OnPrimaryDark}, Dark={StaticResource OnPrimaryDark}}" />
+
+								<!-- Right Actions: Comment + Share -->
+								<HorizontalStackLayout Grid.Column="2"
+													   Spacing="8"
+													   HorizontalOptions="End">
+									<!-- COMMENT Button (Optically Aligned via Padding) -->
+									<Button WidthRequest="44"
+											Clicked="OnCommentClicked"
+											Style="{StaticResource IconButtonStyle}"
+											Padding="0,0,2,0"
+											Text="&#xF173E;"
+											BackgroundColor="{StaticResource CommentAccent}"
+											BorderColor="{StaticResource OnCommentDark}"
+											TextColor="{StaticResource OnCommentDark}" />
+
+									<!-- SHARE Button (Optically Aligned via Padding) -->
+									<Button HorizontalOptions="End"
+											WidthRequest="44"
+											Clicked="OnShareClicked"
+											Style="{StaticResource IconButtonStyle}"
+											Padding="0,0,0,3"
+											Text="&#xF0496;"
+											BackgroundColor="{StaticResource ShareAccent}"
+											BorderColor="{StaticResource OnShareDark}"
+											TextColor="{StaticResource OnShareDark}" />
+								</HorizontalStackLayout>
+							</Grid>
+						</VerticalStackLayout>
+					</Border>
+				</VerticalStackLayout>
+			</DataTemplate>
+		</CollectionView.ItemTemplate>
+	</CollectionView>
 
 </ContentPage>

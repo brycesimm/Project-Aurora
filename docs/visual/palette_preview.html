@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aurora Project - Palette Preview</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -19,7 +19,7 @@
 
         .container {
             width: 375px;
-            height: 700px;
+            height: 750px;
             border-radius: 30px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -37,7 +37,7 @@
         /* Dark Mode */
         .dark-mode {
             background-color: #263238; /* Blue Grey 900 */
-            color: #ECEFF1;
+            color: #FFFFFF;
         }
 
         .header {
@@ -46,7 +46,7 @@
 
         .title {
             font-size: 24px;
-            font-weight: 800;
+            font-weight: 900;
             margin: 0 0 8px 0;
         }
 
@@ -76,9 +76,10 @@
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
             margin-bottom: 12px;
+            border: 2px solid #3e2723;
         }
 
         .accent-vibe {
@@ -88,64 +89,73 @@
 
         .card-title {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 800;
             margin: 0 0 8px 0;
         }
 
         .card-text {
-            font-size: 14px;
-            line-height: 1.5;
-            opacity: 0.8;
+            font-size: 16px;
+            line-height: 1.25;
             margin-bottom: 16px;
+        }
+
+        .dark-mode .card-text {
+            color: #E0E0E0;
         }
 
         .actions {
             display: flex;
-            gap: 12px;
+            gap: 8px;
+            align-items: center;
         }
 
         .btn {
-            border: none;
+            border: 2px solid transparent;
             padding: 8px 16px;
             border-radius: 24px;
             font-family: inherit;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle lift for filled buttons */
+            height: 40px;
         }
 
-        /* Light Mode Buttons */
-        .light-mode .btn-primary {
+        .btn-circle {
+            width: 40px;
+            padding: 0;
+        }
+
+        /* Button Colors - Light & Dark Unified High Contrast */
+        .btn-primary {
             background-color: #7986CB;
-            color: white;
-        }
-        .light-mode .btn-uplift {
-            background-color: #F48FB1;
-            color: white;
-        }
-        .light-mode .btn-share {
-            background-color: #80CBC4;
-            color: white;
-        }
-
-        /* Dark Mode Buttons - Text is dark for better contrast on pastel backgrounds */
-        .dark-mode .btn-primary {
-            background-color: #9FA8DA;
+            border-color: #263238;
             color: #263238;
         }
-        .dark-mode .btn-uplift {
+        .btn-uplift {
             background-color: #F48FB1;
+            border-color: #3e2723;
             color: #3e2723;
         }
-        .dark-mode .btn-share {
+        .btn-share {
             background-color: #80CBC4;
+            border-color: #004d40;
             color: #004d40;
         }
+        .btn-comment {
+            background-color: #CE93D8;
+            border-color: #4A148C;
+            color: #4A148C;
+        }
 
+        /* Light Mode Specific Button Overrides */
+        .light-mode .btn-primary {
+            border-color: #37474F;
+            color: #37474F;
+        }
 
         .swatch-container {
             padding: 24px;
@@ -163,14 +173,8 @@
             font-size: 10px;
             flex-direction: column;
             text-align: center;
-        }
-        
-        .swatch span {
-            background: rgba(255,255,255,0.4);
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-top: 4px;
-            color: #000;
+            font-weight: 800;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
     </style>
@@ -185,21 +189,23 @@
         </div>
 
         <div class="card">
-            <span class="tag accent-vibe">Vibe of the Day</span>
+            <span class="tag accent-vibe">VIBE OF THE DAY</span>
             <h2 class="card-title">Puppy Rescues Kitten</h2>
             <p class="card-text">In a heartwarming turn of events, a local golden retriever guided firefighters to a trapped kitten...</p>
             <div class="actions">
-                <button class="btn btn-primary">READ</button>
                 <button class="btn btn-uplift">♥ 42</button>
-                <button class="btn btn-share">SHARE</button>
+                <button class="btn btn-primary" style="flex: 1;">READ</button>
+                <button class="btn btn-comment btn-circle">M</button>
+                <button class="btn btn-share btn-circle">S</button>
             </div>
         </div>
 
         <div class="swatch-container">
-            <div class="swatch" style="background: #7986CB; color: white;">Primary<br>#7986CB</div>
-            <div class="swatch" style="background: #F48FB1; color: white;">Uplift<br>#F48FB1</div>
+            <div class="swatch" style="background: #7986CB; color: #263238;">Primary<br>#7986CB</div>
+            <div class="swatch" style="background: #F48FB1; color: #3e2723;">Uplift<br>#F48FB1</div>
             <div class="swatch" style="background: #FFCC80; color: #3e2723;">Vibe<br>#FFCC80</div>
-            <div class="swatch" style="background: #80CBC4; color: white;">Share<br>#80CBC4</div>
+            <div class="swatch" style="background: #80CBC4; color: #004d40;">Share<br>#80CBC4</div>
+            <div class="swatch" style="background: #CE93D8; color: #4A148C;">Comment<br>#CE93D8</div>
         </div>
     </div>
 
@@ -211,13 +217,14 @@
         </div>
 
         <div class="card">
-            <span class="tag accent-vibe">Vibe of the Day</span>
+            <span class="tag accent-vibe">VIBE OF THE DAY</span>
             <h2 class="card-title">Community Garden Blooms</h2>
             <p class="card-text">Neighbors banded together this weekend to transform an empty lot into a vibrant garden...</p>
             <div class="actions">
-                <button class="btn btn-primary">READ</button>
                 <button class="btn btn-uplift">♥ 128</button>
-                <button class="btn btn-share">SHARE</button>
+                <button class="btn btn-primary" style="flex: 1;">READ</button>
+                <button class="btn btn-comment btn-circle">M</button>
+                <button class="btn btn-share btn-circle">S</button>
             </div>
         </div>
 
@@ -226,6 +233,7 @@
             <div class="swatch" style="background: #F48FB1; color: #3e2723;">Uplift<br>#F48FB1</div>
             <div class="swatch" style="background: #FFCC80; color: #3e2723;">Vibe<br>#FFCC80</div>
             <div class="swatch" style="background: #80CBC4; color: #004d40;">Share<br>#80CBC4</div>
+            <div class="swatch" style="background: #CE93D8; color: #4A148C;">Comment<br>#CE93D8</div>
         </div>
     </div>
 
