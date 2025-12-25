@@ -119,6 +119,18 @@
   6. **(Completed)** Implement GitHub Actions CI pipeline for automated build and test verification.
   7. **(Completed)** Standardize code style using Roslyn Analyzers and `.editorconfig`.
   8. Prioritize follow-up items feeding into Phase 5 validation experiments.
+- **Milestone E (Completed as of 2025-12-24): Core Interactions & Polish**
+  1. **(Completed)** Data Model Evolution: Update schema and models to support reaction counts (`UpliftCount`).
+  2. **(Completed)** Backend Persistence: Implement Azure Table Storage service for tracking reactions.
+  3. **(Completed)** API Endpoint: Create serverless endpoint to handle reaction submissions.
+  4. **(Completed)** UI Integration: Connect "Uplift" button to backend and display live counts.
+  5. **(Completed)** Native Sharing: Implement share sheet integration.
+  6. **(Completed)** Visual Polish: Standardize styling and ensure accessibility compliance.
+      - **(Completed)** Define Design System & Palette (Morning Mist).
+      - **(Completed)** Implement Color & Theme Resources.
+      - **(Completed)** Apply Design System to Main Page.
+  7.  Visual Refinements:
+      - **(In Progress)** Adjust typography and spacing for physical devices (Story E-03.4).
 
 ### Phase 5: Validation Strategy
 **Status:** In Progress
@@ -154,6 +166,9 @@
 | 2025-12-07 | Downgraded Swashbuckle.AspNetCore to 6.5.0 | Resolved `TypeLoadException` and `Microsoft.OpenApi` version conflict with `Microsoft.AspNetCore.OpenApi` 9.0.0 for .NET 9 compatibility. |
 | 2025-12-12 | Refactored schema generation to single project | Simplified and made robust the schema generation process, moving from a two-project system to an in-memory console application using `Newtonsoft.Json` and a custom converter for clean, minimal output. |
 | 2025-12-21 | Implemented GitHub Actions CI | Automates "Verify, Then Trust" mandate; requires successful build/test before merge. |
+| 2025-12-23 | Adopted Azure Table Storage & Azurite | Selected for low cost, simplicity, and ease of local offline-first development for reaction persistence. |
+| 2025-12-24 | Established "Morning Mist" Design System | Adopted a pastel, rounded, "Cozy & Warm" aesthetic (Nunito font, soft corners) to align with the "Refuge from Negativity" mission. |
+| 2025-12-24 | Enabled Local LAN Testing | Configured API to listen on 0.0.0.0 and opened Firewall port 7071 to allow physical device testing over Wi-Fi, superior to emulator. |
 
 ---
 
@@ -180,4 +195,4 @@
 
 ---
 
-**Last Updated:** 2025-12-23
+**Last Updated:** 2025-12-24
