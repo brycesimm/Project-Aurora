@@ -107,7 +107,7 @@ Created 5-phase planning approach to avoid premature technical decisions:
     - Formalized use of `BACKLOG.md` with Acceptance Criteria.
     - Established a collaborative, step-by-step development pace.
 - Resolved a persistent build cache corruption issue in the .NET MAUI environment. The solution required manually deleting the hidden `.vs` folder to force a true clean build.
-- Documented the caching issue and its solution in `DEBUGGING_NOTES.md` for future reference.
+- Documented the caching issue and its solution in `../technical/DEBUGGING.md` for future reference.
 
 ### Next Focus
 1. Resume implementation of **Story A-01.2: Vibe of the Day hero card**.
@@ -628,7 +628,7 @@ Key accomplishments include:
 3.  **Infrastructure Stability (Azurite):**
     *   Diagnosed a "Connection Refused" error caused by Azurite not starting in "Multiple Startup Projects" mode.
     *   **Root Cause:** Visual Studio only triggers "Connected Services" dependencies for the first project in the startup list.
-    *   **Fix:** Configured `Aurora.Api` with `serviceDependencies.json` and documented the requirement to place the API project at the top of the startup list in `DEBUGGING_NOTES.md`.
+    *   **Fix:** Configured `Aurora.Api` with `serviceDependencies.json` and documented the requirement to place the API project at the top of the startup list in `../technical/DEBUGGING.md`.
 4.  **Version Control:** Pushed `feature/E-03.2-theme-resources` to remote, ready for PR.
 
 ### Next Focus

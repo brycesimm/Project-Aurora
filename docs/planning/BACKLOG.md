@@ -1,6 +1,6 @@
 # Project Aurora - Backlog
 
-This document tracks the features, user stories, and tasks for Project Aurora. It is organized by milestones defined in `.gemini/PLANNING.md`.
+This document tracks the features, user stories, and tasks for Project Aurora. It is organized by milestones defined in `PLANNING.md`.
 
 ---
 
