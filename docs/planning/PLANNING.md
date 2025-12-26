@@ -119,7 +119,7 @@
   6. **(Completed)** Implement GitHub Actions CI pipeline for automated build and test verification.
   7. **(Completed)** Standardize code style using Roslyn Analyzers and `.editorconfig`.
   8. Prioritize follow-up items feeding into Phase 5 validation experiments.
-- **Milestone E (Completed as of 2025-12-24): Core Interactions & Polish**
+- **Milestone E (Completed as of 2025-12-25): Core Interactions & Polish**
   1. **(Completed)** Data Model Evolution: Update schema and models to support reaction counts (`UpliftCount`).
   2. **(Completed)** Backend Persistence: Implement Azure Table Storage service for tracking reactions.
   3. **(Completed)** API Endpoint: Create serverless endpoint to handle reaction submissions.
@@ -129,11 +129,22 @@
       - **(Completed)** Define Design System & Palette (Morning Mist).
       - **(Completed)** Implement Color & Theme Resources.
       - **(Completed)** Apply Design System to Main Page.
-  7.  Visual Refinements:
-      - **(In Progress)** Adjust typography and spacing for physical devices (Story E-03.4).
+      - **(Completed)** Adjust typography and spacing for physical devices (Story E-03.4).
+
+- **Milestone V-0 (In Progress): Beta Readiness**
+  *Prerequisite to Phase 5 validation: transforms Aurora from local prototype to cloud-connected application with real content.*
+  - **Phase 1 (Immediate):** Core infrastructure and real content integration
+    1. Deploy Aurora API and storage to Azure (Functions, Table Storage, Blob Storage).
+    2. Implement article reader (browser launch via READ button).
+    3. Migrate content delivery from static JSON to Azure Blob Storage.
+    4. Curate and integrate real uplifting news stories (1 Vibe + 5-10 Picks).
+  - **Phase 2 (Post-Verification):** Content management tooling after Phase 1 testing
+    5. Create PowerShell validation script for JSON schema compliance.
+    6. Create PowerShell deployment script with rollback capability.
+    7. Create PowerShell template generator for content.json scaffolding.
 
 ### Phase 5: Validation Strategy
-**Status:** In Progress
+**Status:** Blocked (awaiting Milestone V-0 completion)
 
 #### Questions to Answer:
 - [x] How will we know if this resonates with users...
@@ -169,6 +180,7 @@
 | 2025-12-23 | Adopted Azure Table Storage & Azurite | Selected for low cost, simplicity, and ease of local offline-first development for reaction persistence. |
 | 2025-12-24 | Established "Morning Mist" Design System | Adopted a pastel, rounded, "Cozy & Warm" aesthetic (Nunito font, soft corners) to align with the "Refuge from Negativity" mission. |
 | 2025-12-24 | Enabled Local LAN Testing | Configured API to listen on 0.0.0.0 and opened Firewall port 7071 to allow physical device testing over Wi-Fi, superior to emulator. |
+| 2025-12-26 | Defined Milestone V-0: Beta Readiness | Created prerequisite milestone before Phase 5 validation to deploy cloud infrastructure, integrate real content, and establish content management tooling. Two-phase approach: Phase 1 (core infrastructure, V-0.1 to V-0.4) followed by Phase 2 (PowerShell automation tooling, V-0.5 to V-0.7) after verification. Chose Azure Blob Storage for content delivery, hotlinking for images with placeholder fallback, and PowerShell for scripting. |
 
 ---
 

@@ -693,3 +693,69 @@ The application now feels grounded, accessible, and aesthetically unified.
 ### Next Focus
 1.  Merge the `feature/E-03.4-visual-refinements` branch.
 2.  Begin **Phase 5: Validation Strategy**.
+
+---
+
+## 2025-12-26: Milestone V-0 Planning - Beta Readiness Strategy
+
+### Summary
+This session conducted a comprehensive planning review following the completion of Milestone E. After analyzing the current state of the application, we identified critical gaps preventing meaningful beta testing and collaboratively defined a new prerequisite milestone (V-0) to address them.
+
+### Key Discoveries & Decisions
+
+**Gap Analysis:**
+- Application currently uses static `sample.content.json` with fake placeholder stories
+- Local-only infrastructure (Azurite, localhost API) prevents remote tester access
+- READ button exists but doesn't open articles (core feature missing)
+- **Conclusion:** Current state can only validate UI/design, not product value proposition
+
+**Strategic Decision: Milestone V-0 - Beta Readiness**
+- Created as prerequisite to Phase 5 validation
+- Transforms Aurora from local prototype to cloud-connected application with real content
+- Enables meaningful beta feedback on actual product experience
+
+### Planning Session Outcomes
+
+**Milestone Structure Defined:**
+- **Phase 1 (Immediate - Stories V-0.1 to V-0.4):** Core infrastructure and real content
+  1. Deploy Aurora API to Azure (Functions, Table Storage, Blob Storage)
+  2. Implement article reader (browser launch via READ button)
+  3. Migrate content delivery to Azure Blob Storage for dynamic updates
+  4. Curate and integrate 1 Vibe + 5-10 real uplifting news articles
+
+- **Phase 2 (Post-Verification - Stories V-0.5 to V-0.7):** Content management tooling
+  5. PowerShell validation script for JSON schema compliance
+  6. PowerShell deployment script with rollback capability
+  7. PowerShell template generator for content.json scaffolding
+
+**Key Technical Decisions:**
+- **Content Storage:** Azure Blob Storage (allows updates without app rebuild)
+- **Image Strategy:** Hotlink article Open Graph images with placeholder fallback
+- **Scripting Language:** PowerShell (native to Windows, no additional install)
+- **Content Curation:** Collaborative approach (user and assistant find articles)
+- **Phasing:** Test Phase 1 first, then add Phase 2 automation after verification
+
+**Cost Assessment:**
+- Azure Functions Consumption Plan: ~Free (1M executions/month free tier)
+- Azure Table Storage: ~$0.045/GB/month (expecting <100MB)
+- Azure Blob Storage: ~$0.02/GB/month
+- **Estimated Beta Cost:** $0-5/month
+
+### Documentation Updates
+1. **BACKLOG.md:** Added 7 new stories (V-0.1 through V-0.7) with comprehensive acceptance criteria and edge cases
+2. **PLANNING.md:**
+   - Marked Story E-03.4 as completed (corrected from "In Progress")
+   - Added Milestone V-0 to Phase 4 roadmap
+   - Updated Phase 5 status to "Blocked (awaiting V-0 completion)"
+   - Added planning session decision to Key Decisions Log
+
+### Workflow Strategy
+- **Immediate Priority:** Execute Phase 1 stories (V-0.1 to V-0.4)
+- **Verification Gate:** Test cloud-connected app with real content on physical device
+- **Then:** Add Phase 2 automation tooling if Phase 1 validation succeeds
+- **Rationale:** Avoid overengineering automation before validating cloud infrastructure works
+
+### Next Focus
+1. Commit planning documentation to `planning/milestone-v0-beta-readiness` branch
+2. Merge planning branch to `main`
+3. Begin implementation of **Story V-0.1: Cloud Infrastructure Deployment**
