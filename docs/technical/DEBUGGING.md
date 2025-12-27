@@ -287,3 +287,75 @@ If you suspect changes are still not being picked up, create a strong dependency
 - Open **Solution Properties > Startup Project**.
 - Ensure the **`Aurora.Api`** project is moved to the **top** of the "Multiple Startup Projects" list.
 - This ensures the API's service dependencies (Azurite) are fully initialized before the UI layer attempts to communicate with the backend.
+
+---
+
+## Azure App Service Plan Quota Limitations (New Accounts)
+
+**Symptom:**
+- Azure deployment fails with `SubscriptionIsOverQuotaForSku` error
+- Error message shows: `Current Limit (Dynamic VMs): 0` or `Current Limit (Basic VMs): 0`
+- Deployment requires 1 VM, but quota shows `0 of 0` available
+- Occurs even after upgrading from Free Trial to Pay-As-You-Go subscription
+
+**Example Error:**
+```
+SubscriptionIsOverQuotaForSku
+Current Limit (Dynamic VMs): 0
+Current Usage: 0
+Amount required for this deployment (Dynamic VMs): 1
+```
+
+**Cause:**
+- **New Pay-As-You-Go accounts have zero quota for all App Service Plan tiers by default**
+- This is an anti-fraud measure by Microsoft to prevent abuse on newly created accounts
+- Upgrading from Free Trial to Pay-As-You-Go does NOT automatically grant compute resource quotas
+- Quotas must be explicitly requested via Azure Portal or Support
+
+**Affected Resources:**
+- Azure Functions (Consumption Plan / Y1 SKU) - "Dynamic VMs"
+- App Service Plans (Basic B1, Standard S1, Premium P1v2, etc.)
+- All tiers start at 0 quota until manually approved
+
+**Resolution:**
+
+1. **Access Azure Quotas Portal:**
+   - Azure Portal → Search for "Quotas" → Click **Quotas** service
+   - Select **Provider:** "App Service (Public Preview)"
+
+2. **Identify the Required Quota:**
+   - For **Consumption Plan (serverless)**: Look for "Y1 VMs" or "Total Regional VMs"
+   - For **Basic/Standard/Premium tiers**: Look for specific SKU (e.g., "B1 VMs", "S1 VMs")
+   - Quota will show `0 of 0` for the target region (e.g., East US)
+
+3. **Request Quota Increase:**
+   - Click the **edit/pen icon** next to the quota row
+   - Enter new limit (e.g., 3 for Consumption Plan, 10 for production)
+   - Provide justification: "Need quota for Azure Functions deployment. Upgraded to Pay-As-You-Go, currently have 0 quota."
+   - Submit request
+
+4. **Approval Timeline:**
+   - Small requests (1-10 instances) for Consumption/Basic tiers: **Minutes to 1-2 hours** (often auto-approved)
+   - Larger requests or Premium tiers: Up to 48 hours (manual review)
+   - Check email for approval notification
+
+5. **Verification:**
+   - Return to Quotas page
+   - Quota should update from `0 of 0` to `0 of <requested-limit>` (e.g., `0 of 3`)
+   - Retry deployment - should succeed
+
+**Important Notes:**
+- **"Total Regional VMs" is informational only** - According to Microsoft's documentation, you should NOT request increases for this quota directly. It automatically adjusts when individual SKU quotas are approved.
+- Quota requests are **per region** - East US quota does not apply to West US
+- Consumption Plan quota is the most cost-effective (free tier, pay-per-execution)
+- If blocked, consider requesting Consumption Plan (Y1) first for immediate free deployment
+
+**Alternative (Temporary Workaround):**
+If you cannot wait for quota approval and need immediate deployment:
+- Deploy to a **different Azure region** that may have available quota
+- Note: This is unlikely on brand new accounts; quota is subscription-wide, not region-specific
+
+**Documentation References:**
+- Azure Quotas Portal: [Quickstart - Request quota increase](https://learn.microsoft.com/en-us/azure/quotas/quickstart-increase-quota-portal)
+- New quota UI announcement: [App Service Quota Self-Service Experience](https://techcommunity.microsoft.com/blog/appsonazureblog/announcing-the-public-preview-of-the-new-app-service-quota-self-service-experien/4450415)
+
