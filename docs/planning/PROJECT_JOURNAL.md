@@ -759,3 +759,112 @@ This session conducted a comprehensive planning review following the completion 
 1. Commit planning documentation to `planning/milestone-v0-beta-readiness` branch
 2. Merge planning branch to `main`
 3. Begin implementation of **Story V-0.1: Cloud Infrastructure Deployment**
+---
+
+## 2025-12-27: Story V-0.1 Completion - Cloud Infrastructure Deployment & Quota Resolution
+
+### Summary
+This session successfully completed **Story V-0.1: Cloud Infrastructure Deployment**, transforming Aurora from a local development prototype to a fully cloud-connected application. The session overcame significant Azure quota limitations and verified end-to-end cloud connectivity on physical devices over cellular networks.
+
+### Key Accomplishments
+
+**Infrastructure Deployment:**
+1. **Bicep Infrastructure as Code:** Created modular, production-ready Azure infrastructure templates
+   - Main orchestrator (`main.bicep`) with parameterized environment configuration
+   - Storage module: Blob Storage + Table Storage for reactions
+   - Monitoring module: Application Insights + Log Analytics workspace
+   - Compute module: Consumption Plan (Y1) + Linux Function App (.NET 9)
+   - PowerShell deployment script with validation and structured output
+
+2. **Azure Quota Resolution:**
+   - Discovered new Pay-As-You-Go accounts have **zero quota** for all App Service Plan tiers by default
+   - Successfully requested Y1 VMs quota (3 instances) via Azure Portal self-service workflow
+   - Quota approved within minutes, enabling immediate Consumption Plan deployment
+
+3. **Cloud Resources Deployed (East US):**
+   - Resource Group: `rg-aurora-beta`
+   - Storage Account: Blob + Table Storage with "Reactions" table
+   - Application Insights: With managed Log Analytics workspace
+   - App Service Plan: Consumption Plan (Y1 - serverless, $0/month for beta usage)
+   - Function App: .NET 9 isolated process with CORS configured
+
+**Code Deployment & Configuration:**
+1. **Azure Functions Deployment:**
+   - Deployed `Aurora.Api` to cloud Function App successfully
+   - `GetDailyContent` endpoint serving embedded `sample.content.json`
+   - `ReactToContent` endpoint writing to cloud Azure Table Storage
+   - Verified both endpoints accessible from public internet
+
+2. **Environment-Specific Configuration:**
+   - Created `appsettings.Development.json` for local development (localhost API)
+   - Updated `appsettings.json` with production cloud API URL
+   - Updated `MauiProgram.cs` to conditionally load Development config in DEBUG builds
+   - Maintains zero-warning build mandate across Debug and Release configurations
+
+**End-to-End Verification:**
+1. **Android Emulator Testing (Release build):**
+   - Vibe of the Day and Daily Picks loaded from cloud API
+   - Uplift button reactions persisted to Azure Table Storage
+   - Verified reaction counts visible in Azure Storage Explorer
+
+2. **S24 Ultra Physical Device Testing (Cellular network):**
+   - Deployed Release build to S24 Ultra over USB
+   - Disconnected from Wi-Fi, tested over cellular data only
+   - ✅ Content loaded successfully from cloud API
+   - ✅ Reactions persisted to cloud Table Storage
+   - ✅ Verified app works independently of development machine
+
+### Technical Challenges & Resolutions
+
+**Challenge 1: Azure Quota Limitation on New Accounts**
+- **Issue:** All App Service Plan tiers (Consumption, Basic, etc.) had 0 quota on new Pay-As-You-Go account
+- **Root Cause:** Microsoft anti-fraud measure for new accounts; upgrade to Pay-As-You-Go doesn't auto-grant compute quotas
+- **Resolution:** Used Azure Portal self-service quota request workflow for Y1 VMs (Consumption Plan)
+- **Learning:** New Azure Portal quota UI (Public Preview) streamlines requests; small increases often auto-approve
+
+**Challenge 2: Sensitive Information in Public Repository**
+- **Issue:** Concern about exposing resource names and deployment details in commit messages
+- **Resolution:** Sanitized commit messages to remove specific resource names while maintaining technical clarity
+- **Decision:** Infrastructure templates are safe to commit (no secrets); `SESSION_RESUME_2025-12-27.md` remains untracked
+
+**Challenge 3: Environment Switching Complexity**
+- **Issue:** Need seamless local development (localhost) vs. production (cloud) API configuration
+- **Resolution:** Implemented ASP.NET Core-style environment-specific configuration using conditional compilation
+- **Outcome:** Debug builds use localhost automatically; Release builds use cloud API with zero manual changes
+
+### Documentation Updates
+1. **BACKLOG.md:** Marked Story V-0.1 and all acceptance criteria as complete
+2. **PROJECT_JOURNAL.md:** Added comprehensive session summary
+3. **ARCHITECTURE.md:** (Pending) Will document cloud deployment topology in next update
+
+### Current State
+
+**Azure Infrastructure:**
+- ✅ Fully operational and verified
+- ✅ Consumption Plan (Y1) - $0/month for beta usage
+- ✅ Table Storage persisting reactions globally
+- ✅ Application Insights capturing telemetry
+
+**MAUI Application:**
+- ✅ Cloud-connected in Release builds
+- ✅ Localhost development in Debug builds
+- ✅ Verified on Android emulator and S24 Ultra physical device
+- ✅ Zero-warning build maintained
+
+**Code Repository:**
+- Branch: `feature/V-0.1-azure-deployment`
+- Commits: Infrastructure templates, deployment scripts, environment configuration
+- Ready for: Pull request and merge to `main`
+
+### Next Focus
+1. **Immediate:** Update `ARCHITECTURE.md` to document cloud deployment topology
+2. **Story V-0.2:** Implement article reader (READ button → Browser launch)
+3. **Story V-0.3:** Migrate content delivery from embedded JSON to Azure Blob Storage
+4. **Story V-0.4:** Curate and integrate real uplifting news content
+
+---
+
+**Session Duration:** ~3 hours  
+**Key Milestone:** Aurora is now a cloud-connected application ready for beta testing  
+**Blocker Resolved:** Azure quota limitation on new Pay-As-You-Go accounts  
+**Deployment Cost:** $0/month (Consumption Plan free tier + minimal storage costs)
