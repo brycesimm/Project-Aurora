@@ -27,17 +27,28 @@ public static class MauiProgram
 				fonts.AddFont("Nunito-Black.ttf", "NunitoBlack");
 			});
 
+		// Load configuration files (Production base + Development overrides)
 		var assembly = Assembly.GetExecutingAssembly();
-		using var stream = assembly.GetManifestResourceStream("Aurora.appsettings.json");
+		var configBuilder = new ConfigurationBuilder();
 
+		// Load base production configuration
+		using var stream = assembly.GetManifestResourceStream("Aurora.appsettings.json");
 		if (stream != null)
 		{
-			var config = new ConfigurationBuilder()
-				.AddJsonStream(stream)
-				.Build();
-
-			builder.Configuration.AddConfiguration(config);
+			configBuilder.AddJsonStream(stream);
 		}
+
+		// Load development overrides in DEBUG builds
+#if DEBUG
+		using var devStream = assembly.GetManifestResourceStream("Aurora.appsettings.Development.json");
+		if (devStream != null)
+		{
+			configBuilder.AddJsonStream(devStream);
+		}
+#endif
+
+		var config = configBuilder.Build();
+		builder.Configuration.AddConfiguration(config);
 
 		builder.Services.AddHttpClient<IContentService, ContentService>(client =>
 		{

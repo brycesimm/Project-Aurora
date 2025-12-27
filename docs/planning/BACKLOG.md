@@ -190,12 +190,12 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 ### Feature V-01: Cloud Infrastructure & Real Content (Phase 1)
 *Core infrastructure deployment and real content integration to achieve a testable cloud-connected application.*
 
-- [ ] **Story V-0.1:** As a developer, I want the Aurora API and storage deployed to Azure so that beta testers can access the application from any network.
-    - **AC 1:** Azure Functions app is created and configured (Consumption Plan, .NET 9, Application Insights enabled, CORS configured for mobile app).
-    - **AC 2:** Azure Table Storage is deployed with "Reactions" table and connection string configured in Function App settings.
-    - **AC 3:** GetDailyContent endpoint is accessible from public internet at `https://aurora-api-[uniqueid].azurewebsites.net/api/GetDailyContent` and returns valid JSON.
-    - **AC 4:** ReactToContent endpoint persists data to cloud Table Storage; subsequent GET requests reflect updated counts.
-    - **AC 5:** MAUI app is reconfigured with production Azure Function URL; verified working on Android emulator and S24 Ultra over cellular.
+- [x] **Story V-0.1:** As a developer, I want the Aurora API and storage deployed to Azure so that beta testers can access the application from any network.
+    - **AC 1:** [x] Azure Functions app is created and configured (Consumption Plan, .NET 9, Application Insights enabled, CORS configured for mobile app).
+    - **AC 2:** [x] Azure Table Storage is deployed with "Reactions" table and connection string configured in Function App settings.
+    - **AC 3:** [x] GetDailyContent endpoint is accessible from public internet at `https://aurora-api-[uniqueid].azurewebsites.net/api/GetDailyContent` and returns valid JSON.
+    - **AC 4:** [x] ReactToContent endpoint persists data to cloud Table Storage; subsequent GET requests reflect updated counts.
+    - **AC 5:** [x] MAUI app is reconfigured with production Azure Function URL; verified working on Android emulator and S24 Ultra over cellular.
     - **Edge Cases:**
         - Cold start delays (2-5 seconds) are acceptable for beta.
         - Use `appsettings.Development.json` vs. `appsettings.json` for local vs. cloud environment switching.

@@ -76,3 +76,120 @@ To ensure a responsive and "live" user experience, especially during interactive
 2.  `ContentService` sends POST request to `Aurora.Api` (`/api/articles/{id}/react`).
 3.  `ReactionStorageService` interacts with Azure Table Storage (or Azurite) to increment counts.
 4.  Updated count is returned to Client and UI updates optimistically.
+
+## ☁️ Cloud Deployment Architecture
+
+### Azure Infrastructure (Production)
+
+Aurora's cloud infrastructure is deployed to **Azure (East US region)** using a **serverless, consumption-based** architecture to minimize operational costs during beta testing.
+
+**Resource Group:** `rg-aurora-beta`
+
+#### Compute Layer
+- **Azure Functions** (Consumption Plan - Y1 SKU)
+  - Serverless, pay-per-execution model ($0/month for beta usage under 1M executions)
+  - .NET 9 isolated process runtime
+  - Linux hosting environment
+  - Auto-scales 0-3 instances based on load
+  - CORS configured for mobile application access
+
+**Endpoints:**
+- `GET /api/GetDailyContent` - Serves content feed (currently embedded JSON, migrating to Blob Storage in V-0.3)
+- `POST /api/articles/{id}/react` - Increments reaction counts in Table Storage
+
+#### Storage Layer
+- **Azure Table Storage**
+  - NoSQL key-value store for reaction counts
+  - Table: "Reactions" (PartitionKey: article ID, RowKey: "uplift")
+  - Provides global persistence across all users and sessions
+  - Cost: ~$0.045/GB/month (expecting <100MB for beta)
+
+- **Azure Blob Storage**
+  - Container: `aurora-content` (private access)
+  - Planned for V-0.3: Dynamic content delivery (content.json updates without redeployment)
+  - Cost: ~$0.02/GB/month
+
+#### Monitoring Layer
+- **Application Insights**
+  - Telemetry collection for Function App performance and errors
+  - Integrated Log Analytics workspace for query and analysis
+  - Enables cold start monitoring, exception tracking, and usage analytics
+
+### Deployment Model
+
+**Infrastructure as Code:**
+- Bicep templates define all Azure resources declaratively
+- Modular structure: `main.bicep` orchestrates storage, monitoring, and compute modules
+- Parameterized for environment-specific configuration (beta, production)
+- PowerShell deployment script (`deploy.ps1`) handles validation and deployment
+
+**Code Deployment:**
+- Azure Functions code deployed via `func azure functionapp publish`
+- MAUI application uses environment-specific configuration:
+  - **Debug builds:** `appsettings.Development.json` → localhost API (local development)
+  - **Release builds:** `appsettings.json` → Azure Functions API (cloud-connected)
+
+### Network Architecture
+
+**Mobile Client → Cloud API:**
+- MAUI app communicates with Azure Functions over HTTPS
+- Release builds hardcode production API URL (no runtime discovery)
+- Debug builds use localhost with platform-specific remapping (Android emulator: 10.0.2.2)
+
+**Azure Functions → Table Storage:**
+- Functions use managed service connection strings configured via App Settings
+- No public internet traversal (Azure backbone network)
+- Connection string injected at runtime via environment variables
+
+### Security Model
+
+**API Authentication:**
+- Currently anonymous (no user accounts in MVP)
+- CORS restricts requests to mobile application origins only
+- HTTPS enforced for all endpoints
+
+**Storage Security:**
+- Table Storage accessed via connection string (secured in Function App settings)
+- Blob Storage private access (no public listing or direct access)
+- Connection strings never committed to source control
+
+### Cost Profile (Beta Phase)
+
+**Current Monthly Cost:** ~$0-5/month
+- Consumption Plan: $0 (under 1M free executions)
+- Table Storage: ~$0.05 (minimal data volume)
+- Blob Storage: ~$0.02 (single content file)
+- Application Insights: Free tier (5GB ingestion/month)
+
+**Quota Allocation:**
+- Y1 VMs (Consumption Plan): 3 instances (supports auto-scaling)
+- Sufficient for beta testing with <100 concurrent users
+
+### Disaster Recovery
+
+**Stateful Components:**
+- Reaction counts in Table Storage (persistent, replicated within region)
+- Content JSON in Blob Storage (planned for V-0.3, replicated)
+
+**Stateless Components:**
+- Azure Functions (redeployable from source in <5 minutes)
+- Infrastructure (redeployable from Bicep templates in <3 minutes)
+
+**Backup Strategy:**
+- Infrastructure templates in source control provide "restore from scratch" capability
+- Table Storage data backed up via Azure's geo-redundant storage (GRS)
+- No manual backup processes required for beta phase
+
+### Observability
+
+**Telemetry Streams:**
+- Application Insights captures:
+  - HTTP request/response telemetry (latency, status codes)
+  - Exception tracking and stack traces
+  - Custom events (future: reaction submissions, content loads)
+  - Cold start metrics for Consumption Plan performance
+
+**Monitoring Access:**
+- Azure Portal → Application Insights dashboard
+- Log Analytics queries for advanced troubleshooting
+- Real-time metrics for function execution and failures
