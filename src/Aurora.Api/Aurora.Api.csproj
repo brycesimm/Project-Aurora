@@ -30,4 +30,10 @@
     </Content>
   </ItemGroup>
 
+  <Target Name="EnsureAzuriteRunning" BeforeTargets="PreBuildEvent">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;$port = Get-NetTCPConnection -LocalPort 10002 -ErrorAction SilentlyContinue; if (-not $port) { Write-Host 'Starting Azurite...'; Start-Process cmd -ArgumentList '/c start /min azurite' -WindowStyle Hidden; Start-Sleep -Seconds 3 } else { Write-Host 'Azurite already running on port 10002' }&quot;"
+          IgnoreExitCode="true"
+          ContinueOnError="true" />
+  </Target>
+
 </Project>

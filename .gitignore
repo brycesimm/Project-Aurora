@@ -56,5 +56,9 @@ obj/Debug/net6.0-*/resizetizer/
 # BinSkim
 *.binskim
 
-# Local Storage
+# Local Storage (Azurite Emulator)
 .azurite/
+__azurite_*.json
+AzuriteConfig
+__blobstorage__/
+nul

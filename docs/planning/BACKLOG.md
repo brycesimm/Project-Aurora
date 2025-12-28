@@ -201,7 +201,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - Use `appsettings.Development.json` vs. `appsettings.json` for local vs. cloud environment switching.
         - ReactionStorageService creates initial entity with count=1 if no existing reaction exists (already implemented).
 
-- [ ] **Story V-0.2:** As a user, I want to read the full article when I click "READ" so that I can consume the uplifting news content.
+- [x] **Story V-0.2:** As a user, I want to read the full article when I click "READ" so that I can consume the uplifting news content.
     - **AC 1:** READ button opens article in device's default browser using `Browser.OpenAsync(contentItem.ArticleUrl)` for both Vibe of the Day and Daily Picks.
     - **AC 2:** Invalid/missing URLs are handled gracefully: button is disabled if ArticleUrl is null/empty; malformed URLs show toast "Unable to open article" and log error.
     - **AC 3:** Button provides visual feedback (loading indicator or immediate disable) to prevent double-tap race conditions.
@@ -210,6 +210,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - Validate URL is well-formed (starts with http:// or https://) before calling Browser.OpenAsync().
         - Offline errors are handled by browser app (not Aurora's responsibility).
         - Defer "article read" analytics tracking to post-beta.
+    - **Completed:** 2025-12-27 (Chrome Custom Tabs implementation, Azurite auto-start, real content deployed)
 
 - [ ] **Story V-0.3:** As a developer, I want the API to serve content from Azure Blob Storage so that content can be updated without redeploying the function app.
     - **AC 1:** Azure Blob Storage container `aurora-content` is created (private access) with initial `content.json` file uploaded.
