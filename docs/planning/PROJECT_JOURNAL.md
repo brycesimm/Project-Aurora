@@ -1209,3 +1209,33 @@ This session finalized **Story V-0.4: Real Content Curation**, marking the compl
 
 ### Next Focus
 1.  **Phase 2 Automation:** Begin implementation of **Story V-0.5: Content Validation Script** to streamline future curation updates.
+
+---
+
+## 2025-12-28 (Session 3): Story V-0.5 - Content Validation Script
+
+### Summary
+Implemented **Story V-0.5: Content Validation Script** to prevent deployment of malformed content during beta testing.
+
+### Key Accomplishments
+1. **Created `Validate-Content.ps1`:** PowerShell script validates JSON syntax, required fields, URL formats, and uplift_count constraints
+2. **Optional Image Checks:** `-CheckImageUrls` parameter tests image URL accessibility via HTTP HEAD requests (warns but doesn't fail)
+3. **Quality Warnings:** Detects snippet length issues (<50 or >200 chars) and Daily Picks count recommendations (5-10 items)
+4. **Documentation:** Comprehensive `README.md` with usage examples, validation rules, troubleshooting, and content curation tips
+
+### Testing
+- ✅ Valid content passes with quality warnings for long snippets
+- ✅ Invalid content fails correctly (missing fields, bad URLs, negative counts)
+- ✅ Image URL checks warn for inaccessible placeholders without blocking validation
+
+### Files Created
+- `tools/content-management/Validate-Content.ps1` (344 lines)
+- `tools/content-management/README.md` (329 lines)
+
+### Progress
+**Milestone V-0:** 71% complete (5/7 stories)
+**Phase 2:** 33% complete (1/3 stories)
+
+### Next Focus
+1. Commit and merge Story V-0.5
+2. Implement Story V-0.6 (Deployment script with rollback)

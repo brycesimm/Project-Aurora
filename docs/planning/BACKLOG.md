@@ -242,7 +242,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 
 **Note:** These stories are deferred until after V-0.1 through V-0.4 are complete and tested.
 
-- [ ] **Story V-0.5:** As a content curator, I want automated validation of my content JSON so that I don't accidentally break the app with malformed data.
+- [x] **Story V-0.5:** As a content curator, I want automated validation of my content JSON so that I don't accidentally break the app with malformed data.
     - **AC 1:** PowerShell script `Validate-Content.ps1` exists in `tools/content-management/` directory; run with `.\Validate-Content.ps1 -FilePath .\content.json`.
     - **AC 2:** Script validates JSON against `content.schema.json`: checks syntax, validates required fields, validates UpliftCount is non-negative integer, validates URLs are well-formed (http/https).
     - **AC 3:** Clear error messages: Success: "✓ content.json is valid and ready to upload"; Failure examples: "✗ Error on line 15: Missing required field 'title' in DailyPicks[2]" or "✗ Error: 'article_url' must be a valid URL (got: 'not-a-url')".
@@ -251,6 +251,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **Edge Cases:**
         - JSON schema validation works offline; image URL checks skip with warning if offline.
         - Optional quality validation: warn if snippet >200 chars (too long) or <50 chars (too short).
+    - **Completed:** 2025-12-28 (PowerShell validation script with comprehensive error detection and quality warnings)
 
 - [ ] **Story V-0.6:** As a content curator, I want a one-command deployment process so that I can publish content updates quickly and reliably.
     - **AC 1:** PowerShell script `Deploy-Content.ps1` exists in `tools/content-management/`; run with `.\Deploy-Content.ps1 -FilePath .\content.json -Environment Production`.

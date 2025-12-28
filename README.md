@@ -136,9 +136,36 @@ For **Debug builds** on physical devices connecting to your local API:
 
 ## 🧪 Testing and Quality
 
-Aurora maintains a "Verify, Then Trust" policy. 
+Aurora maintains a "Verify, Then Trust" policy.
 - **Unit Tests:** Business logic is isolated in `Aurora.Client.Core` and tested via xUnit in `Aurora.Client.Core.Tests`.
 - **CI Pipeline:** Every pull request is automatically built and tested via GitHub Actions to ensure stability.
+
+## 📝 Content Management
+
+Aurora's daily content feed is managed through automated PowerShell tooling to ensure quality and prevent deployment errors.
+
+### Validating Content
+
+Before deploying new content, validate it against the schema:
+
+```powershell
+cd tools/content-management
+.\Validate-Content.ps1 -FilePath ..\..\sample.content.json
+```
+
+**Optional:** Check image URL accessibility:
+```powershell
+.\Validate-Content.ps1 -FilePath .\my-content.json -CheckImageUrls
+```
+
+The validation script verifies:
+- JSON syntax and schema compliance
+- Required fields (id, title, snippet, image_url, article_url, uplift_count)
+- URL formats (must start with http:// or https://)
+- Non-negative uplift counts
+- Quality recommendations (snippet length, story count)
+
+See [`tools/content-management/README.md`](tools/content-management/README.md) for detailed documentation, content curation tips, and troubleshooting.
 
 ## 📚 Documentation
 
