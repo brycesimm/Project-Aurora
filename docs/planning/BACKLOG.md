@@ -253,17 +253,18 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - Optional quality validation: warn if snippet >200 chars (too long) or <50 chars (too short).
     - **Completed:** 2025-12-28 (PowerShell validation script with comprehensive error detection and quality warnings)
 
-- [ ] **Story V-0.6:** As a content curator, I want a one-command deployment process so that I can publish content updates quickly and reliably.
-    - **AC 1:** PowerShell script `Deploy-Content.ps1` exists in `tools/content-management/`; run with `.\Deploy-Content.ps1 -FilePath .\content.json -Environment Production`.
-    - **AC 2:** Script performs pre-deployment validation: automatically runs `Validate-Content.ps1`; aborts if validation fails; requires confirmation if warnings exist (e.g., "Image URL returned 404. Continue? [Y/N]").
-    - **AC 3:** Script uploads to Azure Blob Storage using Azure CLI (`az storage blob upload`); overwrites existing file; displays "✓ Content deployed to Production at 2025-12-26 14:32:15".
-    - **AC 4:** Supports multiple environments: `-Environment Dev` vs. `-Environment Production`; defaults to Dev for safety.
-    - **AC 5:** Rollback capability: before upload, downloads current `content.json` and saves as `content.backup.YYYY-MM-DD-HHMMSS.json`; provides `.\Rollback-Content.ps1` to restore; keeps last 5 backups.
-    - **AC 6:** README.md documents full workflow: Edit → Validate → Deploy → Verify → Rollback (if needed).
+- [x] **Story V-0.6:** As a content curator, I want a one-command deployment process so that I can publish content updates quickly and reliably.
+    - **AC 1:** [x] PowerShell script `Deploy-Content.ps1` exists in `tools/content-management/`; run with `.\Deploy-Content.ps1 -FilePath .\content.json -Environment Production`.
+    - **AC 2:** [x] Script performs pre-deployment validation: automatically runs `Validate-Content.ps1`; aborts if validation fails; requires confirmation prompt before deployment.
+    - **AC 3:** [x] Script uploads to Azure Blob Storage using Azure CLI (`az storage blob upload`); overwrites existing file; displays "✓ Content deployed to Dev at 2025-12-28 17:40:24".
+    - **AC 4:** [x] Supports multiple environments: `-Environment Dev` vs. `-Environment Production`; defaults to Dev for safety.
+    - **AC 5:** [x] Rollback capability: before upload, downloads current `content.json` and saves as `content.backup.<Environment>.YYYY-MM-DD-HHMMSS.json`; provides `.\Rollback-Content.ps1` to restore; keeps last 5 backups per environment.
+    - **AC 6:** [x] README.md documents full workflow: Edit → Validate → Deploy → Verify → Rollback (if needed).
     - **Edge Cases:**
-        - Script checks for `az` command; provides install instructions if missing.
-        - Uses `az login` for authentication (user authenticates once, credentials cached).
-        - Azure Blob upload is atomic (all or nothing); if upload fails, old content remains active.
+        - [x] Script checks for `az` command; provides install instructions if missing.
+        - [x] Uses `az login` for authentication (user authenticates once, credentials cached); uses key-based auth for blob operations.
+        - [x] Azure Blob upload is atomic (all or nothing); if upload fails, old content remains active.
+    - **Completed:** 2025-12-28 (PowerShell deployment automation with backup/rollback, tested successfully on Dev environment)
 
 - [ ] **Story V-0.7:** As a content curator, I want a template generator for content.json so that I can quickly create properly formatted content files.
     - **AC 1:** PowerShell script `New-ContentTemplate.ps1` exists in `tools/content-management/`; run with `.\New-ContentTemplate.ps1 -VibeCount 1 -PicksCount 7 -OutputFile .\my-content.json`.

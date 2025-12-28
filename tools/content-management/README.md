@@ -6,7 +6,7 @@ This directory contains PowerShell automation scripts for managing Aurora's dail
 
 ## 📋 Scripts
 
-### Validate-Content.ps1
+### 1. Validate-Content.ps1
 
 Validates a `content.json` file against Aurora's schema requirements before deployment.
 
@@ -32,6 +32,86 @@ Validates a `content.json` file against Aurora's schema requirements before depl
 
 # Validation with image URL accessibility checks
 .\Validate-Content.ps1 -FilePath .\my-content.json -CheckImageUrls
+```
+
+---
+
+### 2. Deploy-Content.ps1
+
+Deploys validated content to Azure Blob Storage with automatic backup and rollback capability.
+
+**Purpose:**
+- Automates content deployment to Azure with validation pre-checks
+- Creates automatic backups before each deployment
+- Supports multiple environments (Dev/Production)
+- Prevents accidental deployments with confirmation prompts
+
+**Usage:**
+```powershell
+.\Deploy-Content.ps1 -FilePath <path-to-content.json> [-Environment <Dev|Production>] [-Force]
+```
+
+**Parameters:**
+- `-FilePath` (required): Path to the content JSON file to deploy
+- `-Environment` (optional): Target environment (`Dev` or `Production`). **Defaults to Dev for safety.**
+- `-Force` (optional): Skip confirmation prompt (use for automation/CI)
+
+**Examples:**
+```powershell
+# Deploy to Dev environment (default, safest)
+.\Deploy-Content.ps1 -FilePath .\content.json
+
+# Deploy to Production (requires confirmation)
+.\Deploy-Content.ps1 -FilePath .\content.json -Environment Production
+
+# Deploy to Production without prompt (CI/automation)
+.\Deploy-Content.ps1 -FilePath .\content.json -Environment Production -Force
+```
+
+**Prerequisites:**
+- **Azure CLI** installed (`winget install Microsoft.AzureCLI`)
+- **Azure authentication:** Run `az login` once (credentials cached)
+- **Blob Storage permissions:** Read/Write access to `aurora-content` container
+
+**What the script does:**
+1. **Validates content** using `Validate-Content.ps1` (aborts if validation fails)
+2. **Downloads current blob** and saves as `content.backup.<Environment>.<timestamp>.json`
+3. **Uploads new content** to Azure Blob Storage (overwrites existing)
+4. **Maintains last 5 backups** per environment (auto-deletes older backups)
+
+---
+
+### 3. Rollback-Content.ps1
+
+Restores a previous content backup to Azure Blob Storage.
+
+**Purpose:**
+- Quickly revert to a previous version if deployment causes issues
+- Browse and select from available backups interactively
+- Restore specific backup file directly
+
+**Usage:**
+```powershell
+.\Rollback-Content.ps1 -Environment <Dev|Production> [-BackupFile <path>]
+```
+
+**Parameters:**
+- `-Environment` (required): Target environment to rollback
+- `-BackupFile` (optional): Specific backup file to restore. If omitted, shows interactive list.
+
+**Examples:**
+```powershell
+# Interactive rollback (shows list of available backups)
+.\Rollback-Content.ps1 -Environment Production
+
+# Restore specific backup directly
+.\Rollback-Content.ps1 -Environment Production -BackupFile .\backups\content.backup.Production.2025-12-28-143215.json
+```
+
+**Backup Location:**
+All backups are stored in `tools/content-management/backups/` directory with naming pattern:
+```
+content.backup.<Environment>.<YYYY-MM-DD-HHMMSS>.json
 ```
 
 ---
@@ -138,18 +218,181 @@ This script uses only PowerShell built-in cmdlets:
 
 ---
 
-## 🚀 Workflow Integration
+## 🚀 Complete Content Management Workflow
 
-### Recommended Content Update Workflow
+### 1. Curate New Content
 
-1. **Edit** content file (e.g., `content.json`)
-2. **Validate** with this script:
-   ```powershell
-   .\Validate-Content.ps1 -FilePath .\content.json -CheckImageUrls
-   ```
-3. **Fix** any errors or warnings
-4. **Deploy** to Azure Blob Storage (using `Deploy-Content.ps1` - coming soon)
-5. **Verify** in the Aurora app on a test device
+**Edit the content file** (recommend working on a copy of `sample.content.json`):
+```powershell
+# Copy template
+cp ..\..\sample.content.json .\my-content.json
+
+# Edit with your preferred editor
+code .\my-content.json
+```
+
+**Follow the content guidelines:**
+- 1 Vibe of the Day (featured story)
+- 5-10 Daily Picks (additional stories)
+- Valid HTTP/HTTPS URLs for articles and images
+- 2-3 sentence snippets (50-200 characters recommended)
+- Unique kebab-case IDs
+
+---
+
+### 2. Validate Content
+
+**Run validation with image checks:**
+```powershell
+.\Validate-Content.ps1 -FilePath .\my-content.json -CheckImageUrls
+```
+
+**Interpret results:**
+- ✅ **No errors?** → Proceed to deployment
+- ⚠️ **Warnings only?** → Review and optionally fix (content is deployable)
+- ❌ **Errors present?** → Fix all errors before deploying
+
+---
+
+### 3. Deploy to Azure
+
+**Deploy to Dev first (recommended):**
+```powershell
+.\Deploy-Content.ps1 -FilePath .\my-content.json -Environment Dev
+```
+
+**Verify on test device:**
+- Open Aurora app on emulator or physical device
+- Check that content loads correctly
+- Test all READ buttons open articles
+- Verify images display properly
+
+**Deploy to Production:**
+```powershell
+.\Deploy-Content.ps1 -FilePath .\my-content.json -Environment Production
+```
+
+**What happens during deployment:**
+```
+╔════════════════════════════════════════════════════════════╗
+║         Aurora Content Deployment Tool - v1.0              ║
+╚════════════════════════════════════════════════════════════╝
+
+Checking prerequisites...
+✓ Azure CLI detected (version 2.x.x)
+✓ Authenticated as: user@example.com
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1/4: Validating content...
+✓ JSON syntax is valid
+✓ Content validation passed
+
+Ready to deploy to: Production
+Continue with deployment? [Y/N]: Y
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 2/4: Creating backup of current content...
+✓ Backup created: content.backup.Production.2025-12-28-143215.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 3/4: Uploading content to Azure Blob Storage...
+✓ Content successfully uploaded to blob storage
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 4/4: Deployment complete
+
+✓ Content deployed to Production at 2025-12-28 14:32:15
+  Storage Account: staurora4tcguzr2zm32w
+  Container: aurora-content
+  Blob: content.json
+
+Backup saved: content.backup.Production.2025-12-28-143215.json
+To rollback: .\Rollback-Content.ps1 -Environment Production
+
+╔════════════════════════════════════════════════════════════╗
+║                  Deployment Successful!                    ║
+╚════════════════════════════════════════════════════════════╝
+```
+
+---
+
+### 4. Verify in Production
+
+**Immediate verification:**
+- Open Aurora app (force close and reopen to clear cache)
+- Confirm new content appears
+- Test article links and reactions
+- Monitor Application Insights for errors (optional)
+
+**If issues are detected:**
+→ Proceed to rollback (Section 5)
+
+---
+
+### 5. Rollback (Emergency Procedure)
+
+**If deployed content has critical issues:**
+
+```powershell
+# Interactive rollback (shows list of backups)
+.\Rollback-Content.ps1 -Environment Production
+```
+
+**Interactive selection example:**
+```
+Available backups for Production environment:
+
+  [1] content.backup.Production.2025-12-28-143215.json
+      Created: 2025-12-28 14:32:15 | Size: 7.70 KB
+
+  [2] content.backup.Production.2025-12-27-091030.json
+      Created: 2025-12-27 09:10:30 | Size: 6.85 KB
+
+  [3] content.backup.Production.2025-12-26-164500.json
+      Created: 2025-12-26 16:45:00 | Size: 7.12 KB
+
+  [0] Cancel rollback
+
+Select backup to restore [0-3]: 1
+
+✓ Selected backup: content.backup.Production.2025-12-28-143215.json
+
+⚠ Warning: This will replace the current Production content with the selected backup.
+
+Continue with rollback? [Y/N]: Y
+
+✓ Content successfully restored from backup
+
+Rollback Summary:
+  Environment: Production
+  Backup restored: content.backup.Production.2025-12-28-143215.json
+  Rollback time: 2025-12-28 14:45:22
+
+╔════════════════════════════════════════════════════════════╗
+║                  Rollback Successful!                      ║
+╚════════════════════════════════════════════════════════════╝
+```
+
+**Direct rollback (specify backup file):**
+```powershell
+.\Rollback-Content.ps1 -Environment Production -BackupFile .\backups\content.backup.Production.2025-12-28-143215.json
+```
+
+---
+
+### Quick Reference Workflow
+
+```
+Edit → Validate → Deploy (Dev) → Test → Deploy (Prod) → Verify
+                                                      ↓
+                                                  Issues?
+                                                      ↓
+                                                  Rollback
+```
 
 ---
 
@@ -209,7 +452,22 @@ Use kebab-case identifiers that are:
 - **Content Schema:** `../../content.schema.json`
 - **Sample Content:** `../../sample.content.json`
 - **Architecture:** `../../docs/technical/ARCHITECTURE.md`
-- **Backlog:** `../../docs/planning/BACKLOG.md` (Story V-0.5)
+- **Backlog:** `../../docs/planning/BACKLOG.md` (Stories V-0.5, V-0.6)
+- **Azure Portal:** [Azure Functions](https://portal.azure.com) (for monitoring and troubleshooting)
+
+---
+
+## 🔐 Security Notes
+
+**Credential Management:**
+- Azure CLI credentials are stored securely by `az login`
+- Never commit `.azure/` directory or credentials to source control
+- Use Azure role-based access control (RBAC) for team environments
+
+**Backup Security:**
+- Backups contain published content only (no sensitive data)
+- Stored locally in `backups/` directory (excluded from git via `.gitignore`)
+- Maintain at least 2 recent backups before deleting old files
 
 ---
 
