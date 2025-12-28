@@ -101,8 +101,8 @@
 #### Roadmap:
 - **Milestone A (Completed as of 2025-12-07): MAUI onboarding + shell with mock data**
   - All stories (A-01.1 to A-01.4) related to the initial application shell, mock data display, and UI controls have been implemented, verified, and merged into the `main` branch. This milestone established the foundational UI of the MAUI application.
-- **Milestone B (In Progress - Updated 2025-12-12): Backend/API + curation workflow**
-  - The strategy and initial stories for Milestone B have been collaboratively defined and documented in `BACKLOG.md`. The focus is on creating a local API prototype using Azure Functions to serve a structured JSON payload, decoupling the front-end from the data source. **Story B-02.1 (Define the Content Schema)** has been completed, as well as **Story B-01.2 (Local, HTTP-triggered function for mock content)**. The automation for schema export has been significantly refactored and simplified into a single console application (`SchemaBuilder`) as part of **Story B-02.2**, and integrated into the build process (**Story B-02.3**).
+- **Milestone B (Completed as of 2025-12-12): Backend/API + curation workflow**
+  - All stories for Milestone B have been completed, including content schema definition (`content.schema.json`), local Azure Functions API prototype (`GetDailyContent` endpoint), and automated schema generation via `SchemaBuilder` console application integrated into the build process.
 - **Milestone C (Completed as of 2025-12-21): Live data integration + reactions/sharing/push**
   1. Add typed data services in the MAUI app (e.g., `IDailyFeedService`) using `HttpClient` + Polly retry policy to fetch the Azure Function endpoint.
   2. Implement loading/error states in the home screen; fall back to cached JSON if offline.
@@ -110,15 +110,11 @@
   4. Integrate native sharing via `Share.Default.RequestAsync`, formatting a message with Vibe title + link.
   5. Configure Firebase Cloud Messaging for Android: create Firebase project, upload google-services.json, register device tokens, and create a server-side push trigger (can reuse Azure Function with HTTP POST) to send the daily notification.
   6. Smoke-test the full loop end-to-end: update JSON, trigger notification, confirm app displays new data and reactions persist.
-- **Milestone D (In Progress): Robust Testing Framework & Service Testability**
-  1. Apply consistent theming (typography, color palette) and ensure accessibility basics (font scaling, contrast checks).
-  2. Test on multiple device sizes/emulators; document layout issues and fixes.
-  3. Instrument basic telemetry (App Center or Azure Insights) for crash/error tracking.
-  4. Recruit a small beta circle; prepare test script (install instructions, feedback form) and capture sentiment in PROJECT_JOURNAL.
-  5. Compile store-readiness checklist (privacy policy draft, screenshot requirements, push notification disclosures) even if launch is later.
-  6. **(Completed)** Implement GitHub Actions CI pipeline for automated build and test verification.
-  7. **(Completed)** Standardize code style using Roslyn Analyzers and `.editorconfig`.
-  8. Prioritize follow-up items feeding into Phase 5 validation experiments.
+- **Milestone D (Completed as of 2025-12-23): Robust Testing Framework & Service Testability**
+  1. **(Completed)** Service Testability Refactor: Created `Aurora.Client.Core` class library to isolate business logic from MAUI framework dependencies.
+  2. **(Completed)** Unit Tests: Implemented comprehensive tests for `ContentService` using `Moq` and `HttpMessageHandler` mocking.
+  3. **(Completed)** GitHub Actions CI pipeline for automated build and test verification.
+  4. **(Completed)** Code Style Standardization: Roslyn Analyzers and `.editorconfig` enforcing zero-warning builds.
 - **Milestone E (Completed as of 2025-12-25): Core Interactions & Polish**
   1. **(Completed)** Data Model Evolution: Update schema and models to support reaction counts (`UpliftCount`).
   2. **(Completed)** Backend Persistence: Implement Azure Table Storage service for tracking reactions.
@@ -131,17 +127,17 @@
       - **(Completed)** Apply Design System to Main Page.
       - **(Completed)** Adjust typography and spacing for physical devices (Story E-03.4).
 
-- **Milestone V-0 (In Progress): Beta Readiness**
+- **Milestone V-0 (Completed as of 2025-12-28): Beta Readiness**
   *Prerequisite to Phase 5 validation: transforms Aurora from local prototype to cloud-connected application with real content.*
-  - **Phase 1 (Completed as of 2025-12-28):** Core infrastructure and real content integration
-    1. Deploy Aurora API and storage to Azure (Functions, Table Storage, Blob Storage).
-    2. Implement article reader (browser launch via READ button).
-    3. Migrate content delivery from static JSON to Azure Blob Storage.
-    4. Curate and integrate real uplifting news stories (1 Vibe + 5-10 Picks).
-  - **Phase 2 (Post-Verification):** Content management tooling after Phase 1 testing
-    5. Create PowerShell validation script for JSON schema compliance.
-    6. Create PowerShell deployment script with rollback capability.
-    7. Create PowerShell template generator for content.json scaffolding.
+  - **Phase 1 (Completed as of 2025-12-27):** Core infrastructure and real content integration
+    1. **(Completed)** Deploy Aurora API and storage to Azure (Functions, Table Storage, Blob Storage).
+    2. **(Completed)** Implement article reader (browser launch via READ button with Chrome Custom Tabs).
+    3. **(Completed)** Migrate content delivery from static JSON to Azure Blob Storage with Polly retry policy.
+    4. **(Completed)** Curate and integrate real uplifting news stories (1 Vibe + 10 Daily Picks from credible sources).
+  - **Phase 2 (Completed as of 2025-12-28):** Content management tooling
+    5. **(Completed)** PowerShell validation script (`Validate-Content.ps1`) for JSON schema compliance with URL validation and quality warnings.
+    6. **(Completed)** PowerShell deployment script (`Deploy-Content.ps1`) with rollback capability and backup management.
+    7. **(Completed)** PowerShell template generator (`New-ContentTemplate.ps1`) for content.json scaffolding.
 
 - **Milestone V-1 (To be Planned): Integration Testing Infrastructure**
   *Establish comprehensive HTTP-layer test coverage for Azure Functions API to complement existing unit tests.*
@@ -188,7 +184,7 @@
   - **Estimated Effort:** 2-3 weeks
 
 ### Phase 5: Validation Strategy
-**Status:** Blocked (awaiting Milestone V-0 completion)
+**Status:** Ready to Begin (Milestone V-0 completed 2025-12-28)
 
 #### Questions to Answer:
 - [x] How will we know if this resonates with users...
@@ -225,6 +221,9 @@
 | 2025-12-24 | Established "Morning Mist" Design System | Adopted a pastel, rounded, "Cozy & Warm" aesthetic (Nunito font, soft corners) to align with the "Refuge from Negativity" mission. |
 | 2025-12-24 | Enabled Local LAN Testing | Configured API to listen on 0.0.0.0 and opened Firewall port 7071 to allow physical device testing over Wi-Fi, superior to emulator. |
 | 2025-12-26 | Defined Milestone V-0: Beta Readiness | Created prerequisite milestone before Phase 5 validation to deploy cloud infrastructure, integrate real content, and establish content management tooling. Two-phase approach: Phase 1 (core infrastructure, V-0.1 to V-0.4) followed by Phase 2 (PowerShell automation tooling, V-0.5 to V-0.7) after verification. Chose Azure Blob Storage for content delivery, hotlinking for images with placeholder fallback, and PowerShell for scripting. |
+| 2025-12-27 | Adopted Chrome Custom Tabs for article reader | Selected `BrowserLaunchMode.SystemPreferred` over external browser for superior Android UX (faster load, smoother transitions, standard pattern used by major apps). |
+| 2025-12-27 | Implemented Polly retry policy for blob storage | Added exponential backoff with jitter (3 retries, 1s/2s/4s delays) to prevent transient blob storage failures from affecting users. |
+| 2025-12-28 | PowerShell chosen for content management tooling | Selected PowerShell over .NET console apps for V-0 to minimize dependencies (Windows-native, no install required); deferred .NET migration to CT-1 based on beta workflow feedback. |
 
 ---
 
@@ -251,4 +250,4 @@
 
 ---
 
-**Last Updated:** 2025-12-24
+**Last Updated:** 2025-12-28
