@@ -1,52 +1,92 @@
 {
   "VibeOfTheDay": {
-    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
-    "title": "What Went Right in 2025: The Year's Top Good News Stories",
-    "snippet": "From ocean protection treaties to endangered species recovery, 2025 brought significant environmental and social progress. 79 nations ratified the Global Ocean Treaty, and Thailand became the first Southeast Asian country to legalize same-sex marriage.",
-    "image_url": "https://picsum.photos/seed/hope2025/800/600",
-    "article_url": "https://www.positive.news/society/what-went-right-in-2025-the-good-news-that-mattered/",
-    "uplift_count": 1250
+    "id": "green-turtles-conservation-2025",
+    "title": "Green Sea Turtles No Longer Endangered After Decades of Conservation",
+    "snippet": "After more than 40 years on the endangered list, green sea turtles have rebounded to 'Least Concern' status, with global populations increasing 28% since the 1970s. This conservation triumph resulted from protecting nesting beaches, community programs to reduce egg harvesting, and fishing gear modifications that prevent accidental capture.",
+    "image_url": "https://www.oceanicsociety.org/wp-content/uploads/2025/10/green-turtle-OceanImageBank_MicheleRoux_27-1024x683.jpg",
+    "article_url": "https://www.npr.org/2025/10/16/nx-s1-5573174/green-sea-turtles-no-longer-endangered-as-global-population-rebounds",
+    "uplift_count": 0
   },
   "DailyPicks": [
     {
-      "id": "b1c2d3e4-f5g6-7890-1234-567890abcde0",
-      "title": "Daily Inspiration and Uplifting Stories from Around the World",
-      "snippet": "The Good News Network continues to share inspiring stories of human kindness, scientific breakthroughs, and positive change across the globe.",
-      "image_url": "https://picsum.photos/seed/inspire/800/600",
-      "article_url": "https://www.goodnewsnetwork.org/",
-      "uplift_count": 845
+      "id": "global-ocean-treaty-2025",
+      "title": "79 Nations Ratify Global Ocean Treaty, Surpassing Threshold for International Law",
+      "snippet": "The historic Global Ocean Treaty officially became international law after 79 countries ratified it—well beyond the 60 required. Iceland, Brazil, and Japan joined in December, enabling the creation of marine sanctuaries in international waters to protect ocean biodiversity.",
+      "image_url": "https://via.placeholder.com/800x600/7986CB/FFFFFF?text=Ocean+Treaty",
+      "article_url": "https://www.greenpeace.org.uk/news/a-landmark-victory-for-our-oceans-the-global-ocean-treaty-comes-to-life/",
+      "uplift_count": 0
     },
     {
-      "id": "c1d2e3f4-g5h6-7890-1234-567890abcde1",
-      "title": "[TEST: Empty URL] Expected Alert: 'Article URL is not available'",
-      "snippet": "Edge case test for missing article URL. READ button should show error dialog with message: 'Article URL is not available.'",
-      "image_url": "https://picsum.photos/seed/test1/800/600",
-      "article_url": "",
-      "uplift_count": 520
+      "id": "ozone-recovery-2025",
+      "title": "Antarctic Ozone Hole Continues Recovery in Global Environmental Success",
+      "snippet": "The ozone layer over Antarctica shows continued healing in 2025, demonstrating that international cooperation works. This long-term success stems from the Montreal Protocol's phase-out of ozone-depleting chemicals, proving that collective action can reverse planetary-scale environmental damage.",
+      "image_url": "https://via.placeholder.com/800x600/FFCC80/FFFFFF?text=Ozone+Recovery",
+      "article_url": "https://wmo.int/media/news/small-and-short-lived-2025-ozone-hole-confirms-long-term-recovery-trend",
+      "uplift_count": 0
     },
     {
-      "id": "d1e2f3g4-h5i6-7890-1234-567890abcde2",
-      "title": "[TEST: Malformed URL] Expected Alert: 'Unable to open article - invalid URL'",
-      "snippet": "Edge case test for invalid URL format. READ button should show error dialog with message: 'Unable to open article - invalid URL.'",
-      "image_url": "https://picsum.photos/seed/test2/800/600",
-      "article_url": "not-a-valid-url",
-      "uplift_count": 312
+      "id": "gene-therapy-hunter-syndrome-2025",
+      "title": "Three-Year-Old Shows Remarkable Progress After World-First Gene Therapy",
+      "snippet": "Oliver Chu became the first patient to receive pioneering gene therapy for Hunter syndrome in February 2025. Nine months later, his speech, agility, and cognitive development have improved dramatically—he no longer requires weekly enzyme infusions, marking a breakthrough for treating rare genetic disorders.",
+      "image_url": "https://www.ucl.ac.uk/news/sites/news/files/styles/large_image/public/ollie_chu_and_father.jpg",
+      "article_url": "https://www.ucl.ac.uk/news/2025/nov/boy-given-world-first-gene-therapy-made-ucl-scientists-thriving",
+      "uplift_count": 0
     },
     {
-      "id": "e1f2g3h4-i5j6-7890-1234-567890abcde3",
+      "id": "nature-science-stories-2025",
+      "title": "Seven Feel-Good Science Stories That Restore Faith in 2025",
+      "snippet": "Nature magazine highlights breakthrough discoveries that inspire hope, from gene editing advances to conservation victories. These achievements demonstrate how scientific progress continues solving humanity's greatest challenges while protecting our planet for future generations.",
+      "image_url": "https://via.placeholder.com/800x600/F48FB1/FFFFFF?text=Science+Wins",
+      "article_url": "https://www.nature.com/articles/d41586-025-03505-7",
+      "uplift_count": 0
+    },
+    {
+      "id": "australia-social-media-laws-2025",
+      "title": "Australia Introduces World's Strictest Social Media Protection for Children",
+      "snippet": "In December 2025, Australia enacted groundbreaking legislation prohibiting under-16s from using social media platforms, setting the global standard for child digital safety. This bold policy aims to protect young people's mental health and development from harmful online content.",
+      "image_url": "https://via.placeholder.com/800x600/CE93D8/FFFFFF?text=Child+Safety",
+      "article_url": "https://www.npr.org/2025/12/10/nx-s1-5639694/social-media-ban-children-australia",
+      "uplift_count": 0
+    },
+    {
+      "id": "syria-human-rights-day-2025",
+      "title": "Syria Marks Human Rights Day for First Time, UN Calls It 'Meaningful Step'",
+      "snippet": "For the first time in its history, Syria joined the global community in observing Human Rights Day in December 2025. The United Nations described this symbolic gesture as a small but significant move toward recognizing universal human dignity and international cooperation.",
+      "image_url": "https://via.placeholder.com/800x600/FFAB91/FFFFFF?text=Human+Rights",
+      "article_url": "https://news.un.org/en/story/2025/12/1166498",
+      "uplift_count": 0
+    },
+    {
+      "id": "mackenzie-scott-hbcu-donation-2025",
+      "title": "Mackenzie Scott Donates $700 Million to Historically Black Colleges",
+      "snippet": "Philanthropist Mackenzie Scott made a transformative $700 million donation to 15 historically Black colleges and universities in 2025. This unprecedented investment in educational equity will expand opportunities for thousands of students and strengthen institutions that have been pillars of the Black community for generations.",
+      "image_url": "https://via.placeholder.com/800x600/A5D6A7/FFFFFF?text=Education",
+      "article_url": "https://abcnews.go.com/US/billionaire-mackenzie-scott-makes-historic-donations-hbcus/story?id=127581362",
+      "uplift_count": 0
+    },
+    {
+      "id": "salvation-army-angel-tree-2025",
+      "title": "Every Salvation Army Angel Tree Child Adopted in North Texas Holiday Milestone",
+      "snippet": "For the first time in several years, every single child on the Salvation Army's Angel Tree was adopted in North Texas, bringing holiday joy to over 35,000 children, older adults, and people with disabilities. This heartwarming achievement reflects extraordinary community generosity during the 2025 holiday season.",
+      "image_url": "https://via.placeholder.com/800x600/FFE082/FFFFFF?text=Community",
+      "article_url": "https://www.localprofile.com/community/all-angel-tree-wishes-fulfilled-across-north-texas-11647655",
+      "uplift_count": 0
+    },
+    {
+      "id": "readers-digest-good-news-2025",
       "title": "Five Heartwarming Stories That Counter 2025's Negativity",
-      "snippet": "Reader's Digest curates the most uplifting moments from this year, showcasing human compassion and unexpected acts of kindness.",
-      "image_url": "https://picsum.photos/seed/heartwarming/800/600",
+      "snippet": "Reader's Digest curates the year's most uplifting moments, including Steve Carell funding wildfire victims' prom tickets, an 80-year-old completing the Ironman Championship, and Pope Francis's popemobile becoming a mobile health clinic for Gaza children. These stories showcase unexpected compassion in challenging times.",
+      "image_url": "https://www.rd.com/wp-content/uploads/2025/12/5-Good-News-Stories-That-Prove-2025_GettyImages3_FT.jpg",
       "article_url": "https://www.rd.com/article/good-news-stories-2025/",
-      "uplift_count": 2105
+      "uplift_count": 0
     },
     {
-      "id": "f1g2h3i4-j5k6-7890-1234-567890abcde4",
-      "title": "CBS News: The Uplift - Stories That Lift You Up",
-      "snippet": "CBS News features good journalism about good things, bringing hope and inspiration through verified positive news coverage.",
-      "image_url": "https://picsum.photos/seed/uplift/800/600",
-      "article_url": "https://www.cbsnews.com/uplift/",
-      "uplift_count": 78
+      "id": "positive-news-year-end-2025",
+      "title": "What Went Right in 2025: The Top 25 Good News Stories of the Year",
+      "snippet": "Positive News presents a comprehensive roundup of 2025's most inspiring achievements across nature, climate, science, and society. From species conservation victories to renewable energy breakthroughs and medical advances treating previously untreatable conditions, this collection proves progress is happening globally.",
+      "image_url": "https://www.positive.news/wp-content/uploads/2025/12/Positive_News_What_Went_Right_2025_1600x1350_.jpg",
+      "article_url": "https://www.positive.news/society/what-went-right-in-2025-the-good-news-that-mattered/",
+      "uplift_count": 0
     }
   ]
 }

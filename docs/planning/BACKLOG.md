@@ -224,12 +224,12 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - [x] Malformed JSON causes deserialization failure; return HTTP 500 (mitigated by V-0.5 validation tooling in Phase 2).
     - **Completed:** 2025-12-28 (Blob storage migration, Azurite tooling, dynamic content updates)
 
-- [ ] **Story V-0.4:** As a developer, I want real uplifting news stories in the application so that beta testers can evaluate actual content quality.
-    - **AC 1:** Initial content file contains 1 Vibe of the Day + 5-10 Daily Picks with real, recently published uplifting news articles, valid ArticleUrls, appropriate ImageUrls, and 2-3 sentence snippets.
-    - **AC 2:** Content sources are credible (r/UpliftingNews, Good News Network, Positive News, etc.); no broken links, no paywalled content.
-    - **AC 3:** Image handling: Use article's Open Graph/featured image URL where available (hotlinking); fallback to placeholder image (`https://via.placeholder.com/800x600/7986CB/FFFFFF?text=Aurora`) if hotlinking not allowed or image unavailable.
-    - **AC 4:** Content.json is uploaded to `aurora-content` blob container; GetDailyContent endpoint serves the real content.
-    - **AC 5:** Verified on S24 Ultra: all stories display correctly, READ buttons open articles, Uplift reactions work.
+- [x] **Story V-0.4:** As a developer, I want real uplifting news stories in the application so that beta testers can evaluate actual content quality.
+    - **AC 1:** [x] Initial content file contains 1 Vibe of the Day + 5-10 Daily Picks with real, recently published uplifting news articles, valid ArticleUrls, appropriate ImageUrls, and 2-3 sentence snippets.
+    - **AC 2:** [x] Content sources are credible (r/UpliftingNews, Good News Network, Positive News, etc.); no broken links, no paywalled content.
+    - **AC 3:** [x] Image handling: Use article's Open Graph/featured image URL where available (hotlinking); fallback to placeholder image (`https://via.placeholder.com/800x600/7986CB/FFFFFF?text=Aurora`) if hotlinking not allowed or image unavailable.
+    - **AC 4:** [x] Content.json is uploaded to `aurora-content` blob container; GetDailyContent endpoint serves the real content.
+    - **AC 5:** [x] Verified on S24 Ultra: all stories display correctly, READ buttons open articles, Uplift reactions work.
     - **Edge Cases:**
         - Broken links after publication are acceptable risk for beta (document as known issue).
         - Image licensing: use Creative Commons or Open Graph images (fair use for preview); document for production review.
