@@ -62,3 +62,6 @@ __azurite_*.json
 AzuriteConfig
 __blobstorage__/
 nul
+
+# Content Management (Deployment backups)
+tools/content-management/backups/
