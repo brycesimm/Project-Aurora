@@ -266,12 +266,13 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - [x] Azure Blob upload is atomic (all or nothing); if upload fails, old content remains active.
     - **Completed:** 2025-12-28 (PowerShell deployment automation with backup/rollback, tested successfully on Dev environment)
 
-- [ ] **Story V-0.7:** As a content curator, I want a template generator for content.json so that I can quickly create properly formatted content files.
-    - **AC 1:** PowerShell script `New-ContentTemplate.ps1` exists in `tools/content-management/`; run with `.\New-ContentTemplate.ps1 -VibeCount 1 -PicksCount 7 -OutputFile .\my-content.json`.
-    - **AC 2:** Generated template includes all required fields with helpful placeholders: `"id": "REPLACE_WITH_UNIQUE_ID_1"`, `"title": "TODO: Article Title Here"`, `"snippet": "TODO: 2-3 sentence summary"`, `"article_url": "https://example.com/article"`, `"image_url": "https://placeholder.com/800x600"`, `"published_date": "2025-12-26"` (auto-filled with today), `"uplift_count": 0`.
-    - **AC 3:** Includes helpful comments or README explaining each field (e.g., `"id": "unique-kebab-case-identifier (e.g., 'coral-reef-restoration-2025')"`).
-    - **AC 4:** Supports bulk creation: `-VibeCount 1 -PicksCount 10` creates 11 items; IDs auto-numbered: `vibe-of-the-day-1`, `daily-pick-1`, `daily-pick-2`, etc.
-    - **AC 5:** Generated file passes validation syntax check (warnings for placeholder URLs are expected).
+- [x] **Story V-0.7:** As a content curator, I want a template generator for content.json so that I can quickly create properly formatted content files.
+    - **AC 1:** [x] PowerShell script `New-ContentTemplate.ps1` exists in `tools/content-management/`; run with `.\New-ContentTemplate.ps1 -VibeCount 1 -PicksCount 7 -OutputFile .\my-content.json`.
+    - **AC 2:** [x] Generated template includes all required fields with helpful placeholders: `"id": "REPLACE_WITH_UNIQUE_ID_1"`, `"title": "TODO: Article Title Here"`, `"snippet": "TODO: 2-3 sentence summary"`, `"article_url": "https://example.com/article"`, `"image_url": "https://placeholder.com/800x600"`, `"published_date": "2025-12-28"` (auto-filled with today), `"uplift_count": 0`.
+    - **AC 3:** [x] Includes helpful README explaining each field and next steps guidance in script output.
+    - **AC 4:** [x] Supports bulk creation: `-VibeCount 1 -PicksCount 10` creates 11 items; IDs auto-numbered: `REPLACE_WITH_UNIQUE_ID_1`, `REPLACE_WITH_UNIQUE_ID_2`, etc.
+    - **AC 5:** [x] Generated file passes validation syntax check (confirmed with Validate-Content.ps1).
     - **Edge Cases:**
-        - Use obvious placeholders (not real data) to force replacement.
-        - Defer automatic metadata fetching (title, image from URL) to future enhancement.
+        - [x] Uses obvious placeholders (`REPLACE_WITH_UNIQUE_ID_N`, `TODO:`) to force replacement.
+        - [x] Deferred automatic metadata fetching (title, image from URL) to future enhancement.
+    - **Completed:** 2025-12-28 (PowerShell template generator with comprehensive README.md documentation)

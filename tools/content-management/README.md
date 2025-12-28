@@ -6,7 +6,63 @@ This directory contains PowerShell automation scripts for managing Aurora's dail
 
 ## 📋 Scripts
 
-### 1. Validate-Content.ps1
+### 1. New-ContentTemplate.ps1
+
+Generates a properly formatted content.json template with placeholder values for quick content creation.
+
+**Purpose:**
+- Eliminates manual JSON editing from scratch
+- Provides consistent structure with all required fields
+- Auto-generates unique IDs and fills today's date
+- Includes helpful TODO markers for manual content entry
+
+**Usage:**
+```powershell
+.\New-ContentTemplate.ps1 [-VibeCount <1-5>] [-PicksCount <1-20>] [-OutputFile <path>]
+```
+
+**Parameters:**
+- `-VibeCount` (optional): Number of Vibe of the Day entries. **Defaults to 1** (recommended).
+- `-PicksCount` (optional): Number of Daily Picks entries. **Defaults to 7**.
+- `-OutputFile` (optional): Path to output template file. **Defaults to `content-template.json`**.
+
+**Examples:**
+```powershell
+# Generate default template (1 Vibe, 7 Picks)
+.\New-ContentTemplate.ps1
+
+# Generate template with 10 Daily Picks
+.\New-ContentTemplate.ps1 -PicksCount 10
+
+# Generate with custom output filename
+.\New-ContentTemplate.ps1 -OutputFile .\my-content.json
+```
+
+**Generated Template Structure:**
+- All required fields with placeholder values:
+  - `id`: `REPLACE_WITH_UNIQUE_ID_N` (auto-numbered)
+  - `title`: `TODO: Article Title Here`
+  - `snippet`: `TODO: Write a 2-3 sentence summary...` (with guidance)
+  - `image_url`: Aurora placeholder image URL
+  - `article_url`: `https://example.com/article-N` (auto-numbered)
+  - `published_date`: Today's date (auto-filled)
+  - `uplift_count`: `0`
+
+**What to Replace:**
+1. **IDs:** Use unique kebab-case identifiers (e.g., `coral-reef-restoration-2025`)
+2. **Titles:** Real article headlines from credible sources
+3. **Snippets:** Engaging 2-3 sentence summaries (50-200 characters recommended)
+4. **Article URLs:** Direct links to full stories on source websites
+5. **Image URLs:** Open Graph images from articles (or keep placeholder)
+
+**Next Steps After Generation:**
+1. Edit the template file to replace all placeholder values
+2. Validate using `.\Validate-Content.ps1 -FilePath <template-file> -CheckImageUrls`
+3. Deploy to Dev for testing: `.\Deploy-Content.ps1 -FilePath <template-file>`
+
+---
+
+### 2. Validate-Content.ps1
 
 Validates a `content.json` file against Aurora's schema requirements before deployment.
 
@@ -36,7 +92,7 @@ Validates a `content.json` file against Aurora's schema requirements before depl
 
 ---
 
-### 2. Deploy-Content.ps1
+### 3. Deploy-Content.ps1
 
 Deploys validated content to Azure Blob Storage with automatic backup and rollback capability.
 
@@ -81,7 +137,7 @@ Deploys validated content to Azure Blob Storage with automatic backup and rollba
 
 ---
 
-### 3. Rollback-Content.ps1
+### 4. Rollback-Content.ps1
 
 Restores a previous content backup to Azure Blob Storage.
 
@@ -220,15 +276,26 @@ This script uses only PowerShell built-in cmdlets:
 
 ## 🚀 Complete Content Management Workflow
 
-### 1. Curate New Content
+### 1. Generate Content Template
 
-**Edit the content file** (recommend working on a copy of `sample.content.json`):
+**Generate a new template** (recommended approach):
 ```powershell
-# Copy template
-cp ..\..\sample.content.json .\my-content.json
+# Generate template with default settings (1 Vibe, 7 Picks)
+.\New-ContentTemplate.ps1
 
-# Edit with your preferred editor
-code .\my-content.json
+# Or customize the number of Daily Picks
+.\New-ContentTemplate.ps1 -PicksCount 10 -OutputFile .\my-content.json
+```
+
+**Alternative: Copy existing content**
+```powershell
+# Copy sample content as starting point
+cp ..\..\sample.content.json .\my-content.json
+```
+
+**Edit the generated template** with your preferred editor:
+```powershell
+code content-template.json
 ```
 
 **Follow the content guidelines:**
@@ -236,7 +303,7 @@ code .\my-content.json
 - 5-10 Daily Picks (additional stories)
 - Valid HTTP/HTTPS URLs for articles and images
 - 2-3 sentence snippets (50-200 characters recommended)
-- Unique kebab-case IDs
+- Unique kebab-case IDs (e.g., `coral-reef-restoration-2025`)
 
 ---
 
@@ -387,11 +454,11 @@ Rollback Summary:
 ### Quick Reference Workflow
 
 ```
-Edit → Validate → Deploy (Dev) → Test → Deploy (Prod) → Verify
-                                                      ↓
-                                                  Issues?
-                                                      ↓
-                                                  Rollback
+Generate → Edit → Validate → Deploy (Dev) → Test → Deploy (Prod) → Verify
+                                                                ↓
+                                                            Issues?
+                                                                ↓
+                                                            Rollback
 ```
 
 ---
