@@ -16,9 +16,11 @@ In a world where news feeds are often engineered to maximize outrage and fear, A
 ## 🛠 Tech Stack
 
 - **Front-End:** .NET MAUI (C# / XAML) targeting Android, iOS, Windows, and macOS.
-- **Back-End:** Azure Functions (Serverless API).
+- **Back-End:** Azure Functions (Serverless API, .NET 9 Isolated Process).
+- **Storage:** Azure Blob Storage (dynamic content delivery) + Azure Table Storage (reaction persistence).
 - **Architecture:** Decoupled "Core" logic library for business rules and service testability.
-- **Infrastructure:** Automated JSON Schema generation to ensure data contract synchronization.
+- **Infrastructure:** Bicep IaC templates, automated JSON Schema generation, Polly retry resilience.
+- **Local Development:** Azurite emulator with automated setup tooling.
 
 ## 🚀 Getting Started
 
@@ -30,20 +32,45 @@ In a world where news feeds are often engineered to maximize outrage and fear, A
 
 ### Running the Application
 
+**Option 1: Local Development (Debug Builds)**
+
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/brycesimm/Project-Aurora.git
    cd Project-Aurora
    ```
 
-2. **Launch the API:**
+2. **Setup Azurite Blob Storage:**
+   Run the automated setup tool to create the local content container:
+   ```bash
+   cd tools/AzuriteSetup
+   dotnet run
+   ```
+   This creates the `aurora-content` container and uploads sample content to Azurite.
+
+3. **Launch the API:**
    Navigate to `src/Aurora.Api` and start the local host:
    ```bash
+   cd ../../src/Aurora.Api
    func start
    ```
+   Azurite will start automatically. Verify the endpoint works: `http://localhost:7071/api/GetDailyContent`
 
-3. **Run the MAUI Client (Visual Studio):**
-   Open `Project-Aurora.sln`, set `Aurora` as the Startup Project, select your target device, and press **F5**.
+4. **Run the MAUI Client (Visual Studio):**
+   - Open `Project-Aurora.sln`
+   - Set `Aurora` as the Startup Project
+   - Select **Debug** configuration (uses `localhost:7071`)
+   - Select your target device (Android Emulator recommended for first run)
+   - Press **F5**
+
+**Option 2: Production Cloud (Release Builds)**
+
+1. **Build for Release:**
+   - Open `Project-Aurora.sln` in Visual Studio
+   - Set configuration to **Release**
+   - Build and deploy to your device
+
+   Release builds connect to the production Azure Functions API automatically—no local API setup required.
 
 ### 📱 Android CLI Workflow (Manual Install & ADB)
 
@@ -79,21 +106,33 @@ If you prefer the command line or need to troubleshoot deployment:
    adb logcat -d -s AndroidRuntime:E
    ```
 
-### 📡 Physical Device Connectivity (Wi-Fi)
+### 📡 Physical Device Connectivity (Debug Builds Only)
 
-To allow your phone to reach the local API (`localhost`) over Wi-Fi:
+**Note:** Release builds connect to production Azure Functions—no local networking configuration needed.
+
+For **Debug builds** on physical devices connecting to your local API:
+
 1.  **Firewall:** Allow inbound traffic on port 7071 (Admin PowerShell):
-    `New-NetFirewallRule -DisplayName "Allow Aurora API Port 7071" -Direction Inbound -LocalPort 7071 -Protocol TCP -Action Allow`
-- **Configure IP:** Find your PC's local IP (via `ipconfig`) and add it to `src/Aurora/appsettings.json` under a new key `LocalOverrideIp`.
+    ```powershell
+    New-NetFirewallRule -DisplayName "Allow Aurora API Port 7071" -Direction Inbound -LocalPort 7071 -Protocol TCP -Action Allow
+    ```
+
+2. **Configure IP:** Find your PC's local IP (via `ipconfig`) and update `src/Aurora/appsettings.Development.json`:
     ```json
-    "ApiSettings": {
-      "BaseUrl": "http://localhost:7071/api/",
-      "LocalOverrideIp": "192.168.1.5"
+    {
+      "ApiSettings": {
+        "BaseUrl": "http://192.168.1.5:7071/api/"
+      }
     }
     ```
-    - *Note:* The app automatically detects physical devices and swaps `localhost` for this override IP. This key should be kept for local development and **not committed** to the repository.
-- **Deployment:** Connect via USB for the initial installation. Once running, the app communicates with the API over Wi-Fi.
-3.  **Host Binding:** Ensure the API is started with `func start --host 0.0.0.0`.
+    Replace `192.168.1.5` with your actual local IP.
+
+3.  **Host Binding:** Start the API with:
+    ```bash
+    func start --host 0.0.0.0
+    ```
+
+4. **Deployment:** Connect via USB for the initial installation. Once running, the app communicates with the API over Wi-Fi.
 
 ## 🧪 Testing and Quality
 

@@ -11,7 +11,7 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Azure.Data.Tables" Version="12.11.0" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.25.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.26.0" />
     <PackageReference Include="Azure.Storage.Files.Shares" Version="12.23.0" />
     <PackageReference Include="Azure.Storage.Queues" Version="12.23.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.23.0" />
@@ -22,6 +22,7 @@
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Storage.Queues" Version="5.5.2" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.13.0" />
+    <PackageReference Include="Polly" Version="8.6.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,9 +32,7 @@
   </ItemGroup>
 
   <Target Name="EnsureAzuriteRunning" BeforeTargets="PreBuildEvent">
-    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;$port = Get-NetTCPConnection -LocalPort 10002 -ErrorAction SilentlyContinue; if (-not $port) { Write-Host 'Starting Azurite...'; Start-Process cmd -ArgumentList '/c start /min azurite' -WindowStyle Hidden; Start-Sleep -Seconds 3 } else { Write-Host 'Azurite already running on port 10002' }&quot;"
-          IgnoreExitCode="true"
-          ContinueOnError="true" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;$port = Get-NetTCPConnection -LocalPort 10002 -ErrorAction SilentlyContinue; if (-not $port) { Write-Host 'Starting Azurite...'; Start-Process cmd -ArgumentList '/c start /min azurite' -WindowStyle Hidden; Start-Sleep -Seconds 3 } else { Write-Host 'Azurite already running on port 10002' }&quot;" IgnoreExitCode="true" ContinueOnError="true" />
   </Target>
 
 </Project>

@@ -119,8 +119,12 @@ This is normal before code deployment. Deploy the Aurora.Api project to resolve.
      --account-name <storageAccountName> \
      --container-name aurora-content \
      --name content.json \
-     --file ../../sample.content.json
+     --file ../Aurora.Api/sample.content.json \
+     --auth-mode key \
+     --overwrite
    ```
+
+   **Note:** Azure CLI will query for the account key automatically. For production deployments, consider using managed identities or SAS tokens.
 
 3. **Update MAUI App Configuration:**
    - Edit `src/Aurora/appsettings.json`

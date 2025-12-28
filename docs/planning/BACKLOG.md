@@ -212,16 +212,17 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - Defer "article read" analytics tracking to post-beta.
     - **Completed:** 2025-12-27 (Chrome Custom Tabs implementation, Azurite auto-start, real content deployed)
 
-- [ ] **Story V-0.3:** As a developer, I want the API to serve content from Azure Blob Storage so that content can be updated without redeploying the function app.
-    - **AC 1:** Azure Blob Storage container `aurora-content` is created (private access) with initial `content.json` file uploaded.
-    - **AC 2:** GetDailyContent function reads from Blob Storage using `BlobServiceClient`; connection string configured via App Settings (not hardcoded).
-    - **AC 3:** Content updates reflect immediately: upload new `content.json` via Azure Storage Explorer, call endpoint, receive new content (no caching or cache invalidated).
-    - **AC 4:** Local development works with local file or Azurite blob emulator (development connection string uses `UseDevelopmentStorage=true`).
-    - **AC 5:** Error handling: HTTP 404 if blob doesn't exist ("Content not yet published"), HTTP 500 if connection string is invalid ("Storage configuration error"); all errors logged to Application Insights.
+- [x] **Story V-0.3:** As a developer, I want the API to serve content from Azure Blob Storage so that content can be updated without redeploying the function app.
+    - **AC 1:** [x] Azure Blob Storage container `aurora-content` is created (private access) with initial `content.json` file uploaded.
+    - **AC 2:** [x] GetDailyContent function reads from Blob Storage using `BlobServiceClient`; connection string configured via App Settings (not hardcoded).
+    - **AC 3:** [x] Content updates reflect immediately: upload new `content.json` via Azure CLI, call endpoint, receive new content (no caching).
+    - **AC 4:** [x] Local development works with Azurite blob emulator (development connection string uses `UseDevelopmentStorage=true`).
+    - **AC 5:** [x] Error handling: HTTP 404 if blob doesn't exist ("Content not yet published"), HTTP 500 if connection string is invalid ("Storage configuration error"); all errors logged to Application Insights.
     - **Edge Cases:**
-        - Implement retry logic (Polly policy, 3 retries with exponential backoff) for blob download failures.
-        - Defer caching optimization to post-beta (blob reads are ~$0.0004 per 10K operations).
-        - Malformed JSON causes deserialization failure; return HTTP 500 (mitigated by V-0.5 validation tooling in Phase 2).
+        - [x] Implement retry logic (Polly policy, 3 retries with exponential backoff) for blob download failures.
+        - [x] Defer caching optimization to post-beta (blob reads are ~$0.0004 per 10K operations).
+        - [x] Malformed JSON causes deserialization failure; return HTTP 500 (mitigated by V-0.5 validation tooling in Phase 2).
+    - **Completed:** 2025-12-28 (Blob storage migration, Azurite tooling, dynamic content updates)
 
 - [ ] **Story V-0.4:** As a developer, I want real uplifting news stories in the application so that beta testers can evaluate actual content quality.
     - **AC 1:** Initial content file contains 1 Vibe of the Day + 5-10 Daily Picks with real, recently published uplifting news articles, valid ArticleUrls, appropriate ImageUrls, and 2-3 sentence snippets.
