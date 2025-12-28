@@ -133,7 +133,7 @@
 
 - **Milestone V-0 (In Progress): Beta Readiness**
   *Prerequisite to Phase 5 validation: transforms Aurora from local prototype to cloud-connected application with real content.*
-  - **Phase 1 (Immediate):** Core infrastructure and real content integration
+  - **Phase 1 (Completed as of 2025-12-28):** Core infrastructure and real content integration
     1. Deploy Aurora API and storage to Azure (Functions, Table Storage, Blob Storage).
     2. Implement article reader (browser launch via READ button).
     3. Migrate content delivery from static JSON to Azure Blob Storage.
