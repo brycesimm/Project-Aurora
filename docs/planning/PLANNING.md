@@ -143,6 +143,17 @@
     6. Create PowerShell deployment script with rollback capability.
     7. Create PowerShell template generator for content.json scaffolding.
 
+- **Milestone V-1 (To be Planned): Integration Testing Infrastructure**
+  *Establish comprehensive HTTP-layer test coverage for Azure Functions API to complement existing unit tests.*
+  - **Objective:** Verify end-to-end request/response behavior, middleware pipeline, and runtime interactions that unit tests cannot cover (HTTP trigger binding, CORS headers, actual storage operations, Polly retry execution).
+  - **Scope:**
+    1. Create `Aurora.Api.IntegrationTests` project with Azure Functions in-process hosting.
+    2. Implement integration tests for `GetDailyContent` endpoint (success, 404, 500, retry scenarios).
+    3. Implement integration tests for `ReactToContent` endpoint (increment, creation, failure, concurrency).
+    4. Configure CI pipeline to run integration tests with Azurite service container.
+    5. Document integration testing architecture and best practices (`docs/testing/INTEGRATION_TESTING.md`).
+  - **Success Criteria:** ~8-10 integration tests passing in CI, clear documentation for adding future endpoint tests, maintained zero-warning build discipline.
+
 ### Phase 5: Validation Strategy
 **Status:** Blocked (awaiting Milestone V-0 completion)
 

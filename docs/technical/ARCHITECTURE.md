@@ -6,35 +6,116 @@ This document describes the high-level architecture and design patterns of Proje
 
 Aurora follows a decoupled, multi-project architecture designed for maximum code reuse, testability, and cross-platform flexibility.
 
+### Solution Projects
+
+```
+Project-Aurora.sln
+├── src/
+│   ├── Aurora (MAUI Application)
+│   ├── Aurora.Client.Core (Business Logic)
+│   ├── Aurora.Client.Core.Tests (Unit Tests)
+│   ├── Aurora.Shared (Contracts & Models)
+│   ├── Aurora.Api (Azure Functions Backend)
+│   ├── Aurora.Api.Tests (API Unit Tests)
+│   └── SchemaBuilder (Build Tool)
+└── tools/
+    └── AzuriteSetup (Local Development Tool)
+```
+
 ### Component Map
 
-1.  **`src/Aurora` (.NET MAUI):**
-    - The primary UI layer.
-    - Handles platform-specific lifecycle, navigation, and visual rendering.
-    - Uses XAML for UI definition and Code-Behind for interaction logic.
+1.  **`src/Aurora` (.NET MAUI Application)**
+    - **Purpose:** Cross-platform UI layer (Android, iOS, Windows, macOS)
+    - **Framework:** .NET 9 with MAUI workload
+    - **Responsibilities:**
+      - Platform-specific lifecycle management
+      - XAML-based UI rendering and navigation
+      - Code-behind for interaction logic
+      - Platform abstraction (Android emulator vs physical device networking)
+    - **Dependencies:** `Aurora.Client.Core`, `Aurora.Shared`
 
-2.  **`src/Aurora.Client.Core` (.NET 9 Class Library):**
-    - The "Brains" of the client application.
-    - Contains business logic, service implementations (`ContentService`), and data-fetching logic.
-    - This project is independent of any UI framework, enabling easy unit testing.
+2.  **`src/Aurora.Client.Core` (.NET 9 Class Library)**
+    - **Purpose:** Framework-independent business logic
+    - **Responsibilities:**
+      - Service implementations (`ContentService`)
+      - HTTP communication with backend API
+      - Data transformation and caching logic
+      - Optimistic UI update strategies
+    - **Dependencies:** `Aurora.Shared`, `System.Net.Http`
+    - **Why Separate:** Enables unit testing without MAUI framework dependencies
 
-3.  **`src/Aurora.Shared` (.NET 9 Class Library):**
-    - Contains shared contracts: Data Models (`ContentItem`, `ContentFeed`) and Interface definitions (`IContentService`).
-    - References by both the Client and the API to ensure data contract consistency.
+3.  **`src/Aurora.Shared` (.NET 9 Class Library)**
+    - **Purpose:** Shared data contracts between client and server
+    - **Responsibilities:**
+      - Data models (`ContentItem`, `ContentFeed`)
+      - Service interfaces (`IContentService`)
+      - Reactive UI models (`INotifyPropertyChanged` implementations)
+    - **Dependencies:** None (pure models and interfaces)
+    - **Why Separate:** Ensures client/server data contract consistency
 
-4.  **`src/Aurora.Api` (Azure Functions):**
-    - The serverless backend.
-    - Serves content payloads via HTTP-triggered functions.
-    - Manages data persistence for user interactions (Reactions) using Azure Table Storage.
+4.  **`src/Aurora.Api` (Azure Functions - .NET 9 Isolated Process)**
+    - **Purpose:** Serverless HTTP API backend
+    - **Responsibilities:**
+      - Content delivery from Azure Blob Storage
+      - Reaction persistence via Azure Table Storage
+      - Retry resilience with Polly policies
+      - Structured logging to Application Insights
+    - **Dependencies:** `Aurora.Shared`, `Azure.Storage.Blobs`, `Azure.Data.Tables`, `Polly`
+    - **Deployment:** Azure Functions Consumption Plan (Linux)
 
-5.  **`src/Aurora.Api.Tests` (xUnit Project):**
-    - Dedicated unit test project for the API layer.
-    - Verifies service logic and storage interactions using mocked dependencies (`Moq`).
+5.  **`src/Aurora.Client.Core.Tests` (xUnit .NET 9)**
+    - **Purpose:** Unit tests for client business logic
+    - **Test Strategy:** Mocked `HttpMessageHandler` for `ContentService` testing
+    - **Dependencies:** `Aurora.Client.Core`, `Moq`, `xUnit`
 
-6.  **`src/SchemaBuilder` (Console App):**
-    - A specialized build-time tool.
-    - Generates `content.schema.json` directly from the C# `ContentItem` models.
-    - Ensures that our documentation and data contracts are always synchronized with the code.
+6.  **`src/Aurora.Api.Tests` (xUnit .NET 9)**
+    - **Purpose:** Unit tests for API services
+    - **Test Strategy:** Mocked Azure SDK clients (`TableServiceClient`)
+    - **Dependencies:** `Aurora.Api`, `Moq`, `xUnit`
+
+7.  **`src/SchemaBuilder` (Console App - .NET 9)**
+    - **Purpose:** Build-time schema generation tool
+    - **Responsibilities:**
+      - Generates `content.schema.json` from C# models
+      - Runs automatically on build via MSBuild PostBuildEvent
+      - Prevents data contract drift between frontend/backend
+    - **Dependencies:** `Aurora.Shared`, `Newtonsoft.Json`, `NSwag.Core`
+
+8.  **`tools/AzuriteSetup` (Console App - .NET 9)**
+    - **Purpose:** Local development environment automation
+    - **Responsibilities:**
+      - Creates `aurora-content` container in Azurite
+      - Uploads `sample.content.json` to local blob storage
+      - Eliminates manual Azure Storage Explorer setup
+    - **Dependencies:** `Azure.Storage.Blobs`
+
+### Project Dependency Graph
+
+```mermaid
+graph TD
+    Aurora[Aurora - MAUI UI]
+    Core[Aurora.Client.Core]
+    Shared[Aurora.Shared]
+    Api[Aurora.Api]
+    CoreTests[Aurora.Client.Core.Tests]
+    ApiTests[Aurora.Api.Tests]
+    Schema[SchemaBuilder]
+
+    Aurora --> Core
+    Aurora --> Shared
+    Core --> Shared
+    Api --> Shared
+    CoreTests --> Core
+    CoreTests --> Shared
+    ApiTests --> Api
+    ApiTests --> Shared
+    Schema --> Shared
+
+    style Aurora fill:#7986CB
+    style Core fill:#FFCC80
+    style Api fill:#F48FB1
+    style Shared fill:#80CBC4
+```
 
 ## ⚙ Key Architectural Patterns
 
@@ -63,19 +144,130 @@ To ensure a responsive and "live" user experience, especially during interactive
 
 ## 📊 Data Flow
 
-### Content Delivery (Read)
-1.  **Build Time:** Models -> `SchemaBuilder` -> `content.schema.json`.
-2.  **Runtime:** 
-    - `Aurora` (UI) requests data via `IContentService`.
-    - `ContentService` (Core) fetches JSON from `Aurora.Api`.
-    - JSON is deserialized using PascalCase-to-snake_case mapping.
-    - UI updates via Data Binding.
+### Content Delivery Flow (Read Path)
 
-### User Interaction (Write)
-1.  User clicks "Uplift" button.
-2.  `ContentService` sends POST request to `Aurora.Api` (`/api/articles/{id}/react`).
-3.  `ReactionStorageService` interacts with Azure Table Storage (or Azurite) to increment counts.
-4.  Updated count is returned to Client and UI updates optimistically.
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as Aurora UI<br/>(XAML)
+    participant Service as ContentService<br/>(Client.Core)
+    participant API as GetDailyContent<br/>(Azure Function)
+    participant Blob as Azure Blob Storage<br/>(aurora-content)
+
+    User->>UI: App Launch
+    UI->>Service: GetDailyContentAsync()
+    Service->>API: GET /api/GetDailyContent
+
+    API->>Blob: DownloadContentAsync("content.json")
+    Note over API,Blob: Polly retry: 3 attempts<br/>Exponential backoff (1s, 2s, 4s)
+
+    alt Success
+        Blob-->>API: content.json (JSON)
+        API-->>Service: 200 OK + ContentFeed JSON
+        Service->>Service: Deserialize JSON<br/>(snake_case → PascalCase)
+        Service-->>UI: ContentFeed object
+        UI->>UI: Data Binding Update
+        UI-->>User: Display Vibe + Daily Picks
+    else Blob Not Found
+        Blob-->>API: 404 Not Found
+        API-->>Service: 404 "Content not yet published"
+        Service-->>UI: Error Message
+    else Storage Error
+        Blob-->>API: 500 Storage Failure
+        API->>API: Retry (3 attempts)
+        alt Retry Success
+            Blob-->>API: content.json
+            API-->>Service: 200 OK
+        else Retry Exhausted
+            API-->>Service: 500 "Storage configuration error"
+            Service-->>UI: Error Message
+        end
+    end
+```
+
+### Reaction Flow (Write Path)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as ContentItem<br/>(INotifyPropertyChanged)
+    participant Service as ContentService<br/>(Client.Core)
+    participant API as ReactToContent<br/>(Azure Function)
+    participant Storage as ReactionStorageService
+    participant Table as Azure Table Storage<br/>(Reactions)
+
+    User->>UI: Tap "Uplift" button
+    UI->>UI: Optimistic Update<br/>(UpliftCount++)
+    Note over UI: UI reflects change immediately<br/>(INotifyPropertyChanged)
+
+    UI->>Service: ReactToArticleAsync(articleId)
+    Service->>API: POST /api/articles/{id}/react
+
+    API->>Storage: IncrementReactionAsync(articleId, "uplift")
+    Storage->>Table: UpsertEntityAsync(Reactions table)
+    Note over Storage,Table: PartitionKey: articleId<br/>RowKey: "uplift"<br/>Atomic increment
+
+    alt Success
+        Table-->>Storage: Entity updated
+        Storage-->>API: New count (1251)
+        API-->>Service: 200 OK + count
+        Service-->>UI: Confirm count (1251)
+        UI->>UI: Update UpliftCount<br/>(server confirmation)
+    else Table Storage Error
+        Table-->>Storage: 500 Error
+        Storage-->>API: Exception
+        API-->>Service: 500 Error
+        Service-->>UI: Rollback optimistic update<br/>(UpliftCount--)
+        Note over UI: Show error toast to user
+    end
+```
+
+### Build-Time Schema Generation
+
+```mermaid
+graph LR
+    Models[ContentItem.cs<br/>ContentFeed.cs] --> Schema[SchemaBuilder<br/>Console App]
+    Schema --> JSON[content.schema.json]
+    JSON --> Docs[API Documentation]
+
+    Build[MSBuild Process] -->|PostBuildEvent| Schema
+
+    style Models fill:#80CBC4
+    style Schema fill:#FFCC80
+    style JSON fill:#CE93D8
+```
+
+### Local Development vs Production Data Flow
+
+**Local Development (Azurite):**
+```
+Aurora UI → ContentService → localhost:7071/api/GetDailyContent
+                                        ↓
+                              Azure Functions Core Tools (func start)
+                                        ↓
+                              GetDailyContent function
+                                        ↓
+                              BlobServiceClient (UseDevelopmentStorage=true)
+                                        ↓
+                              Azurite (127.0.0.1:10000)
+                                        ↓
+                              Local blob: aurora-content/content.json
+```
+
+**Production (Azure):**
+```
+Aurora UI → ContentService → https://func-aurora-beta-4tcguzr2.azurewebsites.net/api/GetDailyContent
+                                        ↓
+                              Azure Functions (Linux, Consumption Plan)
+                                        ↓
+                              GetDailyContent function
+                                        ↓
+                              BlobServiceClient (Azure connection string)
+                                        ↓
+                              Azure Blob Storage (staurora4tcguzr2zm32w)
+                                        ↓
+                              Cloud blob: aurora-content/content.json
+```
 
 ## ☁️ Cloud Deployment Architecture
 
@@ -94,7 +286,7 @@ Aurora's cloud infrastructure is deployed to **Azure (East US region)** using a 
   - CORS configured for mobile application access
 
 **Endpoints:**
-- `GET /api/GetDailyContent` - Serves content feed (currently embedded JSON, migrating to Blob Storage in V-0.3)
+- `GET /api/GetDailyContent` - Serves content feed from Azure Blob Storage with retry logic
 - `POST /api/articles/{id}/react` - Increments reaction counts in Table Storage
 
 #### Storage Layer
@@ -106,8 +298,10 @@ Aurora's cloud infrastructure is deployed to **Azure (East US region)** using a 
 
 - **Azure Blob Storage**
   - Container: `aurora-content` (private access)
-  - Planned for V-0.3: Dynamic content delivery (content.json updates without redeployment)
-  - Cost: ~$0.02/GB/month
+  - Stores `content.json` for dynamic content delivery (updates without API redeployment)
+  - Implements Polly retry policy (3 attempts, exponential backoff) for resilience
+  - Local development uses Azurite emulator (`UseDevelopmentStorage=true`)
+  - Cost: ~$0.02/GB/month (~$0.0004 per 10K read operations)
 
 #### Monitoring Layer
 - **Application Insights**

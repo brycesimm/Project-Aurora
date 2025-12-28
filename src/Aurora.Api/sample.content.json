@@ -1,0 +1,52 @@
+{
+  "VibeOfTheDay": {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "title": "What Went Right in 2025: The Year's Top Good News Stories",
+    "snippet": "From ocean protection treaties to endangered species recovery, 2025 brought significant environmental and social progress. 79 nations ratified the Global Ocean Treaty, and Thailand became the first Southeast Asian country to legalize same-sex marriage.",
+    "image_url": "https://picsum.photos/seed/hope2025/800/600",
+    "article_url": "https://www.positive.news/society/what-went-right-in-2025-the-good-news-that-mattered/",
+    "uplift_count": 1250
+  },
+  "DailyPicks": [
+    {
+      "id": "b1c2d3e4-f5g6-7890-1234-567890abcde0",
+      "title": "Daily Inspiration and Uplifting Stories from Around the World",
+      "snippet": "The Good News Network continues to share inspiring stories of human kindness, scientific breakthroughs, and positive change across the globe.",
+      "image_url": "https://picsum.photos/seed/inspire/800/600",
+      "article_url": "https://www.goodnewsnetwork.org/",
+      "uplift_count": 845
+    },
+    {
+      "id": "c1d2e3f4-g5h6-7890-1234-567890abcde1",
+      "title": "[TEST: Empty URL] Expected Alert: 'Article URL is not available'",
+      "snippet": "Edge case test for missing article URL. READ button should show error dialog with message: 'Article URL is not available.'",
+      "image_url": "https://picsum.photos/seed/test1/800/600",
+      "article_url": "",
+      "uplift_count": 520
+    },
+    {
+      "id": "d1e2f3g4-h5i6-7890-1234-567890abcde2",
+      "title": "[TEST: Malformed URL] Expected Alert: 'Unable to open article - invalid URL'",
+      "snippet": "Edge case test for invalid URL format. READ button should show error dialog with message: 'Unable to open article - invalid URL.'",
+      "image_url": "https://picsum.photos/seed/test2/800/600",
+      "article_url": "not-a-valid-url",
+      "uplift_count": 312
+    },
+    {
+      "id": "e1f2g3h4-i5j6-7890-1234-567890abcde3",
+      "title": "Five Heartwarming Stories That Counter 2025's Negativity",
+      "snippet": "Reader's Digest curates the most uplifting moments from this year, showcasing human compassion and unexpected acts of kindness.",
+      "image_url": "https://picsum.photos/seed/heartwarming/800/600",
+      "article_url": "https://www.rd.com/article/good-news-stories-2025/",
+      "uplift_count": 2105
+    },
+    {
+      "id": "f1g2h3i4-j5k6-7890-1234-567890abcde4",
+      "title": "CBS News: The Uplift - Stories That Lift You Up",
+      "snippet": "CBS News features good journalism about good things, bringing hope and inspiration through verified positive news coverage.",
+      "image_url": "https://picsum.photos/seed/uplift/800/600",
+      "article_url": "https://www.cbsnews.com/uplift/",
+      "uplift_count": 78
+    }
+  ]
+}

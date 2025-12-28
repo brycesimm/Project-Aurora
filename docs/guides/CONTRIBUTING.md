@@ -13,17 +13,40 @@ Before you start, ensure you have the following installed:
 
 ## 🚀 Local Development Workflow
 
-### 1. Running the Backend
-The MAUI app fetches data from an Azure Function and persists reactions to Table Storage. For local development:
-1.  Start **Azurite** (e.g., via Visual Studio Service Dependencies or command line `azurite --silent`).
-2.  Navigate to `src/Aurora.Api`.
-3.  Run `func start` to host the mock API locally (usually at `http://localhost:7071`).
+### 1. Initial Setup: Azurite Blob Storage
+The API reads content from blob storage. For local development, you need to set up Azurite with the content container:
 
-### 2. Running the Client
-1.  Open `Project-Aurora.sln` in Visual Studio.
-2.  Set `Aurora` as your startup project.
-3.  Select your target platform (Android, iOS, or Windows).
-4.  Press **F5** to build and run.
+**Option A: Automated Setup (Recommended)**
+```bash
+cd tools/AzuriteSetup
+dotnet run
+```
+This tool automatically:
+- Creates the `aurora-content` container in Azurite
+- Uploads `sample.content.json` as `content.json`
+- Verifies connectivity
+
+**Option B: Manual Setup via Azure Storage Explorer**
+1.  Open Azure Storage Explorer
+2.  Navigate to: Local & Attached → Storage Accounts → Emulator - Default Ports
+3.  Right-click "Blob Containers" → Create Blob Container → Name: `aurora-content`
+4.  Upload `src/Aurora.Api/sample.content.json` and rename to `content.json`
+
+### 2. Running the Backend
+The MAUI app fetches data from an Azure Function and persists reactions to Table Storage. For local development:
+1.  **Azurite starts automatically** when you build `Aurora.Api` (via MSBuild PreBuild target)
+2.  Navigate to `src/Aurora.Api`
+3.  Run `func start` to host the API locally (usually at `http://localhost:7071`)
+4.  Verify endpoint: `http://localhost:7071/api/GetDailyContent` should return content JSON
+
+### 3. Running the Client
+1.  Open `Project-Aurora.sln` in Visual Studio
+2.  Set `Aurora` as your startup project
+3.  Select build configuration:
+    - **Debug:** Uses `appsettings.Development.json` → `localhost:7071` (local API)
+    - **Release:** Uses `appsettings.json` → Production Azure Functions API
+4.  Select your target platform (Android, iOS, or Windows)
+5.  Press **F5** to build and run
 
 ## 📱 Android Networking Notes
 
