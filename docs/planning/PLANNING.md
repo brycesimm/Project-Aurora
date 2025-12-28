@@ -154,6 +154,39 @@
     5. Document integration testing architecture and best practices (`docs/testing/INTEGRATION_TESTING.md`).
   - **Success Criteria:** ~8-10 integration tests passing in CI, clear documentation for adding future endpoint tests, maintained zero-warning build discipline.
 
+- **Milestone CT-1 (Future Enhancement): Content Management Tooling Refactor**
+  *Migrate PowerShell-based content management scripts to .NET console applications for better development experience, testability, and solution integration.*
+  - **Objective:** Eliminate PowerShell dependency for content management workflows; provide strongly-typed, unit-tested tooling that integrates with the Aurora solution and CI/CD pipelines.
+  - **Current State:** PowerShell scripts (Validate-Content.ps1, Deploy-Content.ps1, Rollback-Content.ps1, New-ContentTemplate.ps1) functional but lack IDE support, unit testing, and cross-platform consistency.
+  - **Proposed Architecture:**
+    - **Aurora.ContentTools** (.NET 9 console application) - Unified CLI for all content management commands
+    - **Aurora.ContentTools.Tests** (xUnit test project) - Unit tests for validation, deployment, template generation logic
+    - **Distribution:** .NET global tool (`dotnet tool install -g Aurora.ContentTools`)
+  - **Scope:**
+    1. Create `Aurora.ContentTools` console application with CommandLineParser for CLI interface.
+    2. Migrate validation logic from PowerShell to `ValidateCommand.cs` (reuse schema from `Aurora.Shared`).
+    3. Migrate deployment logic from PowerShell to `DeployCommand.cs` (share Azure SDK with `Aurora.Api`).
+    4. Migrate rollback logic to `RollbackCommand.cs` with interactive backup selection.
+    5. Migrate template generation logic to `TemplateCommand.cs`.
+    6. Create comprehensive unit tests for all commands (validation rules, deployment workflow, error handling).
+    7. Configure tool as .NET global tool with NuGet packaging.
+    8. Update documentation with migration guide and deprecation notices for PowerShell scripts.
+  - **Benefits:**
+    - Full Visual Studio IntelliSense, debugging, and refactoring support
+    - Unit testing with xUnit (TDD-enabled workflow)
+    - Cross-platform consistency (eliminates PowerShell Core vs. Windows PowerShell differences)
+    - Solution integration (shared dependencies, consistent error handling)
+    - Faster startup times (compiled binaries vs. script interpretation)
+    - CI/CD integration (easier GitHub Actions integration)
+  - **Success Criteria:**
+    - All 4 content management commands migrated and functional
+    - 20+ unit tests covering validation, deployment, and template generation logic
+    - Zero-warning build maintained
+    - Installation via `dotnet tool install` documented and verified
+    - PowerShell scripts deprecated with migration guide in README.md
+  - **Priority:** Low (defer until post-beta or when adding new content management features)
+  - **Estimated Effort:** 2-3 weeks
+
 ### Phase 5: Validation Strategy
 **Status:** Blocked (awaiting Milestone V-0 completion)
 
