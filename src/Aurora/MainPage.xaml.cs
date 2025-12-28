@@ -157,4 +157,73 @@ public partial class MainPage : ContentPage
 	{
 		await DisplayAlert("Coming Soon", "Comments are not yet available.", "OK").ConfigureAwait(false);
 	}
+
+	/// <summary>
+	/// Handles the click event for the READ button, opening the article in the device's default browser.
+	/// </summary>
+	private async void OnReadClicked(object sender, EventArgs e)
+	{
+		if (sender is not Button button)
+		{
+			return;
+		}
+
+		// Disable button immediately to prevent double-tap
+		button.IsEnabled = false;
+
+		try
+		{
+			// Determine which item was clicked
+			ContentItem? itemToRead = null;
+
+			if (button.BindingContext is ContentItem item)
+			{
+				// Daily Pick (List Item context)
+				itemToRead = item;
+			}
+			else if (button.BindingContext is MainPage page && page.VibeOfTheDay != null)
+			{
+				// Vibe Card (Page context)
+				itemToRead = page.VibeOfTheDay;
+			}
+
+			if (itemToRead == null || string.IsNullOrWhiteSpace(itemToRead.ArticleUrl))
+			{
+				MainThread.BeginInvokeOnMainThread(async () =>
+				{
+					await DisplayAlert("Error", "Article URL is not available.", "OK").ConfigureAwait(false);
+				});
+				return;
+			}
+
+			// Validate URL format
+			if (!Uri.TryCreate(itemToRead.ArticleUrl, UriKind.Absolute, out var uri) ||
+				(uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+			{
+				MainThread.BeginInvokeOnMainThread(async () =>
+				{
+					await DisplayAlert("Error", "Unable to open article - invalid URL.", "OK").ConfigureAwait(false);
+				});
+				return;
+			}
+
+			// Open in browser (SystemPreferred uses Chrome Custom Tabs on Android - modern UX pattern)
+			await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred).ConfigureAwait(false);
+		}
+#pragma warning disable CA1031 // Do not catch general exception types
+		catch (Exception ex)
+		{
+			System.Diagnostics.Debug.WriteLine($"Failed to open article: {ex.Message}");
+			MainThread.BeginInvokeOnMainThread(async () =>
+			{
+				await DisplayAlert("Error", "Unable to open article.", "OK").ConfigureAwait(false);
+			});
+		}
+#pragma warning restore CA1031 // Do not catch general exception types
+		finally
+		{
+			// Re-enable button
+			button.IsEnabled = true;
+		}
+	}
 }

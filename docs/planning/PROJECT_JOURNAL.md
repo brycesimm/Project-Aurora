@@ -864,7 +864,177 @@ This session successfully completed **Story V-0.1: Cloud Infrastructure Deployme
 
 ---
 
-**Session Duration:** ~3 hours  
-**Key Milestone:** Aurora is now a cloud-connected application ready for beta testing  
-**Blocker Resolved:** Azure quota limitation on new Pay-As-You-Go accounts  
+**Session Duration:** ~3 hours
+**Key Milestone:** Aurora is now a cloud-connected application ready for beta testing
+**Blocker Resolved:** Azure quota limitation on new Pay-As-You-Go accounts
 **Deployment Cost:** $0/month (Consumption Plan free tier + minimal storage costs)
+
+---
+
+## 2025-12-27: Story V-0.2 - Article Reader Implementation
+
+### Objective
+Implement article reading functionality to enable users to consume full uplifting news content from source websites via the READ button.
+
+### Work Completed
+
+**1. Article Reader Implementation**
+- Created `OnReadClicked` event handler in `MainPage.xaml.cs` (69 lines)
+- Implemented `Browser.OpenAsync()` using Chrome Custom Tabs (SystemPreferred mode)
+- Added comprehensive URL validation (null/empty checks, http/https scheme verification)
+- Wired READ buttons in both Vibe of the Day and Daily Picks sections
+- Implemented graceful error handling with user-friendly alert dialogs
+
+**2. Infrastructure Automation**
+- Automated Azurite emulator startup via MSBuild PreBuild target in `Aurora.Api.csproj`
+- Eliminated manual Azurite management for local development
+- PowerShell script checks port 10002, starts Azurite if not running, continues gracefully if unavailable
+- Production-safe: Fails silently in Azure (azurite command doesn't exist)
+
+**3. Real Content Integration**
+- Replaced placeholder article URLs with real uplifting news sources:
+  - Positive News: "What Went Right in 2025" (Vibe of the Day)
+  - Good News Network: Daily inspiration hub
+  - Reader's Digest: "Five Heartwarming Stories That Counter 2025's Negativity"
+  - CBS News: "The Uplift" section
+- Added edge case test articles with explicit expected behavior labels
+- Deployed updated `sample.content.json` to Azure Functions (`func-aurora-beta-4tcguzr2`)
+
+**4. Build Configuration Updates**
+- Updated `.gitignore` to exclude Azurite artifacts (`__azurite_*.json`, `AzuriteConfig`, `__blobstorage__/`, `nul`)
+- Maintained zero-warning build across all platforms
+
+### Technical Decisions
+
+**Decision 1: Chrome Custom Tabs vs. External Browser**
+- **Initial Approach:** Attempted `BrowserLaunchMode.External` to open articles in separate Chrome app
+- **Problem:** Android emulator threw "Specified method is not supported" exception
+- **Resolution:** Adopted `BrowserLaunchMode.SystemPreferred` (Chrome Custom Tabs)
+- **Justification:**
+  - Chrome Custom Tabs are the modern Android UX standard (used by Twitter, Reddit, Facebook)
+  - Faster performance (browser instance stays in memory)
+  - Smoother visual transition (no app-switching overhead)
+  - Emulator and physical device compatible
+- **Trade-off:** Back button behavior differs slightly from separate app, but testing confirmed correct functionality
+
+**Decision 2: Azurite Auto-Start via MSBuild**
+- **Problem:** Visual Studio Connected Services unreliable with multiple startup projects
+- **Alternative Considered:** Manual startup or reliance on IDE-specific configurations
+- **Resolution:** MSBuild PreBuild target with PowerShell automation
+- **Benefits:**
+  - Portable across development environments
+  - Eliminates manual intervention
+  - Fails safely in production (continues build if Azurite unavailable)
+  - Improves developer experience
+
+### Testing & Verification
+
+**Android Emulator (Debug Build - Localhost API):**
+- ✅ Real article URLs open in Chrome Custom Tab
+- ✅ Empty URL test: "Article URL is not available" alert displayed correctly
+- ✅ Malformed URL test: "Unable to open article - invalid URL" alert displayed correctly
+- ✅ Double-tap prevention: Button disables and re-enables correctly
+- ✅ Azurite auto-start: Uplift button functional without manual intervention
+
+**S24 Ultra Physical Device (Release Build - Cloud API):**
+- ✅ Wi-Fi: All articles load and open correctly
+- ✅ Cellular Data: All articles load and open correctly
+- ✅ Navigation: Back button returns to Aurora as expected
+- ✅ Integration: Uplift + READ both functional with no interference
+- ✅ Performance: Chrome Custom Tabs load instantly, smooth transitions
+
+**Cloud Deployment:**
+- ✅ Updated API deployed to `func-aurora-beta-4tcguzr2.azurewebsites.net`
+- ✅ Real content verified via `GET /api/getdailycontent`
+- ✅ Zero-warning build maintained (0 warnings, 0 errors)
+
+### Challenges & Solutions
+
+**Challenge 1: External Browser Mode Not Supported**
+- **Issue:** `BrowserLaunchMode.External` threw exception on emulator
+- **Investigation:** Added diagnostic logging to capture exception details
+- **Solution:** Switched to SystemPreferred (Chrome Custom Tabs)
+- **Lesson Learned:** Emulator limitations can reveal superior design patterns
+
+**Challenge 2: Azurite Not Auto-Starting**
+- **Issue:** Moving Aurora.Api to top of startup projects didn't reliably trigger Connected Services
+- **Investigation:** Visual Studio Service Dependencies orchestrator behavior inconsistent
+- **Solution:** MSBuild PreBuild automation independent of IDE configuration
+- **Lesson Learned:** Build system automation > IDE-specific features for reliability
+
+**Challenge 3: Initial Content Loading Issues**
+- **Issue:** App loaded with blank Vibe or missing Daily Picks during testing
+- **Root Cause:** Aurora.Api not running (only Aurora project started)
+- **Solution:** Configured Multiple Startup Projects with Aurora.Api first + user education
+- **Lesson Learned:** Local development dependencies need clear documentation
+
+### Files Modified
+- `src/Aurora/MainPage.xaml.cs` (+69 lines) - Article reader implementation
+- `src/Aurora/MainPage.xaml` (+2 lines) - READ button event wiring
+- `src/Aurora.Api/Aurora.Api.csproj` (+6 lines) - Azurite auto-start target
+- `sample.content.json` (~48 changes) - Real URLs + edge case tests
+- `.gitignore` (+4 lines) - Azurite artifact exclusions
+
+**Total Changes:** 101 insertions, 24 deletions
+
+### Acceptance Criteria Verification
+
+**Story V-0.2 - All Criteria Met:**
+- ✅ **AC 1:** READ button opens article in device's default browser for both Vibe and Daily Picks
+- ✅ **AC 2:** Invalid/missing URLs handled gracefully with error alerts
+- ✅ **AC 3:** Button provides visual feedback to prevent double-tap
+- ✅ **AC 4:** Verified on Android emulator and S24 Ultra physical device (Wi-Fi + cellular)
+
+### Progress Metrics
+
+**Milestone V-0 (Beta Readiness) - Phase 1:**
+- **Completed:** 2 of 4 stories (50%)
+  - ✅ V-0.1: Cloud Infrastructure Deployment
+  - ✅ V-0.2: Article Reader Implementation
+  - ⏳ V-0.3: Migrate Content to Azure Blob Storage
+  - ⏳ V-0.4: Real Content Curation
+
+### Documentation Updates
+1. **BACKLOG.md:** Marked Story V-0.2 complete with completion date
+2. **PROJECT_JOURNAL.md:** Added comprehensive session summary (this entry)
+3. **ARCHITECTURE.md:** No updates required (no architectural changes)
+4. **DEBUGGING.md:** (Optional) Could document Chrome Custom Tabs behavior
+
+### Current State
+
+**Feature Completeness:**
+- ✅ Users can read full articles via READ button
+- ✅ Error handling prevents bad URL confusion
+- ✅ Real uplifting news content deployed to production
+- ✅ Local development friction eliminated (Azurite auto-start)
+
+**Code Repository:**
+- Branch: `feature/V-0.2-article-reader`
+- Commits: Ready for commit with comprehensive message
+- Ready for: Pull request and merge to `main`
+
+**Testing Status:**
+- ✅ Emulator verification complete
+- ✅ Physical device verification complete (S24 Ultra)
+- ✅ Cloud deployment verified
+- ✅ Edge cases tested (empty URL, malformed URL)
+
+### Next Focus
+1. **Immediate:** Commit changes and create pull request
+2. **Story V-0.3:** Migrate content from embedded JSON to Azure Blob Storage
+3. **Story V-0.4:** Curate and integrate real uplifting news content (expand beyond test articles)
+4. **Story V-0.5+:** Content management tooling (PowerShell scripts for validation, deployment, generation)
+
+### Lessons Learned
+1. **Chrome Custom Tabs > External Browser:** Modern Android UX pattern provides better experience than app switching
+2. **Automate Infrastructure:** MSBuild targets > IDE-specific configurations for reliability and portability
+3. **Test Data is Documentation:** Explicit expected behavior in test cases makes verification systematic
+4. **Physical Device Testing Critical:** Emulator quirks don't reflect production behavior
+5. **Graceful Degradation:** User-friendly error messages > silent failures for trust and debugging
+
+---
+
+**Session Duration:** ~2.5 hours
+**Key Milestone:** Article reading functionality complete; users can now consume full uplifting news content
+**Infrastructure Improvement:** Azurite auto-start eliminates developer friction
+**Build Quality:** Zero-warning mandate maintained (0 warnings, 0 errors)
