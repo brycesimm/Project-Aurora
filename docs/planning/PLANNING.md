@@ -139,9 +139,44 @@
     6. **(Completed)** PowerShell deployment script (`Deploy-Content.ps1`) with rollback capability and backup management.
     7. **(Completed)** PowerShell template generator (`New-ContentTemplate.ps1`) for content.json scaffolding.
 
-- **Milestone V-1 (To be Planned): Integration Testing Infrastructure**
+- **Milestone V-2 (In Progress as of 2025-12-29): Beta Testing Round 1 (Early Alpha Quality)**
+  *Establish beta testing infrastructure and execute first validation round (self-testing + 1-4 trusted testers) to identify improvements and validate core value proposition.*
+  - **Objective:** Enable structured feedback collection, deploy to Google Play Internal Testing, and validate Aurora's impact through personal use before broader distribution.
+  - **Target Timeline:** 2 weeks
+  - **Platform Scope:** Android-only (iOS deferred pending Mac/device acquisition)
+  - **Terminology Note:** Using "beta" for consistency with Azure infrastructure naming (`rg-aurora-beta`), but this represents alpha-quality testing with small, trusted cohort.
+  - **Scope (10 stories across 4 features):**
+    - **Feature V-2.1:** Feedback Collection Infrastructure (3 stories)
+      1. Create baseline survey (Google Form) with 8 questions covering social media context, positivity definition, and value proposition validation
+      2. Create weekly feedback survey (Google Form) with 10 questions tracking usage, sentiment, friction, and continuation intent
+      3. Integrate "Share Feedback" button in app (opens weekly survey in browser via Chrome Custom Tabs)
+    - **Feature V-2.2:** Beta Tester Onboarding Documentation (2 stories)
+      4. Write Beta Tester Guide (warm, conversational tone; 300-500 words; PDF export for email distribution)
+      5. Document AAB signing and Google Play distribution process (captures lessons learned from first deployment)
+    - **Feature V-2.3:** Google Play Internal Testing Setup (2 stories)
+      6. Create Google Play Console Developer account ($25 one-time fee; execute early to mitigate 24-48hr approval wait)
+      7. Deploy Aurora to Internal Testing track (AAB upload, opt-in URL generation, self-verification on S24 Ultra)
+    - **Feature V-2.4:** Self-Validation & External Tester Execution (3 stories)
+      8. Execute 7-14 day self-validation period (end-of-week recap tracking, weekly survey submission, document findings)
+      9. Curate and deploy at least one full content update (1 Vibe + 10 Picks; track total curation time; ≤45 min target)
+      10. Synthesize findings, recruit 1-4 external testers (if self-validation positive), make Go/No-Go decision
+  - **Success Criteria:**
+    - ✅ Google Forms operational and integrated into app
+    - ✅ Google Play Internal Testing track deployed
+    - ✅ Self-validation completed with documented findings
+    - ✅ Improvement backlog prioritized (Blocker/High/Medium/Low)
+    - ✅ Go/No-Go decision documented with rationale
+  - **Go Decision Thresholds:**
+    - Opened Aurora first ≥50% of tested days (habit formation)
+    - At least 3 stories resonated emotionally (content quality)
+    - Weekly survey shows positive sentiment (value prop validated)
+    - Curation time ≤45 min OR clear automation path (sustainability)
+    - No critical bugs (app stability)
+
+- **Milestone V-1 (Future Enhancement): Integration Testing Infrastructure**
   *Establish comprehensive HTTP-layer test coverage for Azure Functions API to complement existing unit tests.*
   - **Objective:** Verify end-to-end request/response behavior, middleware pipeline, and runtime interactions that unit tests cannot cover (HTTP trigger binding, CORS headers, actual storage operations, Polly retry execution).
+  - **Priority:** Deferred until post-beta (V-2 completion); not blocking Phase 5 validation.
   - **Scope:**
     1. Create `Aurora.Api.IntegrationTests` project with Azure Functions in-process hosting.
     2. Implement integration tests for `GetDailyContent` endpoint (success, 404, 500, retry scenarios).
@@ -224,6 +259,7 @@
 | 2025-12-27 | Adopted Chrome Custom Tabs for article reader | Selected `BrowserLaunchMode.SystemPreferred` over external browser for superior Android UX (faster load, smoother transitions, standard pattern used by major apps). |
 | 2025-12-27 | Implemented Polly retry policy for blob storage | Added exponential backoff with jitter (3 retries, 1s/2s/4s delays) to prevent transient blob storage failures from affecting users. |
 | 2025-12-28 | PowerShell chosen for content management tooling | Selected PowerShell over .NET console apps for V-0 to minimize dependencies (Windows-native, no install required); deferred .NET migration to CT-1 based on beta workflow feedback. |
+| 2025-12-29 | Milestone V-2 defined for Phase 5 validation | Created structured beta testing milestone with 10 stories across feedback infrastructure, Google Play setup, and self-validation. Scope: Android-only, self + 1-4 trusted testers, 2-week timeline. Package name: `com.projectaurora.app` (permanent), App Title: "Aurora - Positive News" (changeable). Using "beta" terminology for consistency with Azure naming despite alpha-quality testing. Go/No-Go thresholds: ≥50% first-app-opened, ≥3 resonant stories, positive sentiment, ≤45 min curation time. |
 
 ---
 

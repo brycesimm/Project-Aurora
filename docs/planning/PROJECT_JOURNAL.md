@@ -1185,6 +1185,87 @@ This session completed **Story V-0.3: Migrate Content to Azure Blob Storage**, a
 **Infrastructure Achievement:** Azurite automation tool created for seamless developer onboarding
 **Build Quality:** Zero-warning mandate maintained (0 warnings, 0 errors)
 
+---
+
+## 2025-12-29: Planning Session - Milestone V-2 (Beta Testing Round 1)
+
+### Summary
+Defined Phase 5 validation strategy as Milestone V-2 with 10 concrete stories. User correctly identified missing feedback infrastructure and limited Android tester availability as blockers before proceeding with beta distribution.
+
+### Key Decisions
+
+**Scope:** Infrastructure + Self-Validation + 1-4 External Testers (optional based on self-validation results)
+- **Timeline:** 2 weeks
+- **Platform:** Android-only (iOS deferred pending Mac/device acquisition)
+- **Terminology:** Keep "beta" for consistency with Azure naming (`rg-aurora-beta`); document alpha quality in guides
+
+**Google Play Console:**
+- **Package Name:** `com.projectaurora.app` (permanent, matches Azure infrastructure)
+- **App Title:** "Aurora - Positive News" (changeable anytime)
+- **Cost:** $25 one-time fee
+- **Timing:** Execute account creation Day 1-2 to absorb 24-48hr approval wait
+
+**Feedback Infrastructure:**
+- **Baseline Survey:** 8 questions (most optional) covering social media context, positivity definition, value proposition
+- **Weekly Survey:** 10 questions tracking usage, sentiment, friction, bugs
+- **In-App Integration:** "Share Feedback" button (Lavender Mist design) at bottom of Daily Picks or top-right above Vibe
+
+**Self-Validation Criteria:**
+- **Duration:** 7-14 days minimum
+- **Tracking:** End-of-week recap (not daily logging)
+- **Success Thresholds:** ≥50% first-app-opened, ≥3 resonant stories, positive sentiment, ≤45 min curation time, no critical bugs
+
+**Go/No-Go Framework:**
+- **Go:** Continue refining; implement blockers/high-priority fixes; proceed to Round 2
+- **No-Go:** Substantial pivot required; restart or salvage decision
+- **Conditional Go:** Document specific blockers (e.g., curation time exceeded but automation path clear)
+
+### Milestone V-2 Structure (10 Stories)
+
+**Feature V-2.1:** Feedback Collection (3 stories)
+- Baseline survey (Google Form)
+- Weekly survey (Google Form)
+- In-app "Share Feedback" button
+
+**Feature V-2.2:** Beta Tester Onboarding (2 stories)
+- Beta Tester Guide (conversational tone, 300-500 words, PDF)
+- AAB signing & distribution documentation
+
+**Feature V-2.3:** Google Play Setup (2 stories)
+- Console account creation
+- Deploy to Internal Testing track
+
+**Feature V-2.4:** Self-Validation & External Testers (3 stories)
+- 7-14 day self-validation with tracking
+- Content update (1 Vibe + 10 Picks, measure curation time)
+- Synthesize findings, recruit 1-4 testers, Go/No-Go decision
+
+### User Concerns Addressed
+
+**Limited Android Testers:** Start with self-testing; expand to 1-4 trusted contacts only if positive; fallback to r/UpliftingNews recruitment if needed
+
+**No Feedback Infrastructure:** Created detailed Google Forms specifications with questions, structure, integration requirements
+
+**No iOS Devices:** Android-only scope; iOS deferred until product-market fit validated on Android
+
+**Package Naming:** Clarified package name permanent (`com.projectaurora.app`), App Title changeable anytime
+
+### Documentation Updates
+- **BACKLOG.md:** Added Milestone V-2 with 10 stories (~650 lines)
+- **PLANNING.md:** Added V-2 to Phase 4 roadmap, clarified V-1 deferred, added Key Decision Log entry
+- **PROJECT_JOURNAL.md:** This entry
+
+### Next Steps
+1. Commit planning branch (`planning/phase-5-validation-strategy`)
+2. Merge to `main`
+3. Execute V-2.3.1 (Google Play account) on Day 1-2 of implementation
+
+---
+
+**Session Duration:** ~3 hours
+**Outcome:** Phase 5 validation strategy transformed into actionable milestone with clear success criteria and Go/No-Go framework
+**Branch:** `planning/phase-5-validation-strategy`
+
 ## 2025-12-28 (Session 2): Story V-0.4 Completion - Real Content Curation
 
 ### Summary
