@@ -304,14 +304,16 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 ### Feature V-2.1: Feedback Collection Infrastructure
 *This feature establishes structured surveys to capture quantitative and qualitative insights without survey fatigue.*
 
-- [ ] **Story V-2.1.1:** As a project owner, I want a baseline survey that captures tester context and expectations so that I can establish a pre-use benchmark for measuring Aurora's impact.
-    - **AC 1:** Google Form created with 8 questions covering: social media context (hours/day, typical emotions, avoidance frequency), positivity definition (story types, topics to avoid), app usage baseline (first app opened), and value proposition validation
-    - **AC 2:** Most questions configured as optional (only "How valuable would an app focused on uplifting news be?" is required)
-    - **AC 3:** Questions with simple answers (scales, multiple choice) include follow-up text box: "Want to elaborate? (Optional)" for detailed feedback/justifications
-    - **AC 4:** Form configured to save responses to Google Sheets automatically with timestamp
-    - **AC 5:** Shareable link generated (e.g., `https://forms.gle/...`) and documented in `docs/beta/SURVEY_LINKS.md`
-    - **AC 6:** Form tested by submitting 2 test responses and verifying data appears correctly in Google Sheets with all columns populated
-    - **AC 7:** Form embedded in Beta Tester Guide (Story V-2.2.1) with clear instruction: "Complete this before installing Aurora"
+- [x] **Story V-2.1.1:** As a project owner, I want a baseline survey that captures tester context and expectations so that I can establish a pre-use benchmark for measuring Aurora's impact.
+    - **AC 1:** ✅ Google Form created with 14 questions (expanded from 8) covering: contact info (method + details), app usage patterns, social media context, sentiment analysis, positivity definition, and value proposition validation
+    - **AC 2:** ✅ Most questions configured as optional (3 required: contact method, contact details, value proposition rating)
+    - **AC 3:** ✅ Questions with simple answers include follow-up text box: "Want to elaborate? (Optional)" for detailed feedback
+    - **AC 4:** ✅ Form configured to save responses to Google Sheets automatically with timestamp
+    - **AC 5:** ✅ Shareable link generated (`https://forms.gle/eRq3qY1EveJbP6Q87`) and documented in `docs/beta/SURVEY_LINKS.md`
+    - **AC 6:** ✅ Form tested with 2 test responses, verified data appears correctly in Google Sheets with all columns populated
+    - **AC 7:** 🔄 Deferred to Story V-2.2.1 (Beta Tester Guide not yet created)
+    - **Completed:** 2025-12-29
+    - **Notes:** Survey expanded beyond original spec to include contact collection (2 questions) and enhanced app usage analysis (Q4-Q6, Q14). Contact method flexibility (Email/Discord/Reddit/Other) provides better tester experience. Confirmation message updated to reflect contact method collection.
     - **Edge Cases:**
         - Tester skips optional questions: Allowed; only value proposition question (#6 in proposed list) is required
         - Political sensitivity (topics to avoid): Question phrased neutrally: "Are there topics you'd prefer Aurora avoid, even if generally positive? (e.g., political figures, religious themes, specific social issues)"
@@ -439,7 +441,17 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - Account unlocks: Internal Testing (100 testers), Closed Testing (unlimited), Open Testing (unlimited), Production releases
         - Package name recommendation: Use `com.projectaurora.app` to match existing Azure infrastructure naming (`rg-aurora-beta`, `func-aurora-beta-*`)
     - **Time Estimate:** 30-60 minutes (form filling + payment) + 24-48 hours wait (approval)
-    - **Decision Point:** Package naming - does `com.projectaurora.app` work for you, or prefer more generic like `com.positivity.newsapp` to future-proof against rebranding?
+    - **Decision Points:**
+        - **Package Name:** Does `com.projectaurora.app` work, or prefer more generic like `com.positivity.newsapp` to future-proof against rebranding?
+        - **Developer Name (Shown on Play Store - PERMANENT):** This appears as "by [Developer Name]" on the Play Store and **cannot be changed** after account creation. Options to consider:
+            - **"Project Aurora"** - Clean, established brand identity
+            - **"Lilly Light Studios"** - Honors Lilly ("my light in this world"), professional studio naming
+            - **"Morning Light Studios"** - Combines Aurora (dawn/morning) with Lilly's light symbolism
+            - **"Aurora Light Labs"** - Merges both Aurora and light themes professionally
+            - **"Lilly Labs"** - Simple, memorable, honors Lilly directly
+            - **Personal name** (e.g., "Bryce Simmerman") - Standard indie developer approach, keeps personal branding
+        - **Note:** App can include "In loving memory of Lilly" dedication in About section regardless of developer name chosen
+        - **Recommendation:** Create **separate Google account** for Play Console (not personal Gmail) to enable brand identity and isolation (see PLANNING.md "Deferred Business & Legal Items" for full rationale)
 
 - [ ] **Story V-2.3.2:** As a developer, I want Aurora deployed to Google Play Internal Testing so that beta testers receive professional installs and automatic updates.
     - **AC 1:** Generate signed Release AAB using Visual Studio or CLI: `dotnet publish -c Release -f net9.0-android -p:AndroidPackageFormat=aab`

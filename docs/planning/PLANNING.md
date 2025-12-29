@@ -286,4 +286,59 @@
 
 ---
 
-**Last Updated:** 2025-12-28
+## Deferred Business & Legal Items
+
+These items are documented for future consideration but are not required for beta testing (Milestone V-2).
+
+### Account & Identity Strategy
+
+**Current State (Beta Testing):**
+- **GitHub:** Personal account (`brycesimm/Project-Aurora`) - Repo can be transferred to organization later without losing history
+- **Google Forms/Sheets:** Personal Gmail account - Data is exportable and transferable via sharing
+- **Azure Subscription:** Personal Pay-As-You-Go subscription - Resources can be migrated between subscriptions if needed
+- **Billing:** Personal credit card (expected to remain permanent for independent development)
+
+**Google Play Console Decision:**
+- **Recommendation:** Create separate Google account specifically for Play Console to enable brand identity
+- **Developer Name:** To be decided in Story V-2.3.1 (see suggestions in BACKLOG.md)
+- **Rationale:** Developer account owner is **permanent** and cannot be transferred; separating now provides maximum flexibility
+- **Cost:** $25 one-time fee
+- **Payment:** Personal credit card (standard practice even for business accounts)
+
+### Post-Beta Infrastructure Items
+
+**Priority: Low (defer until Go decision after V-2)**
+
+1. **Custom Domain Registration**
+   - **Domain:** `projectaurora.app` (or alternative)
+   - **Cost:** ~$12/year
+   - **Purpose:** Professional contact email (support@projectaurora.app), privacy policy hosting, marketing landing page
+   - **Timing:** Before public launch (post-beta if Go decision)
+   - **Registrar:** Google Domains, Namecheap, or Cloudflare
+
+2. **GitHub Organization Migration**
+   - **Current:** `brycesimm/Project-Aurora` (personal account)
+   - **Future:** Transfer to `projectaurora` organization if bringing on collaborators
+   - **Process:** GitHub allows repository transfers without losing commit history
+   - **Timing:** Only if partnerships/collaboration materialize
+
+3. **Business Entity Formation (LLC)**
+   - **Current:** Sole proprietor (personal income, Schedule C)
+   - **Threshold for Consideration:** Revenue exceeds ~$5K/year OR liability protection desired
+   - **Tax Implications:** Google sends 1099-K tax forms to Play Console account email if revenue threshold met
+   - **Current Aurora Status:** Free app, no immediate tax/legal implications
+   - **Timing:** Only if app monetizes successfully post-launch
+
+4. **Email Migration (Post-Domain Registration)**
+   - **Current:** Play Console uses separate Gmail account (e.g., `auroradev2025@gmail.com`)
+   - **Future:** Migrate Play Console email to custom domain (dev@projectaurora.app)
+   - **Note:** Email change **is possible** without losing Play Console account
+   - **Timing:** After domain registration and Go decision
+
+**Documentation Reference:**
+- Developer account strategy discussion documented in PROJECT_JOURNAL.md (2025-12-29 session)
+- Google Play Console account creation details in Story V-2.3.1 (BACKLOG.md)
+
+---
+
+**Last Updated:** 2025-12-29
