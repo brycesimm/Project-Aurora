@@ -304,14 +304,16 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 ### Feature V-2.1: Feedback Collection Infrastructure
 *This feature establishes structured surveys to capture quantitative and qualitative insights without survey fatigue.*
 
-- [ ] **Story V-2.1.1:** As a project owner, I want a baseline survey that captures tester context and expectations so that I can establish a pre-use benchmark for measuring Aurora's impact.
-    - **AC 1:** Google Form created with 8 questions covering: social media context (hours/day, typical emotions, avoidance frequency), positivity definition (story types, topics to avoid), app usage baseline (first app opened), and value proposition validation
-    - **AC 2:** Most questions configured as optional (only "How valuable would an app focused on uplifting news be?" is required)
-    - **AC 3:** Questions with simple answers (scales, multiple choice) include follow-up text box: "Want to elaborate? (Optional)" for detailed feedback/justifications
-    - **AC 4:** Form configured to save responses to Google Sheets automatically with timestamp
-    - **AC 5:** Shareable link generated (e.g., `https://forms.gle/...`) and documented in `docs/beta/SURVEY_LINKS.md`
-    - **AC 6:** Form tested by submitting 2 test responses and verifying data appears correctly in Google Sheets with all columns populated
-    - **AC 7:** Form embedded in Beta Tester Guide (Story V-2.2.1) with clear instruction: "Complete this before installing Aurora"
+- [x] **Story V-2.1.1:** As a project owner, I want a baseline survey that captures tester context and expectations so that I can establish a pre-use benchmark for measuring Aurora's impact.
+    - **AC 1:** ✅ Google Form created with 14 questions (expanded from 8) covering: contact info (method + details), app usage patterns, social media context, sentiment analysis, positivity definition, and value proposition validation
+    - **AC 2:** ✅ Most questions configured as optional (3 required: contact method, contact details, value proposition rating)
+    - **AC 3:** ✅ Questions with simple answers include follow-up text box: "Want to elaborate? (Optional)" for detailed feedback
+    - **AC 4:** ✅ Form configured to save responses to Google Sheets automatically with timestamp
+    - **AC 5:** ✅ Shareable link generated (`https://forms.gle/eRq3qY1EveJbP6Q87`) and documented in `docs/beta/SURVEY_LINKS.md`
+    - **AC 6:** ✅ Form tested with 2 test responses, verified data appears correctly in Google Sheets with all columns populated
+    - **AC 7:** 🔄 Deferred to Story V-2.2.1 (Beta Tester Guide not yet created)
+    - **Completed:** 2025-12-29
+    - **Notes:** Survey expanded beyond original spec to include contact collection (2 questions) and enhanced app usage analysis (Q4-Q6, Q14). Contact method flexibility (Email/Discord/Reddit/Other) provides better tester experience. Confirmation message updated to reflect contact method collection.
     - **Edge Cases:**
         - Tester skips optional questions: Allowed; only value proposition question (#6 in proposed list) is required
         - Political sensitivity (topics to avoid): Question phrased neutrally: "Are there topics you'd prefer Aurora avoid, even if generally positive? (e.g., political figures, religious themes, specific social issues)"

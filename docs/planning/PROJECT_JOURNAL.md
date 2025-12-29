@@ -1349,3 +1349,35 @@ Completed **Story V-0.7: Content Template Generator**, finishing Milestone V-0 (
 ### Next Focus
 1. Push feature branch and create PR #44
 2. Begin Phase 5 (Beta testing preparation)
+
+---
+
+## 2025-12-29: Story V-2.1.1 Completion - Baseline Survey
+
+### Summary
+Completed **Story V-2.1.1: Baseline Survey** and documented developer account strategy for Play Console setup.
+
+### Deliverables
+- **Baseline Survey:** https://forms.gle/eRq3qY1EveJbP6Q87 (14 questions, 3 required)
+- **Responses Sheet:** https://docs.google.com/spreadsheets/d/1Xl90ykDVii1rTgsgFDcUnoQAjxG-JjT0nxnbYyjb1ok/edit
+- **docs/beta/SURVEY_LINKS.md:** Created to track survey links and metadata
+- **PLANNING.md:** Added "Deferred Business & Legal Items" section documenting account strategy, custom domain, LLC considerations
+- **BACKLOG.md:** Added developer name suggestions to Story V-2.3.1 honoring Lilly (late dog): "Lilly Light Studios," "Morning Light Studios," etc.
+
+### Key Decisions
+- **Survey Expansion:** Increased from 8 to 14 questions to capture app usage patterns and contact preferences
+- **Contact Flexibility:** Added Email/Discord/Reddit/Other options with corresponding details field
+- **Play Console Strategy:** Documented recommendation to create separate Google account with brand identity (developer name is permanent)
+- **Timing Language:** Changed weekly survey from "Sunday evening" to "end of week" (less prescriptive)
+
+### Verification
+- ✅ Form accessible without Google sign-in
+- ✅ 2 test responses verified in Google Sheets
+- ✅ All 14 columns populated correctly
+
+### Progress
+**Milestone V-2:** 1 of 10 stories complete (10%)
+
+### Next Focus
+1. Commit and merge Story V-2.1.1
+2. Story V-2.1.2: Weekly feedback survey
