@@ -276,3 +276,368 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - [x] Uses obvious placeholders (`REPLACE_WITH_UNIQUE_ID_N`, `TODO:`) to force replacement.
         - [x] Deferred automatic metadata fetching (title, image from URL) to future enhancement.
     - **Completed:** 2025-12-28 (PowerShell template generator with comprehensive README.md documentation)
+
+---
+
+## Milestone V-2: Beta Testing Round 1 (Early Alpha Quality)
+
+**Objective:** Establish beta testing infrastructure and execute the first round of validation (self-testing + 1-4 trusted testers) to identify improvements and validate Aurora's core value proposition.
+
+**Target Completion:** 2 weeks from start
+
+**Success Criteria:**
+- ✅ Google Forms created and integrated into app for structured feedback
+- ✅ Google Play Internal Testing track operational with professional distribution
+- ✅ 7-14 day self-validation completed with structured findings documented
+- ✅ 1-4 external testers recruited and onboarded (optional, based on availability)
+- ✅ Improvement backlog documented with prioritization (Critical/High/Medium/Low)
+- ✅ Go/No-Go decision made: Continue refining Aurora OR Pivot substantially
+
+**Platform Scope:** Android-only (iOS explicitly deferred pending Mac/device acquisition)
+
+**Testing Philosophy:** This is early-stage beta testing (alpha quality) focused on discovering critical gaps and validating core value proposition with controlled audience before broader distribution.
+
+**Terminology Note:** We use "beta" for consistency with Azure infrastructure naming (`rg-aurora-beta`), but this milestone represents alpha-quality testing with a small, trusted cohort.
+
+---
+
+### Feature V-2.1: Feedback Collection Infrastructure
+*This feature establishes structured surveys to capture quantitative and qualitative insights without survey fatigue.*
+
+- [ ] **Story V-2.1.1:** As a project owner, I want a baseline survey that captures tester context and expectations so that I can establish a pre-use benchmark for measuring Aurora's impact.
+    - **AC 1:** Google Form created with 8 questions covering: social media context (hours/day, typical emotions, avoidance frequency), positivity definition (story types, topics to avoid), app usage baseline (first app opened), and value proposition validation
+    - **AC 2:** Most questions configured as optional (only "How valuable would an app focused on uplifting news be?" is required)
+    - **AC 3:** Questions with simple answers (scales, multiple choice) include follow-up text box: "Want to elaborate? (Optional)" for detailed feedback/justifications
+    - **AC 4:** Form configured to save responses to Google Sheets automatically with timestamp
+    - **AC 5:** Shareable link generated (e.g., `https://forms.gle/...`) and documented in `docs/beta/SURVEY_LINKS.md`
+    - **AC 6:** Form tested by submitting 2 test responses and verifying data appears correctly in Google Sheets with all columns populated
+    - **AC 7:** Form embedded in Beta Tester Guide (Story V-2.2.1) with clear instruction: "Complete this before installing Aurora"
+    - **Edge Cases:**
+        - Tester skips optional questions: Allowed; only value proposition question (#6 in proposed list) is required
+        - Political sensitivity (topics to avoid): Question phrased neutrally: "Are there topics you'd prefer Aurora avoid, even if generally positive? (e.g., political figures, religious themes, specific social issues)"
+        - Google account required: Configure form to NOT require sign-in (Settings → Responses → "Limit to 1 response" unchecked)
+    - **Survey Questions (Final):**
+        1. "On average, how many hours per day do you spend on social media or news apps?" (Scale: <1, 1-2, 2-4, 4-6, 6+) + Optional text: "Want to elaborate?"
+        2. "How does social media/news consumption typically make you feel?" (Multiple choice: Informed, Anxious, Entertained, Angry, Hopeful, Drained, Other) + Optional text
+        3. "How often do you avoid news or social media due to negative content?" (Scale: Never → Always) + Optional text
+        4. "What types of stories do you consider 'positive'? Select all that apply:" (Checkboxes: Scientific breakthroughs, Environmental progress, Human kindness, Animal welfare, Social justice, Economic good news, Health/medical advances, Arts & culture, Other)
+        5. "Are there topics you'd prefer Aurora avoid, even if generally positive?" (Open text, optional)
+        6. **"How valuable would an app focused exclusively on uplifting news be to you?"** (Scale: Not valuable → Extremely valuable) **[REQUIRED]**
+        7. "What app do you typically open first when you pick up your phone?" (Open text, optional)
+        8. "How important is it that a news app has a mobile-optimized reading experience?" (Scale: Not important → Extremely important) + Optional text
+
+- [ ] **Story V-2.1.2:** As a project owner, I want a weekly feedback survey to track sentiment, usage patterns, and friction points during beta testing so that I can identify improvements iteratively.
+    - **AC 1:** Google Form created with 10 questions covering: usage frequency, first-app-opened behavior, articles read, content resonance, sharing behavior, mood impact, UX friction (good/bad moments), bugs, and continuation intent
+    - **AC 2:** All questions optional except "How many days this week did you open Aurora?" (allows tracking zero-usage weeks)
+    - **AC 3:** Simple-answer questions include "Want to elaborate?" text box for detailed feedback
+    - **AC 4:** Form configured to save responses to **separate Google Sheets** from baseline survey (distinct tab or new sheet)
+    - **AC 5:** Shareable link generated and documented in `docs/beta/SURVEY_LINKS.md`
+    - **AC 6:** Form tested with 2 test submissions, verified data separation from baseline responses
+    - **AC 7:** Form URL embedded in Beta Tester Guide with instruction: "Submit this every Sunday evening"
+    - **Edge Cases:**
+        - Tester skips a week: Weekly form is optional; no enforcement or reminders (low-pressure alpha environment)
+        - Tester had zero usage that week: Question #1 allows "0 days" response; remaining questions can be skipped
+        - Response volume too low for analysis: If <3 responses after 2 weeks, pivot to 1-on-1 interviews instead (document in findings)
+    - **Survey Questions (Final):**
+        1. **"How many days this week did you open Aurora?"** (Scale: 0, 1, 2-3, 4-5, 6-7) **[REQUIRED]**
+        2. "Was Aurora the first app you opened when picking up your phone?" (Multiple choice: Never, Rarely, Sometimes, Often, Always) + Optional text
+        3. "How many articles did you read in full this week?" (Scale: 0, 1-2, 3-5, 6-10, 10+) + Optional text
+        4. "Which story resonated with you most this week?" (Open text, optional)
+        5. "Did you share any stories from Aurora? If not, why?" (Open text, optional)
+        6. "How did using Aurora make you feel this week?" (Multiple choice: More hopeful, Less anxious, Informed, Neutral, Disappointed, Other) + Optional text
+        7. "What felt **good** when using Aurora this week?" (Open text, optional)
+        8. "What felt **bad** or frustrating?" (Open text, optional)
+        9. "Did you encounter any bugs or crashes?" (Yes/No + description if yes)
+        10. "Would you continue using Aurora next week?" (Yes / Maybe / No) + "Why?" text box
+
+- [ ] **Story V-2.1.3:** As a beta tester, I want easy access to the feedback form from within Aurora so that I don't have to search for the link in emails or documentation.
+    - **AC 1:** "Share Feedback" button added to main page (MainPage.xaml) at the bottom of the Daily Picks list OR top-right above Vibe of the Day card (choose based on design preference during implementation)
+    - **AC 2:** Button uses "Morning Mist" design system: Lavender Mist background (`#CE93D8`), 2.0dp purple border, rounded pill shape (22-24dp corner radius), Nunito ExtraBold font
+    - **AC 3:** Button icon: Material Design Icons `comment-text-outline` (`\U000f09ED`) with label "Share Feedback"
+    - **AC 4:** Tapping button opens weekly feedback form URL in device browser using `Browser.OpenAsync(feedbackUrl, BrowserLaunchOptions.SystemPreferred)` (reuses Chrome Custom Tabs pattern)
+    - **AC 5:** Feedback form URL is configurable via `appsettings.json`: new key `WeeklyFeedbackFormUrl` added to both Development and Production configs
+    - **AC 6:** Browser launch handles errors gracefully: if URL invalid or browser unavailable, show toast "Unable to open feedback form. Please check your connection."
+    - **AC 7:** Verified on Android emulator and S24 Ultra physical device (both Wi-Fi and cellular)
+    - **Edge Cases:**
+        - No internet connection: Browser will handle error (standard "No internet" page); Aurora shows generic toast message
+        - Form URL changes: Update `appsettings.json` and redeploy (no code changes needed)
+        - Tester accidentally opens form multiple times: No impact; Google Forms handle duplicate submissions gracefully
+    - **Technical Considerations:**
+        - Reuse existing `Browser.OpenAsync()` error handling pattern from READ button (Story V-0.2)
+        - Placement decision: Bottom of Daily Picks = less intrusive; Top-right above Vibe = higher visibility (defer final choice to implementation based on visual balance)
+        - Add new appsettings key: `"WeeklyFeedbackFormUrl": "https://forms.gle/[ID]"`
+        - Estimated effort: ~1-2 hours (minimal UI change, reuse existing patterns)
+
+---
+
+### Feature V-2.2: Beta Tester Onboarding Documentation
+*This feature provides clear, concise instructions for beta testers so they understand expectations and can successfully install/use Aurora.*
+
+- [ ] **Story V-2.2.1:** As a beta tester, I want a clear onboarding guide so that I understand Aurora's purpose, how to install it, and how to provide valuable feedback.
+    - **AC 1:** `docs/beta/BETA_TESTER_GUIDE.md` created with sections: Welcome & Purpose, Installation, How to Provide Feedback, What We're Testing, Known Limitations
+    - **AC 2:** Guide is 1-2 pages (300-500 words) in **conversational, warm tone** matching "Morning Mist" design philosophy (friendly, approachable, not clinical)
+    - **AC 3:** All links clearly marked as placeholders until dependencies complete:
+        - `[BASELINE SURVEY LINK]` (Story V-2.1.1)
+        - `[WEEKLY SURVEY LINK]` (Story V-2.1.2)
+        - `[GOOGLE PLAY INSTALL LINK]` (Story V-2.3.2)
+    - **AC 4:** Guide includes time commitment transparency: "~5-10 min/day for 1-2 weeks, plus one 5-min survey weekly"
+    - **AC 5:** Known Limitations section explicitly states: "Android-only for now; iOS planned for future," "Manual content curation (may lag on weekends)," "Minimal features intentionally (testing core concept)"
+    - **AC 6:** Contact information section: Provide email/Discord handle for urgent bugs + reminder that forms are preferred for structured feedback
+    - **AC 7:** Guide reviewed for clarity (no jargon, no assumptions about technical knowledge)
+    - **AC 8:** PDF export created for easy email distribution: `docs/beta/BETA_TESTER_GUIDE.pdf`
+    - **Edge Cases:**
+        - Tester loses the guide: Email includes PDF attachment + link to GitHub docs (`https://github.com/.../BETA_TESTER_GUIDE.md`)
+        - Links change: Guide lives in Git; can be updated and redistributed quickly
+        - Non-technical tester confused by installation: Guide uses screenshots (add in V-2.3.2 after first successful install)
+    - **Guide Structure (Final):**
+        - **Section 1: Welcome & Purpose** (2-3 sentences: refuge from negative news, you're helping validate if this concept resonates)
+        - **Section 2: Installation** (Step 1: Baseline survey, Step 2: Google Play opt-in link, Step 3: Open app and explore)
+        - **Section 3: How to Provide Feedback** (Weekly survey every Sunday, In-app "Share Feedback" button, Email/Discord for urgent bugs)
+        - **Section 4: What We're Testing** (Content quality, user experience, value proposition: "Does Aurora make you feel more hopeful?")
+        - **Section 5: Known Limitations** (Android-only, manual curation, minimal features, early alpha quality)
+
+- [ ] **Story V-2.2.2:** As a developer, I want documented steps for generating signed AABs and distributing via Google Play so that I can repeat the process reliably for future beta rounds.
+    - **NOTE:** This story **MOVED AFTER V-2.3.2** to capture lessons learned from first deployment.
+    - **AC 1:** `docs/processes/BETA_DISTRIBUTION.md` created with step-by-step signing and upload instructions based on actual experience from Story V-2.3.2
+    - **AC 2:** Keystore creation and **backup procedure** documented with explicit security warnings: "Store keystore in 3 locations: local encrypted folder, cloud backup (OneDrive/Google Drive encrypted), password manager (1Password/Bitwarden)"
+    - **AC 3:** AAB generation documented (not APK): `dotnet publish -c Release -f net9.0-android -p:AndroidPackageFormat=aab`
+    - **AC 4:** Google Play Internal Testing release process documented: Console navigation, AAB upload, release notes format, rollout steps
+    - **AC 5:** Email template for tester distribution created in same document: Subject line, body text with opt-in URL + guide + survey links
+    - **AC 6:** Process verified by generating test AAB and uploading to Play Console (reuses V-2.3.2 artifact)
+    - **Edge Cases:**
+        - **Keystore lost:** Cannot update the app without losing all installs. Mitigation: Document backup to 3 locations (local, cloud, password manager) in bold/red text
+        - AAB rejected by Google: Console provides reason; likely signing config issue. Document common errors: version code conflict, missing permissions, improper signing
+        - Tester can't install: Check device compatibility (minimum Android version). Guide should list requirements: "Android 8.0+ (API 26)"
+    - **Technical Considerations:**
+        - Keystore password must be stored securely (never in Git)
+        - Automation deferred: Manual process acceptable for beta (revisit GitHub Actions in Beta Round 2+ if needed)
+        - AAB vs. APK: AAB is Google's preferred format (smaller download size, dynamic delivery benefits)
+        - Document version code increment requirement: `<ApplicationVersion>1.0.1</ApplicationVersion>` in `Aurora.csproj` for each upload
+
+---
+
+### Feature V-2.3: Google Play Internal Testing Setup
+*This feature establishes professional distribution infrastructure for reliable installs and automatic updates.*
+
+- [ ] **Story V-2.3.1:** As a developer, I want a Google Play Console account so that I can distribute Aurora via Internal Testing track without requiring testers to sideload APKs.
+    - **NOTE:** **Execute this story EARLY in milestone** (Day 1-2) to mitigate 24-48 hour account approval wait time.
+    - **AC 1:** Visit `play.google.com/console/signup` and create Google Play Developer account
+    - **AC 2:** Pay $25 one-time registration fee (credit card required, non-refundable)
+    - **AC 3:** Complete developer profile: legal name, country, developer email address
+    - **AC 4:** Accept Google Play Developer Distribution Agreement (read terms, especially content policy)
+    - **AC 5:** Account status shows "Active" or "Pending" (approval can take 24-48 hours for new accounts)
+    - **AC 6:** Create new application entry: **Package Name:** `com.projectaurora.app`, **App Title:** "Aurora - Positive News" (title can change later; package name is permanent)
+    - **AC 7:** Application created but NOT published (remains in draft/internal testing only)
+    - **Edge Cases:**
+        - Account approval delayed beyond 48 hours: Contact Google Play support via Console help center (usually resolves within 72 hours)
+        - Payment issues: Verify billing address matches credit card; use card that accepts international transactions (Google Ireland)
+        - Name collision: If "Aurora" package name taken, use `com.projectaurora.positivenews` or append unique identifier
+        - **Name change concern:** Package name (`com.projectaurora.app`) is **permanent** and locked after first publish; App Title ("Aurora - Positive News") can be changed anytime without penalty
+    - **Technical Considerations:**
+        - One-time cost: $25 USD (lifetime developer account, no renewal fees)
+        - Required info: Legal name (individual or business), physical address, phone number, email
+        - Account unlocks: Internal Testing (100 testers), Closed Testing (unlimited), Open Testing (unlimited), Production releases
+        - Package name recommendation: Use `com.projectaurora.app` to match existing Azure infrastructure naming (`rg-aurora-beta`, `func-aurora-beta-*`)
+    - **Time Estimate:** 30-60 minutes (form filling + payment) + 24-48 hours wait (approval)
+    - **Decision Point:** Package naming - does `com.projectaurora.app` work for you, or prefer more generic like `com.positivity.newsapp` to future-proof against rebranding?
+
+- [ ] **Story V-2.3.2:** As a developer, I want Aurora deployed to Google Play Internal Testing so that beta testers receive professional installs and automatic updates.
+    - **AC 1:** Generate signed Release AAB using Visual Studio or CLI: `dotnet publish -c Release -f net9.0-android -p:AndroidPackageFormat=aab`
+    - **AC 2:** Upload AAB to Google Play Console → Aurora → Testing → Internal Testing → Create Release
+    - **AC 3:** Add release notes: "Beta Round 1 - Initial testing build with real content, reaction persistence, and integrated feedback forms"
+    - **AC 4:** Configure Internal Testing track: Add testers by email (start with your own email as first tester)
+    - **AC 5:** Generate opt-in URL from Console (format: `https://play.google.com/apps/internaltest/...`)
+    - **AC 6:** Self-verification: Click opt-in URL on S24 Ultra, become a tester, install Aurora from Play Store
+    - **AC 7:** App launches successfully, loads content from production API (`func-aurora-beta-*.azurewebsites.net`), reactions persist to cloud Table Storage
+    - **AC 8:** Verify "Share Feedback" button opens weekly survey form in browser (validates V-2.1.3 integration)
+    - **AC 9:** Opt-in URL documented in `docs/beta/SURVEY_LINKS.md` and embedded in Beta Tester Guide (Story V-2.2.1)
+    - **Edge Cases:**
+        - **Upload rejected by Console:** Common reasons: improper signing (keystore mismatch), version code conflict (already uploaded this version), missing required permissions in AndroidManifest.xml. Console provides specific error; resolve and re-upload.
+        - Opt-in URL doesn't activate: Verify email added to Internal Testing list; propagation takes ~5 minutes. If still broken after 15 min, remove and re-add email.
+        - App crashes on install: Check Android Studio Logcat for stack trace. Likely causes: signing config mismatch (Debug vs Release), missing dependencies in Release build, ProGuard obfuscation issues (disable for beta).
+        - First install delayed: Google's automated security scan (Play Protect) can take 10-30 minutes before install link activates; show "Pending publication" during this time.
+    - **Technical Considerations:**
+        - **Version Code:** Ensure `<ApplicationVersion>1.0.0</ApplicationVersion>` in `Aurora.csproj` is set correctly; increment to `1.0.1` for second upload (Google rejects duplicate versions)
+        - **Permissions:** Verify `AndroidManifest.xml` includes `<uses-permission android:name="android.permission.INTERNET" />` (already present from V-0)
+        - **Signing:** MAUI auto-generates debug keystore for local builds; Release requires explicit keystore configuration in project properties or CLI
+        - **AAB benefits:** Smaller download size than APK (Google's dynamic delivery), required for apps >150MB, supports Play Feature Delivery
+    - **Time Estimate:** 1-2 hours (includes first-time AAB generation learning curve + Console navigation)
+
+---
+
+### Feature V-2.4: Self-Validation & External Tester Execution
+*This feature validates Aurora's core value proposition through personal use and small cohort feedback before broader distribution.*
+
+- [ ] **Story V-2.4.1:** As a project owner, I want to use Aurora daily for 1-2 weeks so that I can validate the value proposition from a user's perspective and identify friction points before finalizing external tester recruitment.
+    - **AC 1:** Install Aurora on S24 Ultra via Google Play Internal Testing opt-in link (professional install, not sideloaded APK)
+    - **AC 2:** Complete baseline survey (Story V-2.1.1) using own responses
+    - **AC 3:** Use Aurora for **7-14 consecutive days** (minimum 7 days required, extend to 14 if availability permits or insights are unclear after Week 1)
+    - **AC 4:** Track usage via **end-of-week recap** (not daily logging) with the following data points:
+        - [ ] "How many days this week did I open Aurora?" (count)
+        - [ ] "How many times was Aurora the first app I opened?" (count out of total phone pickups - estimate acceptable)
+        - [ ] "How many articles did I read in full?" (count)
+        - [ ] "Which stories resonated most?" (list titles + 1-sentence why)
+        - [ ] "Did I share any stories?" (Yes/No + platform if yes: Discord, Reddit, etc.)
+        - [ ] "UX moments that felt good" (specific examples: "Chrome Custom Tabs loaded smoothly," "Uplift animation was satisfying")
+        - [ ] "UX moments that felt bad/frustrating" (specific examples: "Button too small on S24," "Snippet text too long")
+    - **AC 5:** Submit weekly feedback survey (Story V-2.1.2) at end of Week 1 using own responses
+    - **AC 6:** If testing extends to Week 2, submit second weekly survey at end of Week 2
+    - **AC 7:** Document findings in `docs/beta/BETA_ROUND_1_SELF_VALIDATION.md` using provided template (see below)
+    - **AC 8:** **Success Criteria Met:** "I used Aurora more than half of the tested days (≥4 days in Week 1, or ≥8 days over 2 weeks)" AND "Majority of weekly survey responses indicate positive sentiment (More hopeful, Informed, or similar)"
+    - **Edge Cases:**
+        - Miss logging for a day: End-of-week recap format allows estimation; doesn't invalidate test if ≥5 days have data
+        - Zero usage some days: Valid data point; document reason in recap ("Too busy," "Forgot," "Didn't feel like it" - all useful insights)
+        - No stories resonate: **Critical finding**; indicates content curation needs major pivot (document in findings as blocker)
+        - Extend testing beyond 14 days: Allowed if decision is unclear; document rationale in findings
+    - **Tracking Template (docs/beta/BETA_ROUND_1_SELF_VALIDATION.md):**
+        ```markdown
+        # Beta Round 1 - Self-Validation Log
+
+        ## Testing Period
+        - **Start Date:** [YYYY-MM-DD]
+        - **End Date:** [YYYY-MM-DD]
+        - **Total Days:** [7-14]
+
+        ## Week 1 Recap: [Date Range]
+
+        ### Usage Summary
+        - **Days opened:** [X/7]
+        - **First app opened:** [X times]
+        - **Articles read:** [X total]
+        - **Stories shared:** [Yes/No - Platform if yes]
+
+        ### Resonant Stories
+        1. **[Story Title]** - Why: [emotional impact, credibility, shareability]
+        2. ...
+
+        ### Good UX Moments
+        - [Specific example: "READ button opened Chrome Custom Tab smoothly; back button returned to Aurora correctly"]
+        - ...
+
+        ### Bad UX Moments / Friction Points
+        - [Specific example: "Uplift button too small on S24 Ultra; required precision tap"]
+        - ...
+
+        ### Weekly Survey Response
+        [Copy-paste your survey answers here for reference]
+
+        ## Week 2 Recap: [Date Range] (if applicable)
+        [Same structure as Week 1]
+
+        ## Overall Impression
+        [2-3 paragraphs answering:]
+        - Did Aurora make me feel more hopeful about humanity?
+        - Would I continue using it after this test?
+        - Would I recommend it to a friend? Why or why not?
+
+        ## Success Criteria Met?
+        - [ ] Used app ≥50% of tested days (≥4/7 or ≥8/14)
+        - [ ] Majority positive sentiment in weekly survey(s)
+        ```
+    - **Time Estimate:** 7-14 days (actual testing) + 1 hour (documentation)
+
+- [ ] **Story V-2.4.2:** As a content curator, I want to update Aurora's content at least once during self-validation so that I can measure curation effort and ensure fresh stories for ongoing testing.
+    - **AC 1:** Identify 1 Vibe of the Day + 10 Daily Picks from real uplifting news sources (credible outlets, published within last 7-14 days)
+    - **AC 2:** Create new `content.json` using `New-ContentTemplate.ps1` as starting point: `.\New-ContentTemplate.ps1 -VibeCount 1 -PicksCount 10 -OutputFile .\beta-round-1-update.json`
+    - **AC 3:** Populate template with real stories: titles, 2-3 sentence snippets, article URLs, image URLs (hotlinked or placeholder), published dates
+    - **AC 4:** Validate using `Validate-Content.ps1`: `.\Validate-Content.ps1 -FilePath .\beta-round-1-update.json` (must return zero errors, warnings acceptable)
+    - **AC 5:** Deploy to Azure Blob Storage: `.\Deploy-Content.ps1 -FilePath .\beta-round-1-update.json -Environment Production`
+    - **AC 6:** Verify deployment: Open Aurora on S24 Ultra, pull to refresh (if implemented) or force-stop and reopen app; confirm new stories appear
+    - **AC 7:** **Track total curation time:** Start timer at "begin searching for stories," stop at "deployment verified." Document time in format: "X minutes for 11 stories (1 Vibe + 10 Picks)"
+    - **AC 8:** **Success Threshold:** Total curation time **≤45 minutes** (per PLANNING.md sustainability criteria). If exceeds 45 min, document why and identify bottlenecks.
+    - **AC 9:** Document curation experience in `docs/beta/BETA_ROUND_1_SELF_VALIDATION.md` under new section: "Content Curation Experience"
+    - **Edge Cases:**
+        - **Curation exceeds 45 min:** Not a failure; document bottlenecks (finding credible sources took 20 min, writing snippets took 15 min, image search took 15 min). Identifies automation opportunities for future.
+        - Deployment fails (blob upload error): Rollback using `Rollback-Content.ps1`, investigate error in Azure Portal (connection string, permissions), retry
+        - New content doesn't appear in app: Verify blob upload succeeded in Azure Portal; clear app cache or reinstall; check API logs for blob read errors
+        - Stories go stale (published >2 weeks ago): Acceptable for beta testing; prioritize credibility and uplift quality over recency
+    - **Content Curation Template (add to BETA_ROUND_1_SELF_VALIDATION.md):**
+        ```markdown
+        ## Content Curation Experience
+
+        ### Update #1: [Date]
+        - **Total Time:** [X minutes]
+        - **Breakdown (estimate):**
+            - Story discovery/research: [X min]
+            - Snippet writing: [X min]
+            - Image sourcing: [X min]
+            - Deployment/verification: [X min]
+
+        ### Bottlenecks Identified
+        - [e.g., "Finding credible sources for environmental news took 15 min; need RSS feed automation"]
+        - ...
+
+        ### Success Threshold Met?
+        - [ ] Total time ≤45 minutes (sustainable for daily curation)
+        - [ ] If exceeded, are bottlenecks addressable with tooling? (Yes/No + ideas)
+        ```
+    - **Time Estimate:** Variable (target ≤45 min, could be 30-60 min for first update)
+
+- [ ] **Story V-2.4.3:** As a project owner, I want to synthesize self-validation findings and recruit 1-4 external testers so that I can validate Aurora's value proposition beyond personal bias and gather diverse perspectives.
+    - **AC 1:** Create `docs/beta/BETA_ROUND_1_FINDINGS.md` with the following sections:
+        - [ ] **Executive Summary:** 2-3 sentences answering: "Did Aurora deliver on its value proposition for me? Should we proceed with external testers?"
+        - [ ] **Quantitative Data:** First-app-opened rate (X%), days used (X/7 or X/14), articles read (total), stories shared (count), curation time (X minutes)
+        - [ ] **Qualitative Insights:** Stories that resonated (themes), stories that didn't (themes), emotional impact, habit formation potential
+        - [ ] **Critical Bugs:** Issues that block external testing (must-fix before Round 1 expansion) - e.g., app crashes, content fails to load
+        - [ ] **UX Friction Points:** Annoyances that degrade experience (should-fix before Round 2) - e.g., button sizing, text readability
+        - [ ] **Feature Requests:** Nice-to-haves discovered during testing (could-fix post-beta) - e.g., dark mode improvements, search functionality
+    - **AC 2:** Update `BACKLOG.md` with new stories for identified improvements, categorized as:
+        - [ ] **Blocker (Beta Round 1 - Fix Before External Testers):** Critical bugs that prevent testing (e.g., app crashes on launch)
+        - [ ] **High Priority (Beta Round 2):** Significant UX issues that degrade value prop (e.g., "Uplift button too small on large screens")
+        - [ ] **Medium Priority (Post-Beta):** Enhancements for broader release (e.g., "Add pull-to-refresh for content updates")
+        - [ ] **Low Priority (Future Backlog):** Nice-to-haves (e.g., "User accounts for cross-device sync")
+    - **AC 3:** **Recruit 1-4 External Testers** (if self-validation was positive):
+        - [ ] Identify 1-4 trusted contacts with Android devices (friends, family, online community members)
+        - [ ] Send recruitment email with: Beta Tester Guide PDF, Baseline Survey link, Google Play opt-in URL, personal note explaining Aurora's purpose
+        - [ ] Add tester emails to Google Play Console Internal Testing track
+        - [ ] Verify testers successfully install app and complete baseline survey
+        - [ ] Set expectation: "Use for 1 week, submit weekly survey on Sunday"
+    - **AC 4:** Make **Go/No-Go Decision** documented in findings:
+        - [ ] **Go:** Continue refining Aurora; implement blockers/high-priority fixes; proceed to Beta Round 2 with larger cohort
+        - [ ] **No-Go:** Substantial pivot required; Aurora doesn't deliver value proposition as designed; decide whether to restart concept or salvage
+    - **AC 5:** Document decision rationale in findings: "Why Go?" or "Why No-Go?" (specific data points and insights that drove decision)
+    - **Go Decision Criteria (Thresholds):**
+        - ✅ Opened Aurora first ≥50% of tested days (shows habit formation potential)
+        - ✅ At least 3 stories resonated emotionally over testing period (content quality validated)
+        - ✅ Weekly survey shows "More hopeful," "Informed," or similar positive sentiment (value prop validated)
+        - ✅ Curation time ≤45 min/update OR bottlenecks identified with clear automation path (sustainability validated)
+        - ✅ No critical bugs encountered (app stability validated)
+    - **No-Go Decision Triggers (Pivot Signals):**
+        - ❌ Never or rarely opened Aurora first (<30% of days) - no habit formation
+        - ❌ No stories resonated; felt neutral or negative about content - content quality failure
+        - ❌ Curation time consistently >60 min with no clear automation path - unsustainable
+        - ❌ Critical bugs made app frequently unusable - stability failure
+    - **Edge Cases:**
+        - **Mixed results:** Some criteria pass, some fail. Document as "Conditional Go" with specific blockers that must be addressed before Round 2. Example: "Content resonated, but curation time was 55 min; automate RSS parsing before Round 2."
+        - **No strong signal:** Neutral data (neither great nor terrible). Recommendation: Recruit 1-2 external testers for additional perspectives; extend testing to Week 2 if only tested 7 days.
+        - **Cannot recruit external testers:** Acceptable to proceed with self-only if self-validation was strongly positive; document as limitation ("Round 1 limited to self-testing due to tester availability; will expand in Round 2")
+        - **All testers decline or ghost:** Valid finding; may indicate low perceived value. Document in No-Go rationale: "Could not recruit testers; suggests concept lacks initial appeal."
+    - **External Tester Recruitment Email Template:**
+        ```
+        Subject: Help me test Aurora - a refuge from negative news
+
+        Hi [Name],
+
+        I'm working on a mobile app called Aurora that curates uplifting news stories - a refuge from the fear-mongering and negativity that dominates most media. I'd love your help testing it for 1-2 weeks.
+
+        **What I'm asking:**
+        - Install Aurora on your Android phone (via Google Play link)
+        - Use it for 1 week (~5 min/day)
+        - Fill out a quick weekly survey (5 min)
+
+        **What you get:**
+        - Early access to something genuinely positive
+        - A say in shaping the app before broader release
+        - Daily dose of hope for humanity 😊
+
+        Interested? Here's what to do:
+        1. Fill out this baseline survey: [LINK]
+        2. Install Aurora: [GOOGLE PLAY OPT-IN LINK]
+        3. Open the app and explore!
+
+        Full guide attached. Let me know if you have any questions!
+
+        Thanks,
+        [Your Name]
+        ```
+    - **Time Estimate:** 3-4 hours (write findings, update backlog, recruit testers)
