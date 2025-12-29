@@ -439,7 +439,17 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - Account unlocks: Internal Testing (100 testers), Closed Testing (unlimited), Open Testing (unlimited), Production releases
         - Package name recommendation: Use `com.projectaurora.app` to match existing Azure infrastructure naming (`rg-aurora-beta`, `func-aurora-beta-*`)
     - **Time Estimate:** 30-60 minutes (form filling + payment) + 24-48 hours wait (approval)
-    - **Decision Point:** Package naming - does `com.projectaurora.app` work for you, or prefer more generic like `com.positivity.newsapp` to future-proof against rebranding?
+    - **Decision Points:**
+        - **Package Name:** Does `com.projectaurora.app` work, or prefer more generic like `com.positivity.newsapp` to future-proof against rebranding?
+        - **Developer Name (Shown on Play Store - PERMANENT):** This appears as "by [Developer Name]" on the Play Store and **cannot be changed** after account creation. Options to consider:
+            - **"Project Aurora"** - Clean, established brand identity
+            - **"Lilly Light Studios"** - Honors Lilly ("my light in this world"), professional studio naming
+            - **"Morning Light Studios"** - Combines Aurora (dawn/morning) with Lilly's light symbolism
+            - **"Aurora Light Labs"** - Merges both Aurora and light themes professionally
+            - **"Lilly Labs"** - Simple, memorable, honors Lilly directly
+            - **Personal name** (e.g., "Bryce Simmerman") - Standard indie developer approach, keeps personal branding
+        - **Note:** App can include "In loving memory of Lilly" dedication in About section regardless of developer name chosen
+        - **Recommendation:** Create **separate Google account** for Play Console (not personal Gmail) to enable brand identity and isolation (see PLANNING.md "Deferred Business & Legal Items" for full rationale)
 
 - [ ] **Story V-2.3.2:** As a developer, I want Aurora deployed to Google Play Internal Testing so that beta testers receive professional installs and automatic updates.
     - **AC 1:** Generate signed Release AAB using Visual Studio or CLI: `dotnet publish -c Release -f net9.0-android -p:AndroidPackageFormat=aab`
