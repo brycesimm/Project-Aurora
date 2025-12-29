@@ -147,19 +147,19 @@
   - **Terminology Note:** Using "beta" for consistency with Azure infrastructure naming (`rg-aurora-beta`), but this represents alpha-quality testing with small, trusted cohort.
   - **Scope (10 stories across 4 features):**
     - **Feature V-2.1:** Feedback Collection Infrastructure (3 stories)
-      1. Create baseline survey (Google Form) with 8 questions covering social media context, positivity definition, and value proposition validation
-      2. Create weekly feedback survey (Google Form) with 10 questions tracking usage, sentiment, friction, and continuation intent
-      3. Integrate "Share Feedback" button in app (opens weekly survey in browser via Chrome Custom Tabs)
+      1. ✅ Create baseline survey (Google Form) with 14 questions (expanded) covering contact info, social media context, app usage patterns, positivity definition, and value proposition validation
+      2. ✅ Create weekly feedback survey (Google Form) with 12 questions (expanded) tracking usage, sentiment, friction, and continuation intent
+      3. ⏳ Integrate "Share Feedback" button in app (opens weekly survey in browser via Chrome Custom Tabs)
     - **Feature V-2.2:** Beta Tester Onboarding Documentation (2 stories)
-      4. Write Beta Tester Guide (warm, conversational tone; 300-500 words; PDF export for email distribution)
-      5. Document AAB signing and Google Play distribution process (captures lessons learned from first deployment)
+      4. ⏳ Write Beta Tester Guide (warm, conversational tone; 300-500 words; PDF export for email distribution)
+      5. ⏳ Document AAB signing and Google Play distribution process (captures lessons learned from first deployment)
     - **Feature V-2.3:** Google Play Internal Testing Setup (2 stories)
-      6. Create Google Play Console Developer account ($25 one-time fee; execute early to mitigate 24-48hr approval wait)
-      7. Deploy Aurora to Internal Testing track (AAB upload, opt-in URL generation, self-verification on S24 Ultra)
+      6. ⏳ Create Google Play Console Developer account ($25 one-time fee; execute early to mitigate 24-48hr approval wait)
+      7. ⏳ Deploy Aurora to Internal Testing track (AAB upload, opt-in URL generation, self-verification on S24 Ultra)
     - **Feature V-2.4:** Self-Validation & External Tester Execution (3 stories)
-      8. Execute 7-14 day self-validation period (end-of-week recap tracking, weekly survey submission, document findings)
-      9. Curate and deploy at least one full content update (1 Vibe + 10 Picks; track total curation time; ≤45 min target)
-      10. Synthesize findings, recruit 1-4 external testers (if self-validation positive), make Go/No-Go decision
+      8. ⏳ Execute 7-14 day self-validation period (end-of-week recap tracking, weekly survey submission, document findings)
+      9. ⏳ Curate and deploy at least one full content update (1 Vibe + 10 Picks; track total curation time; ≤45 min target)
+      10. ⏳ Synthesize findings, recruit 1-4 external testers (if self-validation positive), make Go/No-Go decision
   - **Success Criteria:**
     - ✅ Google Forms operational and integrated into app
     - ✅ Google Play Internal Testing track deployed

@@ -1381,3 +1381,39 @@ Completed **Story V-2.1.1: Baseline Survey** and documented developer account st
 ### Next Focus
 1. Commit and merge Story V-2.1.1
 2. Story V-2.1.2: Weekly feedback survey
+
+---
+
+## 2025-12-29 (Session 2): Story V-2.1.2 Completion - Weekly Feedback Survey
+
+### Summary
+Completed **Story V-2.1.2: Weekly Feedback Survey**, the second component of Feature V-2.1 (Feedback Collection Infrastructure).
+
+### Deliverables
+- **Weekly Feedback Survey:** https://forms.gle/SqN9ZH54zea1GkTJ8 (12 questions, 1 required)
+- **Responses Sheet:** https://docs.google.com/spreadsheets/d/1RuqIF1tZcrW-FH_0PGXqACNon_Vjx-SNkxwpLmjIcQo/edit?gid=1863402994#gid=1863402994
+- **Updated `docs/beta/SURVEY_LINKS.md`** with weekly survey link and question breakdown
+
+### Key Decisions
+- **Survey Expansion:** Increased from 10 to 12 questions by making "Want to elaborate?" standalone questions (Q7 for mood, Q12 for continuation intent)
+- **Multi-Select Mood Tracking:** Changed Q6 from single-choice to "Select all that apply" for more nuanced sentiment analysis
+- **Broader Continuation Question:** Q11 asks about general continuation intent rather than specific "next week" commitment
+- **Consistent Branding:** Added "Project Aurora" to several questions for clarity
+
+### Question Structure
+1. **Required:** Days opened this week (0, 1, 2-3, 4-5, 6-7)
+2-12. **Optional:** First-app-opened frequency, articles read, resonant stories, sharing behavior, mood impact, good/bad UX moments, bugs, continuation intent with elaboration fields
+
+### Verification
+- ✅ Form accessible without Google sign-in
+- ✅ 2 test responses verified in Google Sheets
+- ✅ Separate spreadsheet confirmed (distinct from baseline survey)
+- ✅ All 12 question columns + timestamp populated correctly
+
+### Progress
+**Milestone V-2:** 2 of 10 stories complete (20%)
+**Feature V-2.1 (Feedback Collection):** 2 of 3 stories complete (67%)
+
+### Next Focus
+1. Commit and merge Story V-2.1.2
+2. Story V-2.1.3: In-App Feedback Button (final story in Feature V-2.1)
