@@ -328,14 +328,16 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         7. "What app do you typically open first when you pick up your phone?" (Open text, optional)
         8. "How important is it that a news app has a mobile-optimized reading experience?" (Scale: Not important → Extremely important) + Optional text
 
-- [ ] **Story V-2.1.2:** As a project owner, I want a weekly feedback survey to track sentiment, usage patterns, and friction points during beta testing so that I can identify improvements iteratively.
-    - **AC 1:** Google Form created with 10 questions covering: usage frequency, first-app-opened behavior, articles read, content resonance, sharing behavior, mood impact, UX friction (good/bad moments), bugs, and continuation intent
-    - **AC 2:** All questions optional except "How many days this week did you open Aurora?" (allows tracking zero-usage weeks)
-    - **AC 3:** Simple-answer questions include "Want to elaborate?" text box for detailed feedback
-    - **AC 4:** Form configured to save responses to **separate Google Sheets** from baseline survey (distinct tab or new sheet)
-    - **AC 5:** Shareable link generated and documented in `docs/beta/SURVEY_LINKS.md`
-    - **AC 6:** Form tested with 2 test submissions, verified data separation from baseline responses
-    - **AC 7:** Form URL embedded in Beta Tester Guide with instruction: "Submit this every Sunday evening"
+- [x] **Story V-2.1.2:** As a project owner, I want a weekly feedback survey to track sentiment, usage patterns, and friction points during beta testing so that I can identify improvements iteratively.
+    - **AC 1:** ✅ Google Form created with 12 questions (expanded to include standalone "Want to elaborate?" questions) covering: usage frequency, first-app-opened behavior, articles read, content resonance, sharing behavior, mood impact, UX friction (good/bad moments), bugs, and continuation intent
+    - **AC 2:** ✅ All questions optional except "How many days this week did you open Aurora?" (allows tracking zero-usage weeks)
+    - **AC 3:** ✅ Simple-answer questions include "Want to elaborate?" text boxes for detailed feedback (Q7 for mood, Q12 for continuation intent)
+    - **AC 4:** ✅ Form configured to save responses to **separate Google Sheets** from baseline survey (new spreadsheet created)
+    - **AC 5:** ✅ Shareable link generated and documented in `docs/beta/SURVEY_LINKS.md`
+    - **AC 6:** ✅ Form tested with 2 test submissions, verified data separation from baseline responses
+    - **AC 7:** 🔄 Deferred to Story V-2.2.1 (Beta Tester Guide not yet created)
+    - **Completed:** 2025-12-29
+    - **Notes:** Survey expanded from 10 to 12 questions by making "Want to elaborate?" standalone questions rather than conditional follow-ups. Changed Q6 to "Select all that apply" for better mood tracking. Question wording adjusted to include "Project Aurora" for clarity. Q11 changed from "next week" to general "would you continue" for broader applicability.
     - **Edge Cases:**
         - Tester skips a week: Weekly form is optional; no enforcement or reminders (low-pressure alpha environment)
         - Tester had zero usage that week: Question #1 allows "0 days" response; remaining questions can be skipped

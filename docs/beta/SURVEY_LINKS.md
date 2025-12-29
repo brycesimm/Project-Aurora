@@ -44,11 +44,31 @@ This document tracks the Google Forms used for structured feedback collection du
 
 **When to Complete:** End of each week during beta testing period
 
-**Link:** [TBD - Story V-2.1.2]
+**Link:** https://forms.gle/SqN9ZH54zea1GkTJ8
 
-**Responses Sheet:** [TBD]
+**Responses Sheet:** https://docs.google.com/spreadsheets/d/1RuqIF1tZcrW-FH_0PGXqACNon_Vjx-SNkxwpLmjIcQo/edit?gid=1863402994#gid=1863402994
 
-**Question Count:** 10 questions (9 optional, 1 required)
+**Question Count:** 12 questions (11 optional, 1 required)
+
+**Required Questions:**
+1. How many days this week did you open Aurora?
+
+**Optional Questions:**
+2. Was Project Aurora ever the first app you opened when picking up your phone?
+3. How many articles from Project Aurora did you read this week?
+4. Which story resonated with you most this week?
+5. Did you share any stories from Aurora? If not, why?
+6. How did using Aurora make you feel this week? (Select all that apply)
+7. Want to elaborate? (Optional - for Q6)
+8. What felt good when using Project Aurora this week?
+9. What felt bad or frustrating when using Project Aurora this week?
+10. Did you encounter any bugs or crashes?
+11. Assuming development continued in a similar direction for a full release with your feedback in mind, would you continue using Project Aurora?
+12. Want to elaborate? (Optional - for Q11)
+
+**Confirmation Message:** "Thank you for your feedback! Your insights help make Aurora better each week."
+
+**Status:** ✅ Live and verified (2025-12-29)
 
 ---
 
