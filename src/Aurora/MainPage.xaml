@@ -188,6 +188,37 @@
 				</VerticalStackLayout>
 			</DataTemplate>
 		</CollectionView.ItemTemplate>
+
+		<CollectionView.Footer>
+			<VerticalStackLayout>
+				<!-- Beta Feedback Button (conditionally visible) -->
+				<Button
+					x:Name="FeedbackButton"
+					Text="Share Feedback"
+					Clicked="OnShareFeedbackClicked"
+					Margin="24,24,24,32"
+					Padding="16,12"
+					HorizontalOptions="Center"
+					BackgroundColor="{StaticResource CommentAccent}"
+					BorderColor="{StaticResource OnCommentDark}"
+					BorderWidth="2.0"
+					CornerRadius="24"
+					FontFamily="NunitoExtraBold"
+					FontSize="16"
+					TextColor="{StaticResource OnCommentDark}">
+					<Button.Shadow>
+						<Shadow Brush="{StaticResource OnCommentDark}" Opacity="0.2" Radius="8" Offset="0,2" />
+					</Button.Shadow>
+					<Button.ImageSource>
+						<FontImageSource
+							FontFamily="MDI"
+							Glyph="&#xF0DC9;"
+							Color="{StaticResource OnCommentDark}"
+							Size="20" />
+					</Button.ImageSource>
+				</Button>
+			</VerticalStackLayout>
+		</CollectionView.Footer>
 	</CollectionView>
 
 </ContentPage>

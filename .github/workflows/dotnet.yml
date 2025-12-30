@@ -34,9 +34,10 @@ jobs:
       if: steps.changes.outputs.src == 'true'
       run: dotnet workload install maui
 
-    - name: Cache NuGet packages
+    - name: Restore NuGet cache
       if: steps.changes.outputs.src == 'true'
-      uses: actions/cache@v4
+      id: cache-nuget
+      uses: actions/cache/restore@v4
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
@@ -54,3 +55,10 @@ jobs:
     - name: Test
       if: steps.changes.outputs.src == 'true'
       run: dotnet test --no-build --verbosity normal
+
+    - name: Save NuGet cache
+      if: steps.changes.outputs.src == 'true' && steps.cache-nuget.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}

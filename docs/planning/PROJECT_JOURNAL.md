@@ -1417,3 +1417,58 @@ Completed **Story V-2.1.2: Weekly Feedback Survey**, the second component of Fea
 ### Next Focus
 1. Commit and merge Story V-2.1.2
 2. Story V-2.1.3: In-App Feedback Button (final story in Feature V-2.1)
+
+---
+
+## 2025-12-29 (Session 4): Story V-2.1.3 Completion - In-App Feedback Button & Logo Integration
+
+### Summary
+Completed **Story V-2.1.3: In-App Feedback Button**, finalizing Feature V-2.1 (Feedback Collection Infrastructure). Additionally integrated custom Aurora logo (2048x2048px) to replace default .NET MAUI icon.
+
+### Key Accomplishments
+1. **Beta Mode Toggle:** Implemented configuration-driven visibility via `BetaSettings:IsBetaTesting`
+2. **Polite UX:** Confirmation dialog ("Would you like to provide feedback on your experience with Aurora?") before opening form
+3. **Icon Refinement:** Used `file-document-edit-outline` (U+F0DC9) for semantic accuracy (editing/providing feedback)
+4. **Configuration Injection:** Loaded `IConfiguration` via DI to access nested BetaSettings object
+5. **Production-Ready:** Toggle `IsBetaTesting: false` to hide feedback button in non-beta releases
+6. **Threading Fix:** Button re-enable wrapped in `MainThread.BeginInvokeOnMainThread()` to prevent crash after dialog dismissal
+7. **Custom Logo Integration:** Replaced default MAUI icon with 2048x2048px Aurora logo using `BaseSize="1536,1536"` (75% fill ratio)
+
+### Design Decisions
+- **Placement:** Bottom of Daily Picks list (CollectionView.Footer) - natural "end of content" location
+- **Confirmation Dialog:** Prevents accidental taps, demonstrates respect for user intent ("Not Right Now" vs "Yes, Open Survey")
+- **Config Structure:** Nested `BetaSettings` object enables future expansion:
+  - `IsBetaTesting` (bool) - Controls feedback button visibility
+  - `WeeklyFeedbackFormUrl` (string) - Survey link configurable without code changes
+  - Future: `BaselineSurveyUrl`, `BetaExpirationDate`, `ShowDebugInfo`
+- **Logo Scaling:** `BaseSize="1536,1536"` provides 75% fill ratio with appropriate padding for Android adaptive icons
+
+### Technical Implementation
+- **MainPage.xaml:** Added CollectionView.Footer with "Share Feedback" button (CommentAccent color, file-document-edit-outline icon)
+- **MainPage.xaml.cs:**
+  - Injected `IConfiguration` via constructor DI
+  - Added `OnShareFeedbackClicked` event handler with confirmation dialog, URL validation, Chrome Custom Tabs launch
+  - Fixed threading violation by wrapping button re-enable in `MainThread.BeginInvokeOnMainThread()`
+- **appsettings.json & appsettings.Development.json:** Added `BetaSettings` configuration object
+- **Aurora.csproj:** Updated `MauiIcon` to use custom logo with `BaseSize="1536,1536"`
+
+### Debugging & Testing
+- **Emulator Issue Identified:** Threading violation when dismissing confirmation dialog - `finally` block executing on background thread after `ConfigureAwait(false)`
+- **Resolution:** Wrapped `FeedbackButton.IsEnabled = true` in `MainThread.BeginInvokeOnMainThread()` lambda
+- **Logo Iteration:** Initial 1545x1536px crop was zoomed in; replaced with Gemini-generated 2048x2048px version
+- **BaseSize Calibration:** Started at 400x400 (too much padding), adjusted to 1536x1536 (75% fill - optimal)
+
+### Testing
+- ✅ Emulator: Dialog, browser launch, form submission verified
+- ✅ S24 Ultra (Release build): Wi-Fi + cellular verified, no crashes
+- ✅ Beta toggle: Button hides when `IsBetaTesting: false`
+- ✅ Logo rendering: 2048x2048px with 75% fill looks balanced on S24 Ultra launcher
+- ✅ Zero-warning build maintained (Debug + Release configurations)
+
+### Progress
+**Milestone V-2:** 3 of 10 stories complete (30%)
+**Feature V-2.1:** COMPLETE (3/3 stories)
+
+### Next Focus
+1. Story V-2.2.1: Beta Tester Guide
+2. Story V-2.3.1: Google Play Console Account (time-sensitive - 24-48 hour approval)
