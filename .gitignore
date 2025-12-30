@@ -65,3 +65,6 @@ nul
 
 # Content Management (Deployment backups)
 tools/content-management/backups/
+
+# Private Planning Documents (Local Only - Not for Public Repo)
+docs/planning/LOCAL_NOTES.md
