@@ -1,5 +1,6 @@
 using Aurora.Shared.Interfaces;
 using Aurora.Shared.Models;
+using Microsoft.Extensions.Configuration;
 using System.Collections.ObjectModel;
 
 namespace Aurora;
@@ -7,6 +8,7 @@ namespace Aurora;
 public partial class MainPage : ContentPage
 {
 	private readonly IContentService _contentService;
+	private readonly IConfiguration _configuration;
 
 	private ContentItem? _vibeOfTheDay;
 	public ContentItem? VibeOfTheDay
@@ -30,16 +32,22 @@ public partial class MainPage : ContentPage
 		}
 	}
 
-	public MainPage(IContentService contentService)
+	public MainPage(IContentService contentService, IConfiguration configuration)
 	{
 		InitializeComponent();
 		_contentService = contentService;
+		_configuration = configuration;
 		this.BindingContext = this;
 	}
 
 	protected override async void OnAppearing()
 	{
 		base.OnAppearing();
+
+		// Control feedback button visibility based on beta mode
+		bool isBetaTesting = _configuration.GetValue<bool>("BetaSettings:IsBetaTesting", false);
+		FeedbackButton.IsVisible = isBetaTesting;
+
 		await LoadDataAsync().ConfigureAwait(false);
 	}
 
@@ -156,6 +164,79 @@ public partial class MainPage : ContentPage
 	private async void OnCommentClicked(object sender, EventArgs e)
 	{
 		await DisplayAlert("Coming Soon", "Comments are not yet available.", "OK").ConfigureAwait(false);
+	}
+
+	/// <summary>
+	/// Handles the click event for the Share Feedback button, prompting the user before opening the weekly survey.
+	/// </summary>
+	private async void OnShareFeedbackClicked(object sender, EventArgs e)
+	{
+		// Disable button to prevent double-tap
+		FeedbackButton.IsEnabled = false;
+
+		try
+		{
+			// Confirmation dialog
+			bool userConsent = await DisplayAlert(
+				"Share Feedback",
+				"Would you like to provide feedback on your experience with Aurora?",
+				"Yes, Open Survey",
+				"Not Right Now"
+			).ConfigureAwait(false);
+
+			if (!userConsent)
+			{
+				return; // User declined
+			}
+
+			// Load feedback URL from configuration
+			string? feedbackUrl = _configuration.GetValue<string>("BetaSettings:WeeklyFeedbackFormUrl");
+
+			if (string.IsNullOrWhiteSpace(feedbackUrl))
+			{
+				await MainThread.InvokeOnMainThreadAsync(async () =>
+				{
+					await DisplayAlert("Error", "Feedback form URL is not configured.", "OK").ConfigureAwait(false);
+				}).ConfigureAwait(false);
+				return;
+			}
+
+			// Validate URL format
+			if (!Uri.TryCreate(feedbackUrl, UriKind.Absolute, out var uri) ||
+				(uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+			{
+				await MainThread.InvokeOnMainThreadAsync(async () =>
+				{
+					await DisplayAlert("Error", "Feedback form URL is invalid.", "OK").ConfigureAwait(false);
+				}).ConfigureAwait(false);
+				return;
+			}
+
+			// Open survey in Chrome Custom Tabs (reuse V-0.2 pattern)
+			await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred).ConfigureAwait(false);
+		}
+#pragma warning disable CA1031 // Do not catch general exception types
+		catch (Exception ex)
+		{
+			System.Diagnostics.Debug.WriteLine($"Feedback button error: {ex.Message}");
+			await MainThread.InvokeOnMainThreadAsync(async () =>
+			{
+				await DisplayAlert(
+					"Unable to Open Feedback",
+					"Could not open the feedback form. Please check your internet connection and try again.",
+					"OK"
+				).ConfigureAwait(false);
+			}).ConfigureAwait(false);
+		}
+#pragma warning restore CA1031 // Do not catch general exception types
+		finally
+		{
+			// Re-enable button on main thread (finally executes on background thread after ConfigureAwait(false))
+			MainThread.BeginInvokeOnMainThread(() =>
+			{
+				FeedbackButton.IsEnabled = true;
+			});
+		}
 	}
 
 	/// <summary>

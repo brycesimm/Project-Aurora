@@ -71,3 +71,43 @@ Buttons use a colored pastel background with a darker, high-contrast 2.0dp borde
 ## 5. Iconography
 - **Set:** Material Design Icons (MDI)
 - **Style:** Rounded variants where available.
+
+---
+
+## 6. App Icon & Branding
+
+### App Icon
+<img src="../../src/Aurora/Resources/AppIcon/appicon.png" alt="Aurora App Icon" width="256" height="256" />
+
+### App Icon Specifications
+- **Source File:** `src/Aurora/Resources/AppIcon/appicon.png`
+- **Dimensions:** 2048 x 2048 pixels (square, 1:1 aspect ratio)
+- **Format:** PNG with RGB color (8-bit/color)
+- **File Size:** ~4.4 MB source (auto-optimized by MAUI resizetizer for deployment)
+- **BaseSize Configuration:** `1536x1536` (75% fill ratio)
+  - Provides appropriate padding for Android adaptive icons
+  - Prevents cropping on circular/squircle icon shapes
+  - Can be adjusted in `Aurora.csproj` via `<MauiIcon BaseSize="1536,1536" />`
+
+### Design Guidelines
+- **Safe Zone:** Logo design should remain recognizable within the central 75% area
+- **Padding:** 25% margin (512px on each edge) accounts for platform-specific icon masking
+- **Color Profile:** Should complement Morning Mist palette (pastels, warm tones)
+- **Scalability:** Design must be recognizable at small sizes (48dp launcher icons)
+
+### Platform-Specific Rendering
+- **Android:** MAUI generates adaptive icon layers (foreground + background)
+  - Supports circular, squircle, rounded square masks
+  - Icon automatically scaled to `mdpi`, `hdpi`, `xhdpi`, `xxhdpi`, `xxxhdpi` densities
+- **iOS:** Generated at 1024x1024 for App Store + various sizes for device home screens
+- **Windows/macOS:** Generated at appropriate sizes for each platform
+
+### Configuration Reference
+```xml
+<!-- Aurora.csproj -->
+<MauiIcon Include="Resources\AppIcon\appicon.png" BaseSize="1536,1536" />
+```
+
+**Adjustment Guidelines:**
+- Too much cropping? Reduce BaseSize to `1433,1433` (70% fill)
+- Too much padding? Increase BaseSize to `1638,1638` (80% fill)

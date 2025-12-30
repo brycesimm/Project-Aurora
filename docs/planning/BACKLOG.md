@@ -354,23 +354,25 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         9. "Did you encounter any bugs or crashes?" (Yes/No + description if yes)
         10. "Would you continue using Aurora next week?" (Yes / Maybe / No) + "Why?" text box
 
-- [ ] **Story V-2.1.3:** As a beta tester, I want easy access to the feedback form from within Aurora so that I don't have to search for the link in emails or documentation.
-    - **AC 1:** "Share Feedback" button added to main page (MainPage.xaml) at the bottom of the Daily Picks list OR top-right above Vibe of the Day card (choose based on design preference during implementation)
-    - **AC 2:** Button uses "Morning Mist" design system: Lavender Mist background (`#CE93D8`), 2.0dp purple border, rounded pill shape (22-24dp corner radius), Nunito ExtraBold font
-    - **AC 3:** Button icon: Material Design Icons `comment-text-outline` (`\U000f09ED`) with label "Share Feedback"
-    - **AC 4:** Tapping button opens weekly feedback form URL in device browser using `Browser.OpenAsync(feedbackUrl, BrowserLaunchOptions.SystemPreferred)` (reuses Chrome Custom Tabs pattern)
-    - **AC 5:** Feedback form URL is configurable via `appsettings.json`: new key `WeeklyFeedbackFormUrl` added to both Development and Production configs
-    - **AC 6:** Browser launch handles errors gracefully: if URL invalid or browser unavailable, show toast "Unable to open feedback form. Please check your connection."
-    - **AC 7:** Verified on Android emulator and S24 Ultra physical device (both Wi-Fi and cellular)
-    - **Edge Cases:**
-        - No internet connection: Browser will handle error (standard "No internet" page); Aurora shows generic toast message
-        - Form URL changes: Update `appsettings.json` and redeploy (no code changes needed)
-        - Tester accidentally opens form multiple times: No impact; Google Forms handle duplicate submissions gracefully
-    - **Technical Considerations:**
-        - Reuse existing `Browser.OpenAsync()` error handling pattern from READ button (Story V-0.2)
-        - Placement decision: Bottom of Daily Picks = less intrusive; Top-right above Vibe = higher visibility (defer final choice to implementation based on visual balance)
-        - Add new appsettings key: `"WeeklyFeedbackFormUrl": "https://forms.gle/[ID]"`
-        - Estimated effort: ~1-2 hours (minimal UI change, reuse existing patterns)
+- [x] **Story V-2.1.3:** As a beta tester, I want easy access to the feedback form from within Aurora so that I don't have to search for the link in emails or documentation.
+    - **AC 1:** ✅ "Share Feedback" button added at bottom of Daily Picks list (CollectionView.Footer) for natural "end of content" placement
+    - **AC 2:** ✅ Button uses "Morning Mist" design system: CommentAccent background, 2.0dp purple border, rounded pill shape (24dp corner radius), Nunito ExtraBold font
+    - **AC 3:** ✅ Button icon: Material Design Icons `file-document-edit-outline` (U+F0DC9) with label "Share Feedback"
+    - **AC 4:** ✅ Confirmation dialog before opening ("Would you like to provide feedback on your experience with Aurora?" → "Yes, Open Survey" / "Not Right Now")
+    - **AC 5:** ✅ Tapping "Yes" opens weekly survey in Chrome Custom Tabs (BrowserLaunchMode.SystemPreferred)
+    - **AC 6:** ✅ Configuration via nested `BetaSettings` object in appsettings.json with `IsBetaTesting` flag and `WeeklyFeedbackFormUrl`
+    - **AC 7:** ✅ Button visibility controlled by `BetaSettings:IsBetaTesting` flag (production-ready: set false to hide)
+    - **AC 8:** ✅ Graceful error handling with MainThread-safe alerts for invalid URLs or browser launch failures
+    - **AC 9:** ✅ Threading fix: Button re-enable wrapped in `MainThread.BeginInvokeOnMainThread()` to prevent crash
+    - **AC 10:** ✅ Zero-warning build maintained (Debug and Release configurations)
+    - **AC 11:** ✅ Verified on Android emulator and S24 Ultra physical device (Wi-Fi + cellular)
+    - **Completed:** 2025-12-29
+    - **Enhancements Implemented:**
+        - Beta mode toggle for clean production transition (no code changes required)
+        - Polite confirmation dialog prevents accidental taps
+        - `file-document-edit-outline` icon for semantic accuracy (editing/providing feedback)
+        - Nested `BetaSettings` object enables future expansion (expiration dates, baseline survey URL, debug flags)
+        - Custom Aurora logo integrated (2048x2048px with BaseSize="1536,1536" for optimal scaling)
 
 ---
 

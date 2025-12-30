@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/Logo_Banner-min.png" alt="Project Aurora Banner" width="75%" />
+</div>
+
 # Project Aurora: A Refuge of Positive News
 
 Project Aurora is a cross-platform mobile application built with .NET MAUI, designed to provide a sanctuary from the often negative and sensationalized traditional media landscape. It delivers a curated stream of uplifting, inspiring, and family-friendly stories.
