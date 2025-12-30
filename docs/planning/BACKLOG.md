@@ -425,15 +425,21 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 ### Feature V-2.3: Google Play Internal Testing Setup
 *This feature establishes professional distribution infrastructure for reliable installs and automatic updates.*
 
-- [ ] **Story V-2.3.1:** As a developer, I want a Google Play Console account so that I can distribute Aurora via Internal Testing track without requiring testers to sideload APKs.
+- [~] **Story V-2.3.1:** As a developer, I want a Google Play Console account so that I can distribute Aurora via Internal Testing track without requiring testers to sideload APKs.
     - **NOTE:** **Execute this story EARLY in milestone** (Day 1-2) to mitigate 24-48 hour account approval wait time.
-    - **AC 1:** Visit `play.google.com/console/signup` and create Google Play Developer account
-    - **AC 2:** Pay $25 one-time registration fee (credit card required, non-refundable)
-    - **AC 3:** Complete developer profile: legal name, country, developer email address
-    - **AC 4:** Accept Google Play Developer Distribution Agreement (read terms, especially content policy)
-    - **AC 5:** Account status shows "Active" or "Pending" (approval can take 24-48 hours for new accounts)
-    - **AC 6:** Create new application entry: **Package Name:** `com.projectaurora.app`, **App Title:** "Aurora - Positive News" (title can change later; package name is permanent)
-    - **AC 7:** Application created but NOT published (remains in draft/internal testing only)
+    - **AC 1:** ✅ Visit `play.google.com/console/signup` and create Google Play Developer account (Google account: themetanoiasociety@gmail.com)
+    - **AC 2:** ✅ Pay $25 one-time registration fee (credit card required, non-refundable)
+    - **AC 3:** ✅ Complete developer profile: Developer name "Metanoia Society" (PERMANENT), developer type (Individual), contact information
+    - **AC 4:** ✅ Accept Google Play Developer Distribution Agreement (read terms, especially content policy)
+    - **AC 5:** 🔄 Account status shows "Active" or "Pending" (approval can take 24-48 hours for new accounts) - **PENDING APPROVAL**
+    - **AC 6:** ⏳ Create new application entry: **Package Name:** `com.projectaurora.app`, **App Title:** "Aurora - Positive News" (deferred until account approved)
+    - **AC 7:** ⏳ Application created but NOT published (remains in draft/internal testing only) - **PENDING AC 6**
+    - **Progress Notes:**
+        - ✅ Developer name research completed: "Metanoia Society" selected after trademark/domain availability analysis
+        - ✅ Application submitted with detailed developer background (curating/aggregating positive news content)
+        - ✅ Identity verification completed (app install to device)
+        - 🔄 Phone verification in progress
+        - ⏳ Waiting for account approval (expected 24-48 hours from 2025-12-30)
     - **Edge Cases:**
         - Account approval delayed beyond 48 hours: Contact Google Play support via Console help center (usually resolves within 72 hours)
         - Payment issues: Verify billing address matches credit card; use card that accepts international transactions (Google Ireland)
