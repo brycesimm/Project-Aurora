@@ -72,6 +72,49 @@ This document tracks the Google Forms used for structured feedback collection du
 
 ---
 
+## Beta Tester Guide
+**Purpose:** Onboarding documentation for beta testers explaining Aurora's purpose, installation steps, feedback mechanisms, testing focus, and known limitations.
+
+**Location:**
+- Markdown: `docs/beta/BETA_TESTER_GUIDE.md`
+- PDF: `docs/beta/BETA_TESTER_GUIDE.pdf`
+- HTML (source): `docs/beta/BETA_TESTER_GUIDE.html`
+
+**Format:** Markdown + HTML + PDF for email distribution
+
+**Sections:**
+1. Welcome & Purpose (with beta definition)
+2. What is Aurora? (value proposition and feature overview)
+3. Known Limitations (5 subsections: platform, content updates, article accessibility, Uplift behavior, minimal features)
+4. ✅ You'll Know Aurora is Working If... (expected behavior guide)
+5. Installation (4 detailed steps with email expectations and app confirmation)
+6. How to Provide Feedback (weekly survey, in-app button, bug/question template)
+7. What We're Testing (content quality, UX, value proposition)
+8. Time Commitment (with usage reassurance)
+
+**Tone:** Warm, conversational, approachable with emojis throughout (matches "Morning Mist" design philosophy)
+
+**Word Count:** ~1,400 words
+
+**Key Features:**
+- 🎨 **Emoji-enhanced:** Friendly icons throughout for visual engagement
+- 🖋️ **Custom typography:** Nunito font via CSS for warm, rounded aesthetic
+- 🎨 **Morning Mist palette:** Purple-blue headings (#7986CB) matching app design system
+- 📧 **Email distribution clarity:** Google Play link sent manually via email/Discord after baseline survey
+- 📱 **Device info instructions:** Step-by-step guidance for non-tech-savvy users (Settings → About phone)
+- 🐛 **Beginner-friendly bug template:** Copy-paste template with filled example
+- 📱 **App confirmation:** Logo image (80x80px) + visual description for installation verification
+- ⚠️ **Known limitations disclosure:** Stale Uplift counts, no state tracking, manual curation, paywalls
+- ⏰ **Response time expectations:** 24-48 hours for email replies
+- 💬 **Non-urgent question support:** Email welcome for general questions, not just bugs
+- ✅ **Expected behavior guide:** Reduces false bug reports (2-3 sec spin-up, count jumps normal)
+- 🕐 **Flexible timing:** Weekly survey "whenever works for you" (no specific day pressure)
+- 💯 **Usage reassurance:** "Used it twice or ten times? Either way, fill out the survey"
+
+**Status:** ✅ Complete (2025-12-30) - PDF finalized with custom styling, ready for email distribution
+
+---
+
 ## Notes
 - All forms configured to NOT require Google account sign-in
 - Responses automatically saved to Google Sheets with timestamps

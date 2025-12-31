@@ -379,7 +379,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 ### Feature V-2.2: Beta Tester Onboarding Documentation
 *This feature provides clear, concise instructions for beta testers so they understand expectations and can successfully install/use Aurora.*
 
-- [ ] **Story V-2.2.1:** As a beta tester, I want a clear onboarding guide so that I understand Aurora's purpose, how to install it, and how to provide valuable feedback.
+- [x] **Story V-2.2.1:** As a beta tester, I want a clear onboarding guide so that I understand Aurora's purpose, how to install it, and how to provide valuable feedback.
     - **AC 1:** `docs/beta/BETA_TESTER_GUIDE.md` created with sections: Welcome & Purpose, Installation, How to Provide Feedback, What We're Testing, Known Limitations
     - **AC 2:** Guide is 1-2 pages (300-500 words) in **conversational, warm tone** matching "Morning Mist" design philosophy (friendly, approachable, not clinical)
     - **AC 3:** All links clearly marked as placeholders until dependencies complete:
@@ -400,7 +400,9 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - **Section 2: Installation** (Step 1: Baseline survey, Step 2: Google Play opt-in link, Step 3: Open app and explore)
         - **Section 3: How to Provide Feedback** (Weekly survey every Sunday, In-app "Share Feedback" button, Email/Discord for urgent bugs)
         - **Section 4: What We're Testing** (Content quality, user experience, value proposition: "Does Aurora make you feel more hopeful?")
-        - **Section 5: Known Limitations** (Android-only, manual curation, minimal features, early alpha quality)
+        - **Section 5: Known Limitations** (Android-only, manual curation, minimal features, early beta quality)
+    - **Completed:** 2025-12-30
+    - **Notes:** Guide significantly expanded beyond original 300-500 word spec (~1,400 words final) to address non-tech-savvy tester needs. Key additions: "What is Aurora?" value proposition section, "✅ You'll Know Aurora is Working If..." expected behavior guide, comprehensive device info instructions with manufacturer variations, beginner-friendly bug template with copy-paste format + filled example, article accessibility limitations (paywall disclosure), installation confirmation with Aurora logo (80x80px), response time expectations (24-48hr), flexible weekly survey timing, usage reassurance ("any feedback is good feedback"). PDF generated via Pandoc→HTML→browser Print-to-PDF with custom CSS (Nunito font, Morning Mist palette #7986CB, emojis throughout). Comprehensive review from non-tech-savvy perspective identified and resolved 11 critical gaps. Contact simplified to email-only (themetanoiasociety@gmail.com); Discord references removed per user preference. Survey links active (baseline/weekly forms from V-2.1.1/V-2.1.2); Google Play link referenced as "sent via email" pending V-2.3.2. All 8 ACs met; guide ready for email distribution.
 
 - [ ] **Story V-2.2.2:** As a developer, I want documented steps for generating signed AABs and distributing via Google Play so that I can repeat the process reliably for future beta rounds.
     - **NOTE:** This story **MOVED AFTER V-2.3.2** to capture lessons learned from first deployment.
