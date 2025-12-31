@@ -8,7 +8,6 @@
 
     The generated template includes all required fields with helpful placeholders:
     - Auto-generated unique IDs (vibe-of-the-day-N, daily-pick-N)
-    - Today's date auto-filled for published_date
     - Clear TODO markers for fields requiring manual input
     - Valid JSON structure ready for editing
 
@@ -86,16 +85,12 @@ function New-ContentItem {
 		[int]$Index
 	)
 
-	$today = Get-Date -Format 'yyyy-MM-dd'
-	$id = "$IdPrefix-$Index"
-
 	return [PSCustomObject]@{
 		id            = "REPLACE_WITH_UNIQUE_ID_$Index"
 		title         = "TODO: Article Title Here"
 		snippet       = "TODO: Write a 2-3 sentence summary that explains the uplifting news in a clear, engaging way. Focus on the positive impact and specific outcomes."
 		image_url     = "https://via.placeholder.com/800x600/7986CB/FFFFFF?text=Aurora+Placeholder"
 		article_url   = "https://example.com/article-$Index"
-		published_date = $today
 		uplift_count  = 0
 	}
 }
@@ -174,7 +169,6 @@ Write-Host ""
 Write-InfoMessage "Template Summary:"
 Write-InfoMessage "  ✓ 1 Vibe of the Day (featured story)"
 Write-InfoMessage "  ✓ $PicksCount Daily Picks"
-Write-InfoMessage "  ✓ Auto-filled today's date: $(Get-Date -Format 'yyyy-MM-dd')"
 Write-InfoMessage "  ✓ Placeholder values ready for editing"
 Write-Host ""
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkGray
