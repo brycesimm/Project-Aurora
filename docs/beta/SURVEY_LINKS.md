@@ -13,12 +13,11 @@ This document tracks the Google Forms used for structured feedback collection du
 
 **Responses Sheet:** https://docs.google.com/spreadsheets/d/1Xl90ykDVii1rTgsgFDcUnoQAjxG-JjT0nxnbYyjb1ok/edit?gid=1658055882#gid=1658055882
 
-**Question Count:** 14 questions (11 optional, 3 required)
+**Question Count:** 13 questions (11 optional, 2 required)
 
 **Required Questions:**
-1. Preferred contact method (Email, Discord, Reddit, Other)
-2. Contact details (email/username)
-11. Value proposition rating (1-5 scale)
+1. Google Play Store email address (must match Google account on device)
+2. Value proposition rating (1-5 scale)
 
 **Optional Questions:**
 3. Social media usage hours
@@ -100,7 +99,7 @@ This document tracks the Google Forms used for structured feedback collection du
 - 🎨 **Emoji-enhanced:** Friendly icons throughout for visual engagement
 - 🖋️ **Custom typography:** Nunito font via CSS for warm, rounded aesthetic
 - 🎨 **Morning Mist palette:** Purple-blue headings (#7986CB) matching app design system
-- 📧 **Email distribution clarity:** Google Play link sent manually via email/Discord after baseline survey
+- 📧 **Email distribution clarity:** Google Play opt-in link sent manually via email after baseline survey (email must match Google Play Store account)
 - 📱 **Device info instructions:** Step-by-step guidance for non-tech-savvy users (Settings → About phone)
 - 🐛 **Beginner-friendly bug template:** Copy-paste template with filled example
 - 📱 **App confirmation:** Logo image (80x80px) + visual description for installation verification

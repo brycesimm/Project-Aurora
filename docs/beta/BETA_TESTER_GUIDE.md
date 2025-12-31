@@ -80,7 +80,7 @@ Getting started is simple:
    👉 [Baseline Survey](https://forms.gle/eRq3qY1EveJbP6Q87)
 
 2. **⏰ Wait for your Google Play opt-in link**
-   After you complete the baseline survey, I will manually send you the opt-in link via the contact method you specified in the form (email or Discord).
+   After you complete the baseline survey, I will manually send you the opt-in link via email to the Google Play Store email address you provided.
 
    - **📧 Look for an email from:** themetanoiasociety@gmail.com
    - **⏳ If it's been more than 24 hours** and you haven't received anything, please email me at the address above - your message might have been caught in spam, or I may have missed it.
@@ -88,8 +88,10 @@ Getting started is simple:
 3. **⬇️ Install Aurora from Google Play**
    Tap the opt-in link on your Android device, accept the invitation to join Internal Testing, then install from the Google Play Store.
 
+   **🔍 Don't be confused by the opt-in page!** When you first open the opt-in link and accept the invitation, you'll see a placeholder Android icon and the app listed as "**com.metanoiasociety.aurora (unreviewed)**" - this is normal for internal testing and will look more polished in future releases. The app will look correct once installed on your device.
+
    **✅ You'll know you have the right app if you see:**
-   - App name: **Aurora**
+   - App name on your device (after installation): **Aurora**
    - App icon with pastel colors (teal, pink, orange stripes above a blue/white "A"):
 
      <img src="aurora-logo.png" alt="Aurora Logo" width="80" height="80">

@@ -24,10 +24,10 @@
 		<ApplicationTitle>Aurora</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.aurora</ApplicationId>
+		<ApplicationId>com.metanoiasociety.aurora</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
@@ -39,6 +39,16 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<!-- <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion> -->
+	</PropertyGroup>
+
+	<!-- Android Release Signing Configuration -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Release' AND '$(TargetFramework)' == 'net9.0-android'">
+		<AndroidKeyStore>true</AndroidKeyStore>
+		<AndroidSigningKeyStore>C:\Programming\Keystores\aurora-release.keystore</AndroidSigningKeyStore>
+		<AndroidSigningKeyAlias>aurora</AndroidSigningKeyAlias>
+		<AndroidSigningStorePass>$(AURORA_KEYSTORE_PASSWORD)</AndroidSigningStorePass>
+		<AndroidSigningKeyPass>$(AURORA_KEYSTORE_PASSWORD)</AndroidSigningKeyPass>
+		<AndroidPackageFormat>aab</AndroidPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup>
