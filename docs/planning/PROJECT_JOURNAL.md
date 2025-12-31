@@ -9,10 +9,10 @@ This journal tracks recent development sessions, key decisions, and project traj
 ## 🎯 Current Status (Quick Reference)
 
 **Active Milestone:** V-2 (Beta Testing Round 1 - Early Alpha Quality)
-**Progress:** 4 of 10 stories complete (40%)
-**Current Sprint:** Google Play deployment + Beta Tester Guide
-**Blockers:** None (Google Play account approved 2025-12-31)
-**Git Branch:** `main` (clean working directory)
+**Progress:** 6 of 10 stories complete (60%)
+**Current Sprint:** Self-validation testing (7-14 days)
+**Blockers:** None
+**Git Branch:** `docs/journal-monthly-archives` (uncommitted changes - keystore config, journal restructure, AAB deployment, deployment docs)
 
 ---
 
@@ -36,8 +36,9 @@ This journal tracks recent development sessions, key decisions, and project traj
 
 | Date | Decision | Rationale | Impact |
 |------|----------|-----------|--------|
+| 2025-12-31 | Package Name: `com.metanoiasociety.aurora` | Organization-scoped namespace for future Metanoia Society apps; aligns with owned domains (metanoiasociety.com/net/org); changed from initial `com.projectaurora.app` before first publish | **HIGH** - Permanently locked after AAB upload |
+| 2025-12-31 | App Title: "Aurora - Uplifting Media" | Broader than "Positive News" to avoid Google News Policy regulations; future-proofs for video/podcast content | **MEDIUM** - Can be changed anytime (unlike package name) |
 | 2025-12-30 | Developer Name: "Metanoia Society" | Permanent Google Play identity; Greek "transformative change of heart/mind" aligns with mission | **HIGH** - Cannot be changed after registration |
-| 2025-12-29 | Package Name: `com.projectaurora.app` | Permanent identifier; aligns with Azure naming (`rg-aurora-beta`) | **HIGH** - Locked after first publish |
 | 2025-12-28 | PowerShell for content tooling | Windows-native, zero additional install overhead, mature ecosystem | **MEDIUM** - Deferred .NET migration to Milestone CT-1 |
 | 2025-12-27 | Chrome Custom Tabs for article reader | Superior Android UX vs external browser; modern standard (Twitter, Reddit, Facebook) | **MEDIUM** - Better performance + visual transition |
 | 2025-12-27 | Azure Consumption Plan (Y1) | Serverless, $0/month for beta usage, auto-scaling, minimal maintenance | **HIGH** - Enables cost-effective beta testing |
@@ -52,7 +53,64 @@ This journal tracks recent development sessions, key decisions, and project traj
 
 ## 📅 Recent Sessions (Last 7)
 
-### 2025-12-31: Context Refresh + Project Journal Restructuring
+### 2025-12-31 (Session 2): Story V-2.3.2 Complete - Aurora Deployed to Google Play Internal Testing
+
+**Summary:**
+- Completed Google Play Console app creation and AAB deployment
+- Generated Android release keystore (permanent, irreversible)
+- Updated package name from `com.projectaurora.app` to `com.metanoiasociety.aurora`
+- Successfully deployed to Internal Testing track
+- Configured store listing (icon, descriptions, screenshots)
+
+**Key Decisions:**
+- **Package name:** Changed to `com.metanoiasociety.aurora` (organization-scoped) to support future Metanoia Society apps; aligns with owned domains (metanoiasociety.com/net/org)
+- **App title:** "Aurora - Uplifting Media" (broader than "Positive News" to avoid Google News Policy regulations)
+- **Keystore location:** `C:\Programming\Keystores\aurora-release.keystore` (outside repo, backed up to 3 locations)
+
+**Work Completed:**
+1. **Keystore Generation:**
+   - Installed Microsoft OpenJDK 17.0.17 LTS
+   - Generated RSA 2048-bit keystore: alias `aurora`, validity 10,000 days (~27 years)
+   - SHA-256 fingerprint: `EA:41:5B:D4:AC:73:D0:BE:A0:E5:F5:52:24:27:63:59:69:25:8A:1E:72:76:7D:E4:BC:3A:55:42:0B:DE:B6:D5`
+   - Password stored in Bitwarden; keystore backed up to 3 secure locations
+
+2. **Aurora.csproj Configuration:**
+   - Updated `ApplicationId` to `com.metanoiasociety.aurora`
+   - Updated `ApplicationDisplayVersion` to `1.0.0`
+   - Added Release signing configuration with environment variable for password
+   - Added `.gitignore` entries for keystore files
+
+3. **AAB Build:**
+   - Built signed AAB: `com.metanoiasociety.aurora-Signed.aab` (30 MB)
+   - Supports 12,929 Android devices, API 21+, Target SDK 35
+
+4. **Google Play Console:**
+   - Created app "Aurora - Uplifting Media"
+   - Uploaded AAB (package name permanently locked)
+   - Added release notes for version "1 (1.0.0)"
+   - Configured Internal Testing testers
+   - Generated opt-in URL (retrievable from Google Play Console)
+   - Configured store listing: app name, short/full descriptions, icon (512x512px), screenshots
+
+5. **Self-Verification:**
+   - Installed on S24 Ultra via opt-in URL
+   - Confirmed app displays as "Aurora" with correct icon on device
+   - Noted placeholder icon on opt-in page (normal for internal testing)
+
+6. **Documentation:**
+   - Updated Beta Tester Guide with opt-in page expectations (opt-in placeholder icon warning)
+   - Removed Discord/Reddit contact references (email-only for streamlined workflow)
+   - Created `docs/technical/DEPLOYMENT.md` with comprehensive deployment procedures (Story V-2.2.2)
+
+**Progress:** Milestone V-2 at 60% complete (6/10 stories)
+
+**Next Focus:**
+1. Story V-2.4.1: Self-validation (7-14 days of daily usage)
+2. Story V-2.4.2: Content update during self-validation
+
+---
+
+### 2025-12-31 (Session 1): Context Refresh + Project Journal Restructuring
 
 **Summary:**
 - Completed comprehensive context refresh and strategic assessment
@@ -162,7 +220,7 @@ This journal tracks recent development sessions, key decisions, and project traj
 
 **Key Decisions:**
 - Survey expansion from 8 to 14 questions (added app usage patterns + contact preferences)
-- Contact flexibility: Email/Discord/Reddit/Other options
+- Contact method: Email-only (must match Google Play Store account) - Updated 2025-12-31 to remove Discord/Reddit for streamlined workflow
 - Play Console strategy: Separate Google account with brand identity
 
 **Verification:**

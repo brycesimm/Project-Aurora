@@ -68,3 +68,8 @@ tools/content-management/backups/
 
 # Private Planning Documents (Local Only - Not for Public Repo)
 docs/planning/LOCAL_NOTES.md
+
+# Android Signing (CRITICAL: Never commit keystores or passwords)
+*.keystore
+*.jks
+keystore.properties

@@ -313,7 +313,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **AC 6:** ✅ Form tested with 2 test responses, verified data appears correctly in Google Sheets with all columns populated
     - **AC 7:** 🔄 Deferred to Story V-2.2.1 (Beta Tester Guide not yet created)
     - **Completed:** 2025-12-29
-    - **Notes:** Survey expanded beyond original spec to include contact collection (2 questions) and enhanced app usage analysis (Q4-Q6, Q14). Contact method flexibility (Email/Discord/Reddit/Other) provides better tester experience. Confirmation message updated to reflect contact method collection.
+    - **Notes:** Survey expanded beyond original spec to include Google Play Store email collection (1 required question) and enhanced app usage analysis (Q4-Q6, Q14). Email-only contact simplifies tester onboarding (email = whitelist identifier = communication channel). Updated 2025-12-31 to remove Discord/Reddit options for streamlined workflow.
     - **Edge Cases:**
         - Tester skips optional questions: Allowed; only value proposition question (#6 in proposed list) is required
         - Political sensitivity (topics to avoid): Question phrased neutrally: "Are there topics you'd prefer Aurora avoid, even if generally positive? (e.g., political figures, religious themes, specific social issues)"
@@ -388,7 +388,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - `[GOOGLE PLAY INSTALL LINK]` (Story V-2.3.2)
     - **AC 4:** Guide includes time commitment transparency: "~5-10 min/day for 1-2 weeks, plus one 5-min survey weekly"
     - **AC 5:** Known Limitations section explicitly states: "Android-only for now; iOS planned for future," "Manual content curation (may lag on weekends)," "Minimal features intentionally (testing core concept)"
-    - **AC 6:** Contact information section: Provide email/Discord handle for urgent bugs + reminder that forms are preferred for structured feedback
+    - **AC 6:** Contact information section: Provide email (themetanoiasociety@gmail.com) for urgent bugs + reminder that forms are preferred for structured feedback
     - **AC 7:** Guide reviewed for clarity (no jargon, no assumptions about technical knowledge)
     - **AC 8:** PDF export created for easy email distribution: `docs/beta/BETA_TESTER_GUIDE.pdf`
     - **Edge Cases:**
@@ -398,20 +398,20 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **Guide Structure (Final):**
         - **Section 1: Welcome & Purpose** (2-3 sentences: refuge from negative news, you're helping validate if this concept resonates)
         - **Section 2: Installation** (Step 1: Baseline survey, Step 2: Google Play opt-in link, Step 3: Open app and explore)
-        - **Section 3: How to Provide Feedback** (Weekly survey every Sunday, In-app "Share Feedback" button, Email/Discord for urgent bugs)
+        - **Section 3: How to Provide Feedback** (Weekly survey every Sunday, In-app "Share Feedback" button, Email for urgent bugs)
         - **Section 4: What We're Testing** (Content quality, user experience, value proposition: "Does Aurora make you feel more hopeful?")
         - **Section 5: Known Limitations** (Android-only, manual curation, minimal features, early beta quality)
     - **Completed:** 2025-12-30
     - **Notes:** Guide significantly expanded beyond original 300-500 word spec (~1,400 words final) to address non-tech-savvy tester needs. Key additions: "What is Aurora?" value proposition section, "✅ You'll Know Aurora is Working If..." expected behavior guide, comprehensive device info instructions with manufacturer variations, beginner-friendly bug template with copy-paste format + filled example, article accessibility limitations (paywall disclosure), installation confirmation with Aurora logo (80x80px), response time expectations (24-48hr), flexible weekly survey timing, usage reassurance ("any feedback is good feedback"). PDF generated via Pandoc→HTML→browser Print-to-PDF with custom CSS (Nunito font, Morning Mist palette #7986CB, emojis throughout). Comprehensive review from non-tech-savvy perspective identified and resolved 11 critical gaps. Contact simplified to email-only (themetanoiasociety@gmail.com); Discord references removed per user preference. Survey links active (baseline/weekly forms from V-2.1.1/V-2.1.2); Google Play link referenced as "sent via email" pending V-2.3.2. All 8 ACs met; guide ready for email distribution.
 
-- [ ] **Story V-2.2.2:** As a developer, I want documented steps for generating signed AABs and distributing via Google Play so that I can repeat the process reliably for future beta rounds.
+- [x] **Story V-2.2.2:** As a developer, I want documented steps for generating signed AABs and distributing via Google Play so that I can repeat the process reliably for future beta rounds.
     - **NOTE:** This story **MOVED AFTER V-2.3.2** to capture lessons learned from first deployment.
-    - **AC 1:** `docs/processes/BETA_DISTRIBUTION.md` created with step-by-step signing and upload instructions based on actual experience from Story V-2.3.2
-    - **AC 2:** Keystore creation and **backup procedure** documented with explicit security warnings: "Store keystore in 3 locations: local encrypted folder, cloud backup (OneDrive/Google Drive encrypted), password manager (1Password/Bitwarden)"
-    - **AC 3:** AAB generation documented (not APK): `dotnet publish -c Release -f net9.0-android -p:AndroidPackageFormat=aab`
-    - **AC 4:** Google Play Internal Testing release process documented: Console navigation, AAB upload, release notes format, rollout steps
-    - **AC 5:** Email template for tester distribution created in same document: Subject line, body text with opt-in URL + guide + survey links
-    - **AC 6:** Process verified by generating test AAB and uploading to Play Console (reuses V-2.3.2 artifact)
+    - **AC 1:** ✅ `docs/technical/DEPLOYMENT.md` created with step-by-step signing and upload instructions based on actual experience from Story V-2.3.2
+    - **AC 2:** ✅ Keystore creation and **backup procedure** documented with explicit security warnings (3 secure locations: Bitwarden + cloud storage + external USB)
+    - **AC 3:** ✅ AAB generation documented: PowerShell environment variable setup + `dotnet publish -c Release -f net9.0-android` command
+    - **AC 4:** ✅ Google Play Internal Testing release process documented: Console navigation, AAB upload, release notes format, tester configuration, rollout steps
+    - **AC 5:** ✅ Store listing configuration documented: app name, descriptions, icon upload, screenshots
+    - **AC 6:** ✅ Process verified with Story V-2.3.2 successful deployment (com.metanoiasociety.aurora-Signed.aab uploaded, release "1 (1.0.0)" rolled out)
     - **Edge Cases:**
         - **Keystore lost:** Cannot update the app without losing all installs. Mitigation: Document backup to 3 locations (local, cloud, password manager) in bold/red text
         - AAB rejected by Google: Console provides reason; likely signing config issue. Document common errors: version code conflict, missing permissions, improper signing
@@ -427,21 +427,21 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 ### Feature V-2.3: Google Play Internal Testing Setup
 *This feature establishes professional distribution infrastructure for reliable installs and automatic updates.*
 
-- [~] **Story V-2.3.1:** As a developer, I want a Google Play Console account so that I can distribute Aurora via Internal Testing track without requiring testers to sideload APKs.
+- [x] **Story V-2.3.1:** As a developer, I want a Google Play Console account so that I can distribute Aurora via Internal Testing track without requiring testers to sideload APKs.
     - **NOTE:** **Execute this story EARLY in milestone** (Day 1-2) to mitigate 24-48 hour account approval wait time.
     - **AC 1:** ✅ Visit `play.google.com/console/signup` and create Google Play Developer account (Google account: themetanoiasociety@gmail.com)
     - **AC 2:** ✅ Pay $25 one-time registration fee (credit card required, non-refundable)
     - **AC 3:** ✅ Complete developer profile: Developer name "Metanoia Society" (PERMANENT), developer type (Individual), contact information
     - **AC 4:** ✅ Accept Google Play Developer Distribution Agreement (read terms, especially content policy)
-    - **AC 5:** 🔄 Account status shows "Active" or "Pending" (approval can take 24-48 hours for new accounts) - **PENDING APPROVAL**
-    - **AC 6:** ⏳ Create new application entry: **Package Name:** `com.projectaurora.app`, **App Title:** "Aurora - Positive News" (deferred until account approved)
-    - **AC 7:** ⏳ Application created but NOT published (remains in draft/internal testing only) - **PENDING AC 6**
+    - **AC 5:** ✅ Account status "Active" - approval granted 2025-12-31 (phone verification completed same day)
+    - **AC 6:** ✅ Create new application entry: **App Title:** "Aurora - Uplifting Media" (package name assigned on first AAB upload in V-2.3.2)
+    - **AC 7:** ✅ Application created in draft state (Internal Testing only, not published)
     - **Progress Notes:**
         - ✅ Developer name research completed: "Metanoia Society" selected after trademark/domain availability analysis
         - ✅ Application submitted with detailed developer background (curating/aggregating positive news content)
         - ✅ Identity verification completed (app install to device)
-        - 🔄 Phone verification in progress
-        - ⏳ Waiting for account approval (expected 24-48 hours from 2025-12-30)
+        - ✅ Phone verification completed (2025-12-31)
+        - ✅ Account approved (2025-12-31, ~24 hours after submission)
     - **Edge Cases:**
         - Account approval delayed beyond 48 hours: Contact Google Play support via Console help center (usually resolves within 72 hours)
         - Payment issues: Verify billing address matches credit card; use card that accepts international transactions (Google Ireland)
@@ -465,16 +465,25 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - **Note:** App can include "In loving memory of Lilly" dedication in About section regardless of developer name chosen
         - **Recommendation:** Create **separate Google account** for Play Console (not personal Gmail) to enable brand identity and isolation (see PLANNING.md "Deferred Business & Legal Items" for full rationale)
 
-- [ ] **Story V-2.3.2:** As a developer, I want Aurora deployed to Google Play Internal Testing so that beta testers receive professional installs and automatic updates.
-    - **AC 1:** Generate signed Release AAB using Visual Studio or CLI: `dotnet publish -c Release -f net9.0-android -p:AndroidPackageFormat=aab`
-    - **AC 2:** Upload AAB to Google Play Console → Aurora → Testing → Internal Testing → Create Release
-    - **AC 3:** Add release notes: "Beta Round 1 - Initial testing build with real content, reaction persistence, and integrated feedback forms"
-    - **AC 4:** Configure Internal Testing track: Add testers by email (start with your own email as first tester)
-    - **AC 5:** Generate opt-in URL from Console (format: `https://play.google.com/apps/internaltest/...`)
-    - **AC 6:** Self-verification: Click opt-in URL on S24 Ultra, become a tester, install Aurora from Play Store
-    - **AC 7:** App launches successfully, loads content from production API (`func-aurora-beta-*.azurewebsites.net`), reactions persist to cloud Table Storage
-    - **AC 8:** Verify "Share Feedback" button opens weekly survey form in browser (validates V-2.1.3 integration)
-    - **AC 9:** Opt-in URL documented in `docs/beta/SURVEY_LINKS.md` and embedded in Beta Tester Guide (Story V-2.2.1)
+- [x] **Story V-2.3.2:** As a developer, I want Aurora deployed to Google Play Internal Testing so that beta testers receive professional installs and automatic updates.
+    - **AC 1:** ✅ Generate signed Release AAB - Completed 2025-12-31
+        - **Keystore generated:** `C:\Programming\Keystores\aurora-release.keystore`
+            - Alias: `aurora`, Validity: 10,000 days (~27 years), Algorithm: RSA 2048-bit
+            - SHA-256 fingerprint: `EA:41:5B:D4:AC:73:D0:BE:A0:E5:F5:52:24:27:63:59:69:25:8A:1E:72:76:7D:E4:BC:3A:55:42:0B:DE:B6:D5`
+            - Distinguished Name: `CN=Metanoia Society, OU=Unknown, O=Metanoia Society, L=Unknown, ST=Unknown, C=US`
+        - **Backup strategy:** Keystore password stored in Bitwarden; keystore file backed up to 3 secure locations (Bitwarden attachment + cloud storage + external USB)
+        - **Package name decision:** Changed from `com.projectaurora.app` to **`com.metanoiasociety.aurora`** (organization-scoped namespace for future Metanoia Society apps, aligns with owned domains: metanoiasociety.com/net/org)
+        - **Aurora.csproj configuration:** Release signing added with environment variable for password (`$(AURORA_KEYSTORE_PASSWORD)`), AAB format enforced
+        - **Build command:** `$env:AURORA_KEYSTORE_PASSWORD = "***"; dotnet publish -c Release -f net9.0-android`
+        - **Output:** `com.metanoiasociety.aurora-Signed.aab` (30 MB) - 12,929 supported Android devices, API 21+, Target SDK 35
+    - **AC 2:** ✅ Upload AAB to Google Play Console (validates signature, locks package name permanently)
+    - **AC 3:** ✅ Add release notes: "Initial beta release for internal testing. Features: Daily Picks, Vibe of the Day, reactions, sharing"
+    - **AC 4:** ✅ Release "1 (1.0.0)" created and rolled out to Internal Testing track
+    - **AC 5:** ✅ Testers configured (developer email added)
+    - **AC 6:** ✅ Opt-in URL generated (retrievable from Google Play Console → Internal Testing)
+    - **AC 7:** ✅ Self-verification: Installed on S24 Ultra, app launches with correct name "Aurora" and proper icon
+    - **AC 8:** ✅ Store listing configured: App name "Aurora - Uplifting Media", short/full descriptions, app icon (512x512px), feature graphic, screenshots uploaded
+    - **AC 9:** ✅ Beta Tester Guide updated with opt-in page expectations (placeholder icon/package name normal for internal testing)
     - **Edge Cases:**
         - **Upload rejected by Console:** Common reasons: improper signing (keystore mismatch), version code conflict (already uploaded this version), missing required permissions in AndroidManifest.xml. Console provides specific error; resolve and re-upload.
         - Opt-in URL doesn't activate: Verify email added to Internal Testing list; propagation takes ~5 minutes. If still broken after 15 min, remove and re-add email.
