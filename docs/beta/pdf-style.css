@@ -1,0 +1,171 @@
+/* Aurora Beta Tester Guide - PDF Styling */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+/* Page setup */
+@page {
+  margin: 1.5cm;
+  size: A4;
+}
+
+/* Body styling with warm, friendly font */
+body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11pt;
+  line-height: 1.6;
+  color: #2C3E50;
+  max-width: 100%;
+}
+
+/* Headings with color accents from Morning Mist palette */
+h1 {
+  font-size: 24pt;
+  font-weight: 700;
+  color: #7986CB; /* Morning Mist primary purple-blue */
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  border-bottom: 3px solid #B8A9D3;
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  font-size: 16pt;
+  font-weight: 700;
+  color: #7986CB;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #E8DFF5;
+  padding-bottom: 0.2em;
+}
+
+h3 {
+  font-size: 13pt;
+  font-weight: 600;
+  color: #5C6BC0;
+  margin-top: 1em;
+  margin-bottom: 0.4em;
+}
+
+/* Paragraphs and text */
+p {
+  margin-bottom: 0.8em;
+  text-align: justify;
+}
+
+/* Links */
+a {
+  color: #7986CB;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Lists */
+ul, ol {
+  margin-bottom: 0.8em;
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 0.4em;
+}
+
+/* Strong/bold text */
+strong {
+  font-weight: 700;
+  color: #2C3E50;
+}
+
+/* Code blocks and templates */
+pre {
+  background-color: #F5F5F5;
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  padding: 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 9pt;
+  line-height: 1.4;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+
+code {
+  background-color: #F5F5F5;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 9pt;
+}
+
+/* Inline code styling */
+p code, li code {
+  color: #E91E63;
+}
+
+/* Horizontal rules */
+hr {
+  border: none;
+  border-top: 2px solid #E8DFF5;
+  margin: 1.5em 0;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid #7986CB;
+  padding-left: 1em;
+  margin-left: 0;
+  color: #5C6BC0;
+  font-style: italic;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.5em 0;
+}
+
+/* Tables (if any) */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+th, td {
+  border: 1px solid #E0E0E0;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #E8DFF5;
+  font-weight: 700;
+  color: #5C6BC0;
+}
+
+/* Numbered steps styling */
+ol > li > strong {
+  color: #7986CB;
+}
+
+/* Special callout boxes for important info */
+.warning, .note {
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 1em;
+}
+
+.warning {
+  background-color: #FFF3E0;
+  border-left: 4px solid #FF9800;
+}
+
+.note {
+  background-color: #E8F5E9;
+  border-left: 4px solid #4CAF50;
+}

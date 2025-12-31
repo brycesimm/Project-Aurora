@@ -4,6 +4,103 @@ This journal documents key discussions, decisions, and progress throughout the d
 
 ---
 
+## 2025-12-30: Story V-2.2.1 - Beta Tester Guide Complete
+
+### Session Objective
+Complete Beta Tester Guide (Story V-2.2.1) with comprehensive onboarding documentation optimized for non-tech-savvy first-time beta testers.
+
+### Work Completed
+
+**1. Beta Tester Guide Creation**
+- Created `docs/beta/BETA_TESTER_GUIDE.md` (~1,400 words, significantly expanded from 300-500 word original spec)
+- **8 Sections:** Welcome & Purpose (with beta definition), What is Aurora?, Known Limitations (5 subsections), ✅ You'll Know Aurora is Working If..., Installation (4 steps), How to Provide Feedback, What We're Testing, Time Commitment
+- **Tone:** Warm, conversational, emoji-enhanced throughout (🌅 📱 💜 ✅ etc.)
+- **Survey links:** Active baseline (https://forms.gle/eRq3qY1EveJbP6Q87) and weekly (https://forms.gle/SqN9ZH54zea1GkTJ8) forms embedded
+- **Google Play distribution:** Explained as manual email/Discord delivery after baseline survey completion (pending V-2.3.2 deployment)
+
+**2. Non-Tech-Savvy Optimization (11 Critical Gaps Identified & Resolved)**
+- **Post-survey email clarity:** Email from themetanoiasociety@gmail.com, 24hr follow-up guidance if no response
+- **First launch expectations:** 2-3 sec cloud spin-up disclosed, no permissions needed, no tutorial (one-page app)
+- **Device info instructions:** Step-by-step for manufacturer variations (Samsung Product name + Software information, Pixel, etc.)
+- **Bug report template:** Copy-paste format with filled example, device info instructions ABOVE template (not buried)
+- **Expected behavior guide:** New section "✅ You'll Know Aurora is Working If..." reduces false bug reports (count jumps normal on first tap, READ opens browser, etc.)
+- **General questions support:** Email welcome for non-urgent questions, not just crashes/bugs
+- **App installation confirmation:** Aurora logo image (80x80px scaled from 2048x2048px), "no login screen" indicator
+- **Response time expectations:** 24-48hr email reply time disclosed
+- **Flexible weekly survey timing:** "Whenever works for you" (no Sunday-specific pressure)
+- **Usage reassurance:** "Used it twice or ten times? Either way, fill out the survey - understanding why you didn't engage is the most important question"
+- **Beta definition:** Plain English explanation (work-in-progress, taste-testing a recipe analogy)
+
+**3. Known Limitations Disclosure (Expanded to 5 Subsections)**
+- **Platform:** Android-only (iOS requires Mac + iPhone hardware, deferred until beta validation)
+- **Content Updates:** Manual curation (5-7 days/week, weekend lag), no auto-refresh (close/reopen app), no pull-to-refresh
+- **Article Accessibility:** Free articles goal, paywalls may slip through (publisher policy changes), feedback requested for paywall reports
+- **Uplift Button Behavior:** Stale counts (syncs on first tap - technical limitation disclosed), no state tracking (can tap multiple times - honesty requested)
+- **Minimal Features:** User accounts, personalization, comments, dark mode refinements, search all deferred (by design, testing core concept)
+
+**4. PDF Generation with Custom Styling**
+- Installed Pandoc at `C:\Users\bryce\AppData\Local\Pandoc`
+- Created `docs/beta/pdf-style.css` with Morning Mist color palette (#7986CB purple-blue headings, #E8DFF5 borders)
+- **Typography:** Nunito font (friendly, rounded, matches "Morning Mist" design philosophy)
+- Generated HTML via Pandoc → browser Print-to-PDF (headers/footers disabled)
+- **Output:** `docs/beta/BETA_TESTER_GUIDE.pdf` (emoji support, custom colors, professional layout)
+
+**5. Documentation Updates**
+- Updated `docs/beta/SURVEY_LINKS.md` with guide completion status, all 13 key features documented
+- Updated `docs/planning/BACKLOG.md`: Story V-2.2.1 marked complete ✅ with comprehensive notes
+- Updated `docs/planning/PROJECT_JOURNAL.md`: This session summary
+
+### Key Decisions
+
+**Contact Method Simplification:**
+- Email-only: themetanoiasociety@gmail.com (Discord references removed per user preference)
+- Supports bugs, crashes, AND general questions (not just urgent issues)
+
+**Distribution Method Clarification:**
+- Guide will be **email attachment** (PDF) + Google Play opt-in link in email body
+- Guide references "the email you received" rather than including opt-in link directly
+- Baseline survey collects email/Discord preference for manual delivery
+
+**Curation Method Framing (Future Flexibility):**
+- Changed "Aurora hand-picks stories" → "Aurora prioritizes stories"
+- Focuses on outcome (positive content prioritization) not method (manual curation)
+- Leaves flexibility for future automation (algorithmic curation, community voting, hybrid models)
+
+**Typography & Visual Design:**
+- Nunito font (friendly, rounded) from Google Fonts
+- Morning Mist color palette (#7986CB primary purple-blue) for headings
+- Emojis throughout for visual engagement (🌅 📱 💜 ✅ 📧 🐛 etc.)
+- 80x80px logo image for installation confirmation (scaled from 2048x2048px)
+
+### Milestone V-2 Progress
+
+**Stories Complete:** 4 of 10 (40%)
+- ✅ V-2.1.1: Baseline Survey
+- ✅ V-2.1.2: Weekly Feedback Survey
+- ✅ V-2.1.3: In-App Feedback Button
+- ✅ V-2.2.1: Beta Tester Guide ← **COMPLETED THIS SESSION**
+
+**Feature V-2.2 (Beta Tester Onboarding):** 1 of 2 stories complete (50%)
+
+**Next Up:**
+- V-2.3.1: Google Play Console Account (pending approval, submitted 2025-12-30, 24-48hr wait)
+- V-2.3.2: Deploy to Internal Testing Track (AAB upload, opt-in URL generation)
+
+### Technical Artifacts Created
+- `docs/beta/BETA_TESTER_GUIDE.md` (Markdown source, ~1,400 words)
+- `docs/beta/BETA_TESTER_GUIDE.html` (HTML with embedded CSS for PDF generation)
+- `docs/beta/BETA_TESTER_GUIDE.pdf` (Final distribution PDF with custom styling)
+- `docs/beta/pdf-style.css` (Pandoc CSS for Morning Mist palette + Nunito font)
+- `docs/beta/aurora-logo.png` (Copied from `src/Aurora/Resources/AppIcon/appicon.png` for guide)
+
+### Quality Assurance
+- Comprehensive review conducted from perspective of non-tech-savvy first-time beta tester
+- 11 critical gaps identified and resolved (email clarity, device info accessibility, expected behavior guide, etc.)
+- PDF verified with emojis rendering correctly, Nunito font applied, no headers/footers in output
+- All 8 acceptance criteria met; guide ready for email distribution when V-2.3.2 completes
+
+---
+
 ## 2025-11-17: Project Inception
 
 ### Initial Consultation
