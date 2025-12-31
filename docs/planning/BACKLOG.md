@@ -501,7 +501,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 ### Feature V-2.4: Self-Validation & External Tester Execution
 *This feature validates Aurora's core value proposition through personal use and small cohort feedback before broader distribution.*
 
-- [ ] **Story V-2.4.1:** As a project owner, I want to use Aurora daily for 1-2 weeks so that I can validate the value proposition from a user's perspective and identify friction points before finalizing external tester recruitment.
+- [~] **Story V-2.4.1:** As a project owner, I want to use Aurora daily for 1-2 weeks so that I can validate the value proposition from a user's perspective and identify friction points before finalizing external tester recruitment.
     - **AC 1:** Install Aurora on S24 Ultra via Google Play Internal Testing opt-in link (professional install, not sideloaded APK)
     - **AC 2:** Complete baseline survey (Story V-2.1.1) using own responses
     - **AC 3:** Use Aurora for **7-14 consecutive days** (minimum 7 days required, extend to 14 if availability permits or insights are unclear after Week 1)
@@ -569,7 +569,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         ```
     - **Time Estimate:** 7-14 days (actual testing) + 1 hour (documentation)
 
-- [ ] **Story V-2.4.2:** As a content curator, I want to update Aurora's content at least once during self-validation so that I can measure curation effort and ensure fresh stories for ongoing testing.
+- [x] **Story V-2.4.2:** As a content curator, I want to update Aurora's content at least once during self-validation so that I can measure curation effort and ensure fresh stories for ongoing testing.
     - **AC 1:** Identify 1 Vibe of the Day + 10 Daily Picks from real uplifting news sources (credible outlets, published within last 7-14 days)
     - **AC 2:** Create new `content.json` using `New-ContentTemplate.ps1` as starting point: `.\New-ContentTemplate.ps1 -VibeCount 1 -PicksCount 10 -OutputFile .\beta-round-1-update.json`
     - **AC 3:** Populate template with real stories: titles, 2-3 sentence snippets, article URLs, image URLs (hotlinked or placeholder), published dates
@@ -606,7 +606,9 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         ```
     - **Time Estimate:** Variable (target ≤45 min, could be 30-60 min for first update)
 
-- [ ] **Story V-2.4.3:** As a project owner, I want to synthesize self-validation findings and recruit 1-4 external testers so that I can validate Aurora's value proposition beyond personal bias and gather diverse perspectives.
+- [~] **Story V-2.4.3:** As a project owner, I want to synthesize self-validation findings and recruit 1-4 external testers so that I can validate Aurora's value proposition beyond personal bias and gather diverse perspectives.
+    - **Status:** In Progress (AC 3 - External Tester Recruitment can proceed in parallel with self-validation)
+    - **Recruitment Guide:** See `docs/beta/TESTER_RECRUITMENT_GUIDE.md` for complete onboarding workflow
     - **AC 1:** Create `docs/beta/BETA_ROUND_1_FINDINGS.md` with the following sections:
         - [ ] **Executive Summary:** 2-3 sentences answering: "Did Aurora deliver on its value proposition for me? Should we proceed with external testers?"
         - [ ] **Quantitative Data:** First-app-opened rate (X%), days used (X/7 or X/14), articles read (total), stories shared (count), curation time (X minutes)
