@@ -501,10 +501,11 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 ### Feature V-2.4: Self-Validation & External Tester Execution
 *This feature validates Aurora's core value proposition through personal use and small cohort feedback before broader distribution.*
 
-- [~] **Story V-2.4.1:** As a project owner, I want to use Aurora daily for 1-2 weeks so that I can validate the value proposition from a user's perspective and identify friction points before finalizing external tester recruitment.
+- [~] **Story V-2.4.1:** As a project owner, I want to use Aurora daily for 7 days so that I can validate the value proposition from a user's perspective and identify friction points.
+    - **NOTE:** Testing period reduced from 14 days to 7 days (2025-12-28 to 2026-01-04) to accelerate feature development cycle.
     - **AC 1:** Install Aurora on S24 Ultra via Google Play Internal Testing opt-in link (professional install, not sideloaded APK)
     - **AC 2:** Complete baseline survey (Story V-2.1.1) using own responses
-    - **AC 3:** Use Aurora for **7-14 consecutive days** (minimum 7 days required, extend to 14 if availability permits or insights are unclear after Week 1)
+    - **AC 3:** Use Aurora for **7 consecutive days** (2025-12-28 to 2026-01-04)
     - **AC 4:** Track usage via **end-of-week recap** (not daily logging) with the following data points:
         - [ ] "How many days this week did I open Aurora?" (count)
         - [ ] "How many times was Aurora the first app I opened?" (count out of total phone pickups - estimate acceptable)
@@ -513,10 +514,9 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - [ ] "Did I share any stories?" (Yes/No + platform if yes: Discord, Reddit, etc.)
         - [ ] "UX moments that felt good" (specific examples: "Chrome Custom Tabs loaded smoothly," "Uplift animation was satisfying")
         - [ ] "UX moments that felt bad/frustrating" (specific examples: "Button too small on S24," "Snippet text too long")
-    - **AC 5:** Submit weekly feedback survey (Story V-2.1.2) at end of Week 1 using own responses
-    - **AC 6:** If testing extends to Week 2, submit second weekly survey at end of Week 2
-    - **AC 7:** Document findings in `docs/beta/BETA_ROUND_1_SELF_VALIDATION.md` using provided template (see below)
-    - **AC 8:** **Success Criteria Met:** "I used Aurora more than half of the tested days (≥4 days in Week 1, or ≥8 days over 2 weeks)" AND "Majority of weekly survey responses indicate positive sentiment (More hopeful, Informed, or similar)"
+    - **AC 5:** Submit weekly feedback survey (Story V-2.1.2) at end of Week 1 (2026-01-04) using own responses
+    - **AC 6:** Document findings in `docs/beta/BETA_ROUND_1_SELF_VALIDATION.md` using provided template (see below)
+    - **AC 7:** **Success Criteria Met:** "I used Aurora ≥4 days out of 7 (≥57% usage rate)" AND "Weekly survey responses indicate positive sentiment (More hopeful, Informed, or similar)"
     - **Edge Cases:**
         - Miss logging for a day: End-of-week recap format allows estimation; doesn't invalidate test if ≥5 days have data
         - Zero usage some days: Valid data point; document reason in recap ("Too busy," "Forgot," "Didn't feel like it" - all useful insights)
@@ -564,10 +564,10 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - Would I recommend it to a friend? Why or why not?
 
         ## Success Criteria Met?
-        - [ ] Used app ≥50% of tested days (≥4/7 or ≥8/14)
-        - [ ] Majority positive sentiment in weekly survey(s)
+        - [ ] Used app ≥4 days out of 7 (≥57% usage rate)
+        - [ ] Positive sentiment in weekly survey
         ```
-    - **Time Estimate:** 7-14 days (actual testing) + 1 hour (documentation)
+    - **Time Estimate:** 7 days (actual testing) + 1 hour (documentation)
 
 - [x] **Story V-2.4.2:** As a content curator, I want to update Aurora's content at least once during self-validation so that I can measure curation effort and ensure fresh stories for ongoing testing.
     - **AC 1:** Identify 1 Vibe of the Day + 10 Daily Picks from real uplifting news sources (credible outlets, published within last 7-14 days)
@@ -606,9 +606,10 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         ```
     - **Time Estimate:** Variable (target ≤45 min, could be 30-60 min for first update)
 
-- [~] **Story V-2.4.3:** As a project owner, I want to synthesize self-validation findings and recruit 1-4 external testers so that I can validate Aurora's value proposition beyond personal bias and gather diverse perspectives.
-    - **Status:** In Progress (AC 3 - External Tester Recruitment can proceed in parallel with self-validation)
-    - **Recruitment Guide:** See `docs/beta/TESTER_RECRUITMENT_GUIDE.md` for complete onboarding workflow
+- [~] **Story V-2.4.3:** As a project owner, I want to synthesize self-validation findings and make Go/No-Go decision for Beta Round 2.
+    - **NOTE:** External tester recruitment (AC 3) is OPTIONAL and DEFERRED for Beta Round 1. Self-validation alone is sufficient for Go/No-Go decision (2026-01-04). iOS hardware investment ($1,000+) deferred until Aurora proves value proposition on Android first.
+    - **Status:** In Progress (AC 1-2, 4-5 required; AC 3 optional if testers become available)
+    - **Recruitment Guide:** See `docs/beta/TESTER_RECRUITMENT_GUIDE.md` for complete onboarding workflow (if needed in future)
     - **AC 1:** Create `docs/beta/BETA_ROUND_1_FINDINGS.md` with the following sections:
         - [ ] **Executive Summary:** 2-3 sentences answering: "Did Aurora deliver on its value proposition for me? Should we proceed with external testers?"
         - [ ] **Quantitative Data:** First-app-opened rate (X%), days used (X/7 or X/14), articles read (total), stories shared (count), curation time (X minutes)
@@ -621,12 +622,13 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         - [ ] **High Priority (Beta Round 2):** Significant UX issues that degrade value prop (e.g., "Uplift button too small on large screens")
         - [ ] **Medium Priority (Post-Beta):** Enhancements for broader release (e.g., "Add pull-to-refresh for content updates")
         - [ ] **Low Priority (Future Backlog):** Nice-to-haves (e.g., "User accounts for cross-device sync")
-    - **AC 3:** **Recruit 1-4 External Testers** (if self-validation was positive):
+    - **AC 3:** **[OPTIONAL/DEFERRED] Recruit 1-4 External Testers** (if Android testers become available):
         - [ ] Identify 1-4 trusted contacts with Android devices (friends, family, online community members)
         - [ ] Send recruitment email with: Beta Tester Guide PDF, Baseline Survey link, Google Play opt-in URL, personal note explaining Aurora's purpose
         - [ ] Add tester emails to Google Play Console Internal Testing track
         - [ ] Verify testers successfully install app and complete baseline survey
         - [ ] Set expectation: "Use for 1 week, submit weekly survey on Sunday"
+        - **NOTE:** AC 3 is NOT REQUIRED for Beta Round 1 completion. Self-validation (n=1) is sufficient for Go/No-Go decision.
     - **AC 4:** Make **Go/No-Go Decision** documented in findings:
         - [ ] **Go:** Continue refining Aurora; implement blockers/high-priority fixes; proceed to Beta Round 2 with larger cohort
         - [ ] **No-Go:** Substantial pivot required; Aurora doesn't deliver value proposition as designed; decide whether to restart concept or salvage
