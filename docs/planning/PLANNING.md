@@ -294,27 +294,29 @@ These items are documented for future consideration but are not required for bet
 
 **Current State (Beta Testing):**
 - **GitHub:** Personal account (`brycesimm/Project-Aurora`) - Repo can be transferred to organization later without losing history
-- **Google Forms/Sheets:** Personal Gmail account - Data is exportable and transferable via sharing
+- **Google Forms/Sheets:** Personal Gmail account (themetanoiasociety@gmail.com) - Data is exportable and transferable via sharing
 - **Azure Subscription:** Personal Pay-As-You-Go subscription - Resources can be migrated between subscriptions if needed
 - **Billing:** Personal credit card (expected to remain permanent for independent development)
+- **Domain Registration:** ✅ **COMPLETED** - Acquired metanoiasociety.com/.net/.org, metanoia-society.com, the-metanoia-society.com
+- **Professional Email:** Pending setup (using themetanoiasociety@gmail.com temporarily)
 
-**Google Play Console Decision:**
-- **Recommendation:** Create separate Google account specifically for Play Console to enable brand identity
-- **Developer Name:** To be decided in Story V-2.3.1 (see suggestions in BACKLOG.md)
-- **Rationale:** Developer account owner is **permanent** and cannot be transferred; separating now provides maximum flexibility
-- **Cost:** $25 one-time fee
-- **Payment:** Personal credit card (standard practice even for business accounts)
+**Google Play Console Decision:** ✅ **COMPLETED**
+- **Account:** themetanoiasociety@gmail.com (2025-12-31)
+- **Developer Name:** Metanoia Society (PERMANENT)
+- **Package Name:** com.metanoiasociety.aurora (locked after first AAB upload)
+- **Cost:** $25 one-time fee (paid)
 
 ### Post-Beta Infrastructure Items
 
 **Priority: Low (defer until Go decision after V-2)**
 
-1. **Custom Domain Registration**
-   - **Domain:** `projectaurora.app` (or alternative)
-   - **Cost:** ~$12/year
-   - **Purpose:** Professional contact email (support@projectaurora.app), privacy policy hosting, marketing landing page
+1. **Professional Email Setup** ✅ **NEXT ACTION ITEM**
+   - **Domains Available:** metanoiasociety.com/.net/.org (already owned)
+   - **Target Email:** contact@metanoiasociety.com (or support@, dev@)
+   - **Purpose:** Professional contact for Play Console, support inquiries, privacy policy hosting
    - **Timing:** Before public launch (post-beta if Go decision)
-   - **Registrar:** Google Domains, Namecheap, or Cloudflare
+   - **Options:** Google Workspace, Zoho Mail, ProtonMail, custom hosting
+   - **Migration:** Update Google Play Console email from themetanoiasociety@gmail.com to custom domain
 
 2. **GitHub Organization Migration**
    - **Current:** `brycesimm/Project-Aurora` (personal account)
@@ -329,11 +331,11 @@ These items are documented for future consideration but are not required for bet
    - **Current Aurora Status:** Free app, no immediate tax/legal implications
    - **Timing:** Only if app monetizes successfully post-launch
 
-4. **Email Migration (Post-Domain Registration)**
-   - **Current:** Play Console uses separate Gmail account (e.g., `auroradev2025@gmail.com`)
-   - **Future:** Migrate Play Console email to custom domain (dev@projectaurora.app)
-   - **Note:** Email change **is possible** without losing Play Console account
-   - **Timing:** After domain registration and Go decision
+4. **Privacy Policy & Terms of Service Hosting**
+   - **Current:** Not required for Internal Testing
+   - **Future:** Host on metanoiasociety.com (privacy policy required for public Play Store release)
+   - **Timing:** Before Open Testing or Production release
+   - **Tools:** Static site generator (Jekyll, Hugo) or simple HTML on custom domain
 
 **Documentation Reference:**
 - Developer account strategy discussion documented in PROJECT_JOURNAL.md (2025-12-29 session)
@@ -341,4 +343,4 @@ These items are documented for future consideration but are not required for bet
 
 ---
 
-**Last Updated:** 2025-12-29
+**Last Updated:** 2026-01-01

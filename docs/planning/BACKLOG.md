@@ -678,3 +678,724 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
         [Your Name]
         ```
     - **Time Estimate:** 3-4 hours (write findings, update backlog, recruit testers)
+
+---
+
+## Milestone CT-1: Content Management Tooling Refactor
+
+**Objective:** Migrate PowerShell-based content management scripts to testable .NET console applications with unified CLI and local global tool distribution.
+
+**Success Criteria:**
+- All 4 PowerShell scripts migrated to .NET with functional parity
+- 20+ unit tests covering validation, deployment, and template generation logic
+- Zero-warning build maintained
+- Local global tool installation documented and verified
+- PowerShell scripts remain in repo until user confirms deletion
+
+**Estimated Effort:** 2-3 weeks
+
+**Priority:** HIGH (7/10 pain, aligns with main tech stack, improves confidence in content curation workflow)
+
+---
+
+### Feature CT-01: Project Infrastructure & Unified CLI Setup
+*Establish the foundational .NET console application with CommandLineParser, global tool packaging, and shared infrastructure.*
+
+- [ ] **Story CT-1.1.1:** As a developer, I want a .NET 9 console application project for content management tools so that I have a foundation for migrating PowerShell scripts.
+    - **AC 1:** Create `src/Aurora.ContentTools/Aurora.ContentTools.csproj` (.NET 9 console application)
+    - **AC 2:** Add `CommandLineParser` NuGet package for CLI argument parsing
+    - **AC 3:** Create `Program.cs` with basic command routing structure (validate, template, deploy, rollback subcommands)
+    - **AC 4:** Add project reference to `Aurora.Shared` for schema access
+    - **AC 5:** Configure project as .NET global tool in .csproj:
+        ```xml
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>aurora-tools</ToolCommandName>
+        <PackageId>Aurora.ContentTools</PackageId>
+        ```
+    - **AC 6:** Add to `Project-Aurora.sln` under `tools/` solution folder
+    - **AC 7:** Verify build succeeds with zero warnings
+    - **Edge Cases:**
+        - Tool name collision: `aurora-tools` may conflict if multiple versions installed; document uninstall/reinstall process
+        - .NET 9 SDK requirement: Document prerequisite in tool README
+    - **Time Estimate:** 2 hours
+
+- [ ] **Story CT-1.1.2:** As a developer, I want shared configuration and authentication infrastructure so that all commands can access Azure resources and user settings consistently.
+    - **AC 1:** Create `Configuration/ToolSettings.cs` to load from:
+        - Command-line arguments (highest priority)
+        - `aurora-tools.config.json` (medium priority)
+        - Environment variables (lowest priority)
+    - **AC 2:** Create `Configuration/AzureAuthProvider.cs` to handle Azure SDK authentication:
+        - Use `DefaultAzureCredential` for local development (Az CLI, Visual Studio, etc.)
+        - Support connection string override via config/env var for CI/CD
+    - **AC 3:** Create `aurora-tools.config.json` template with documented structure:
+        ```json
+        {
+          "DefaultEnvironment": "Dev",
+          "Environments": {
+            "Dev": {
+              "StorageAccountName": "staurora4tcguzr2zm32w",
+              "ContainerName": "aurora-content",
+              "BlobName": "content.json"
+            },
+            "Production": {
+              "StorageAccountName": "staurora4tcguzr2zm32w",
+              "ContainerName": "aurora-content",
+              "BlobName": "content.json"
+            }
+          }
+        }
+        ```
+    - **AC 4:** Document configuration precedence and authentication methods in tool README
+    - **AC 5:** Add `.gitignore` entry for local config overrides (`aurora-tools.local.config.json`)
+    - **Edge Cases:**
+        - Missing Az CLI authentication: Tool should provide clear error message with setup instructions
+        - Invalid config JSON: Tool should validate and show line number of syntax error
+        - Multiple authentication methods available: Document precedence order clearly
+    - **Time Estimate:** 3 hours
+
+- [ ] **Story CT-1.1.3:** As a developer, I want comprehensive documentation for local global tool installation so that I can confidently use the .NET tools instead of PowerShell scripts.
+    - **AC 1:** Create `tools/content-management/README-DOTNET.md` with sections:
+        - **Prerequisites:** .NET 9 SDK, Azure CLI (for authentication)
+        - **Installation:** Local global tool install command with step-by-step walkthrough
+        - **Configuration:** aurora-tools.config.json setup and environment variable options
+        - **Usage Examples:** Complete examples for each subcommand (validate, template, deploy, rollback)
+        - **Troubleshooting:** Common errors and solutions
+        - **Migration from PowerShell:** Side-by-side command comparison table
+    - **AC 2:** Installation instructions include:
+        ```bash
+        # From repository root
+        dotnet pack src/Aurora.ContentTools/Aurora.ContentTools.csproj -o ./nupkg
+        dotnet tool install --global Aurora.ContentTools --add-source ./nupkg
+
+        # Verify installation
+        aurora-tools --version
+        ```
+    - **AC 3:** Uninstall/upgrade instructions documented:
+        ```bash
+        # Uninstall
+        dotnet tool uninstall --global Aurora.ContentTools
+
+        # Upgrade (after rebuilding)
+        dotnet tool update --global Aurora.ContentTools --add-source ./nupkg
+        ```
+    - **AC 4:** Include troubleshooting section for:
+        - "Tool 'aurora-tools' is already installed" → uninstall first
+        - "No executable found matching command 'aurora-tools'" → check PATH, restart terminal
+        - Azure authentication failures → `az login` required
+    - **AC 5:** Add migration notes: "PowerShell scripts will remain until .NET tools are verified; safe to use side-by-side"
+    - **Time Estimate:** 2 hours
+
+---
+
+### Feature CT-02: Validate Command Migration
+*Migrate Validate-Content.ps1 to .NET with JSON schema validation, URL validation, and quality warnings.*
+
+- [ ] **Story CT-1.2.1:** As a content curator, I want a .NET-based validate command that performs JSON schema validation so that I can verify content files before deployment.
+    - **AC 1:** Create `Commands/ValidateCommand.cs` implementing CommandLineParser verb
+    - **AC 2:** Command accepts arguments:
+        - `--file <path>` (required): Path to content.json file
+        - `--schema <path>` (optional): Path to content.schema.json (defaults to repo root)
+        - `--strict` (optional flag): Treat warnings as errors
+    - **AC 3:** Load `content.schema.json` using `Newtonsoft.Json.Schema` or `NJsonSchema`
+    - **AC 4:** Validate JSON file against schema:
+        - Syntax validation (valid JSON)
+        - Required fields present (id, title, snippet, image_url, article_url, uplift_count)
+        - Field types correct (uplift_count is non-negative integer)
+        - URLs are well-formed (http/https protocol)
+    - **AC 5:** Output format matches PowerShell script style:
+        - Success: `✓ content.json is valid and ready to upload`
+        - Errors: `✗ Error on line X: [detailed message]`
+        - Return exit code 0 (success) or 1 (failure) for CI/CD integration
+    - **AC 6:** Errors include helpful context:
+        - JSON path to invalid field (e.g., `DailyPicks[2].title`)
+        - Expected vs actual value
+        - Schema constraint violated
+    - **Edge Cases:**
+        - File not found: Clear error with absolute path shown
+        - Schema not found: Default to `content.schema.json` in repo root; error if missing
+        - Malformed JSON: Show line/column number from parser
+        - Empty file: Treat as validation failure
+    - **Time Estimate:** 4 hours
+
+- [ ] **Story CT-1.2.2:** As a content curator, I want the validate command to check image URL accessibility so that I can catch broken images before deployment.
+    - **AC 1:** Add `--check-images` flag (optional, defaults to true)
+    - **AC 2:** For each `image_url` in content file, perform HEAD request with 5-second timeout
+    - **AC 3:** Warnings (not errors) for:
+        - HTTP 404 (image not found)
+        - Timeout (slow/unresponsive server)
+        - HTTP 403 (hotlink protection)
+        - Invalid URL (malformed after schema validation)
+    - **AC 4:** Warning format: `⚠ Warning: Image URL for '[Article Title]' returned [status code/error]`
+    - **AC 5:** Allow `--strict` flag to treat image warnings as errors (fails validation)
+    - **AC 6:** Skip image checks if `--check-images false` specified (for offline validation)
+    - **Edge Cases:**
+        - Offline network: Skip checks with warning "Network unavailable, skipping image validation"
+        - HTTPS certificate errors: Warn but don't fail (some valid sites have cert issues)
+        - Redirect chains: Follow up to 3 redirects, warn if >3
+    - **Time Estimate:** 3 hours
+
+- [ ] **Story CT-1.2.3:** As a content curator, I want quality warnings for snippet length and Daily Picks count so that I maintain content standards.
+    - **AC 1:** Quality checks (warnings only, never errors):
+        - Snippet length >200 characters: `⚠ Warning: Snippet for '[Title]' is long (X chars). Consider shortening.`
+        - Snippet length <50 characters: `⚠ Warning: Snippet for '[Title]' is short (X chars). Consider expanding.`
+        - Daily Picks count <5: `⚠ Warning: DailyPicks contains only X items. Recommend 5-10 stories for variety.`
+        - Daily Picks count >10: `⚠ Warning: DailyPicks contains X items. Recommend 5-10 stories to avoid overwhelming users.`
+    - **AC 2:** Quality warnings controlled by `--quality-checks` flag (defaults to true)
+    - **AC 3:** Summary output shows count of errors vs warnings:
+        ```
+        Validation complete: 0 errors, 3 warnings
+        ⚠ 2 snippets could be improved
+        ⚠ 1 Daily Picks count outside recommended range
+        ```
+    - **AC 4:** With `--strict` flag, quality warnings do NOT become errors (schema/URL errors only)
+    - **Time Estimate:** 2 hours
+
+---
+
+### Feature CT-03: Template Command Migration
+*Migrate New-ContentTemplate.ps1 to .NET with schema-compliant template generation and helpful placeholders.*
+
+- [ ] **Story CT-1.3.1:** As a content curator, I want a .NET-based template command that generates schema-compliant content.json scaffolding so that I can quickly create new content files.
+    - **AC 1:** Create `Commands/TemplateCommand.cs` implementing CommandLineParser verb
+    - **AC 2:** Command accepts arguments:
+        - `--vibe-count <int>` (optional, default: 1): Number of Vibe items to generate (note: schema supports only 1, warn if >1)
+        - `--picks-count <int>` (optional, default: 7): Number of Daily Picks to generate
+        - `--output <path>` (optional, default: `./content-template.json`): Output file path
+    - **AC 3:** Generated template includes all required schema fields with helpful placeholders:
+        ```json
+        {
+          "id": "REPLACE_WITH_UNIQUE_ID_1",
+          "title": "TODO: Article Title Here",
+          "snippet": "TODO: Write a 2-3 sentence summary that explains the uplifting news in a clear, engaging way. Focus on the positive impact and specific outcomes.",
+          "image_url": "https://via.placeholder.com/800x600/7986CB/FFFFFF?text=Aurora+Placeholder",
+          "article_url": "https://example.com/article-1",
+          "uplift_count": 0
+        }
+        ```
+    - **AC 4:** IDs auto-numbered sequentially: `REPLACE_WITH_UNIQUE_ID_1`, `REPLACE_WITH_UNIQUE_ID_2`, etc.
+    - **AC 5:** Output structure matches schema:
+        ```json
+        {
+          "VibeOfTheDay": { /* single vibe item */ },
+          "DailyPicks": [ /* array of pick items */ ]
+        }
+        ```
+    - **AC 6:** Success output: `✓ Template generated: content-template.json (1 Vibe + 7 Picks)`
+    - **AC 7:** Generated file must pass validation: `aurora-tools validate --file content-template.json` succeeds (warnings acceptable)
+    - **AC 8:** Match PowerShell color-coded output style with box-drawing and emoji
+    - **Edge Cases:**
+        - Output file exists: Prompt "File exists. Overwrite? (y/n)" or add `--force` flag
+        - Invalid counts (0 or negative): Error "Counts must be positive integers"
+        - Output directory doesn't exist: Create parent directories automatically
+        - Vibe count >1: Warn "Multiple Vibes requested, but only 1 is supported in schema. Using first entry only."
+    - **Time Estimate:** 3 hours
+
+- [ ] **Story CT-1.3.2:** As a content curator, I want the template command to include next steps guidance and curation resources so that I understand how to populate the template.
+    - **AC 1:** Console output includes next steps guidance (matching PowerShell script):
+        ```
+        ✓ Template generated: content-template.json (1 Vibe + 7 Picks)
+
+        Next Steps:
+        1. Edit the template file:
+           code content-template.json
+
+        2. Replace all placeholder values:
+           - Update 'id' with unique kebab-case identifiers
+           - Replace 'TODO: Article Title Here' with actual titles
+           - Write engaging 2-3 sentence snippets
+           - Set real article URLs from credible sources
+           - Update image URLs (or keep placeholder)
+
+        3. Validate the content:
+           aurora-tools validate --file content-template.json --check-images
+
+        4. Deploy to Dev environment:
+           aurora-tools deploy --file content-template.json --environment Dev
+
+        5. After testing, deploy to Production:
+           aurora-tools deploy --file content-template.json --environment Production
+        ```
+    - **AC 2:** Include content curation resources section:
+        ```
+        Content Curation Resources:
+          • r/UpliftingNews - https://reddit.com/r/UpliftingNews
+          • Good News Network - https://goodnewsnetwork.org
+          • Positive News - https://positive.news
+          • The Optimist Daily - https://optimistdaily.com
+        ```
+    - **AC 3:** Use color-coded output matching PowerShell style (green boxes, cyan info, gray secondary text)
+    - **Time Estimate:** 1 hour
+
+---
+
+### Feature CT-04: Deploy Command Migration
+*Migrate Deploy-Content.ps1 to .NET with Azure SDK, pre-deployment validation, backup creation, and environment support.*
+
+- [ ] **Story CT-1.4.1:** As a content curator, I want a .NET-based deploy command that uploads content to Azure Blob Storage so that I can publish content updates without redeploying the API.
+    - **AC 1:** Create `Commands/DeployCommand.cs` implementing CommandLineParser verb
+    - **AC 2:** Command accepts arguments:
+        - `--file <path>` (required): Path to content.json file to deploy
+        - `--environment <name>` (optional, default: "Dev"): Environment name (Dev/Production)
+        - `--skip-validation` (optional flag): Skip pre-deployment validation
+        - `--skip-backup` (optional flag): Skip backup creation
+        - `--force` (optional flag): Skip confirmation prompt (for automation)
+    - **AC 3:** Pre-deployment validation (unless `--skip-validation`):
+        - Run validate command internally
+        - Abort deployment if validation fails
+        - Display validation summary before proceeding
+    - **AC 4:** Confirmation prompt (unless `--force`):
+        ```
+        Ready to deploy to Production:
+        - File: content.json (1 Vibe + 10 Picks)
+        - Destination: staurora4tcguzr2zm32w/aurora-content/content.json
+
+        Continue? (y/n):
+        ```
+    - **AC 5:** Use Azure.Storage.Blobs SDK (already in Aurora.Api dependency):
+        - Create `BlobServiceClient` using `DefaultAzureCredential`
+        - Get container reference (`aurora-content`)
+        - Upload blob with overwrite
+    - **AC 6:** Success output:
+        ```
+        ✓ Content deployed to Production at 2026-01-01 17:40:24
+        ```
+    - **AC 7:** Return exit code 0 (success) or 1 (failure) for CI/CD integration
+    - **AC 8:** Match PowerShell color-coded output style with progress indicators (Step 1/4, Step 2/4, etc.)
+    - **Edge Cases:**
+        - Azure authentication failure: Clear error "Authentication failed. Run 'az login' and try again."
+        - Storage account not found: Error with account name shown
+        - Network timeout: Retry 3 times with exponential backoff (use Polly policy from Aurora.Api pattern)
+        - Blob container doesn't exist: Error "Container 'aurora-content' not found in storage account"
+    - **Time Estimate:** 4 hours
+
+- [ ] **Story CT-1.4.2:** As a content curator, I want the deploy command to create automatic backups before uploading so that I can rollback if needed.
+    - **AC 1:** Before upload (unless `--skip-backup`):
+        - Download current `content.json` from blob storage
+        - Save to `tools/content-management/backups/content.backup.<Environment>.YYYY-MM-DD-HHMMSS.json`
+        - Example: `backups/content.backup.Production.2026-01-01-174024.json`
+    - **AC 2:** Backup creation output:
+        ```
+        Creating backup of current content...
+        ✓ Backup saved: content.backup.Production.2026-01-01-174024.json
+        ```
+    - **AC 3:** If no existing blob found (first deployment):
+        ```
+        ℹ No existing content found; skipping backup
+        ```
+    - **AC 4:** Automatic cleanup: Keep only last 5 backups per environment
+        - Sort backups by timestamp (filename)
+        - Delete oldest backups if count >5
+        - Output: `Cleaned up 2 old backups (keeping last 5)`
+    - **AC 5:** Backup directory created automatically if doesn't exist
+    - **Edge Cases:**
+        - Disk full during backup: Error before upload, don't corrupt production
+        - Backup download fails: Warn but allow deployment with explicit confirmation
+        - Manual backups in folder: Only auto-cleanup files matching pattern `content.backup.<Env>.*.json`
+    - **Time Estimate:** 3 hours
+
+---
+
+### Feature CT-05: Rollback Command Migration
+*Migrate Rollback-Content.ps1 to .NET with interactive backup selection and re-deployment.*
+
+- [ ] **Story CT-1.5.1:** As a content curator, I want a .NET-based rollback command that restores previous content versions so that I can recover from deployment mistakes.
+    - **AC 1:** Create `Commands/RollbackCommand.cs` implementing CommandLineParser verb
+    - **AC 2:** Command accepts arguments:
+        - `--environment <name>` (optional, default: "Dev"): Environment to rollback
+        - `--backup <path>` (optional): Specific backup file to restore (skips interactive selection)
+        - `--force` (optional flag): Skip confirmation prompt
+    - **AC 3:** Interactive backup selection (if `--backup` not provided):
+        - List backups from `tools/content-management/backups/content.backup.<Environment>.*.json`
+        - Sort by timestamp descending (newest first)
+        - Display selection menu:
+            ```
+            Available backups for Production:
+            [1] content.backup.Production.2026-01-01-174024.json
+                Created: 2026-01-01 17:40:24 | Size: 12.34 KB
+            [2] content.backup.Production.2025-12-31-121530.json
+                Created: 2025-12-31 12:15:30 | Size: 11.89 KB
+            [3] content.backup.Production.2025-12-30-092211.json
+                Created: 2025-12-30 09:22:11 | Size: 12.01 KB
+
+            [0] Cancel rollback
+
+            Select backup to restore [0-3]:
+            ```
+    - **AC 4:** Confirmation prompt (unless `--force`):
+        ```
+        ⚠ Warning: This will replace current Production content with backup from 2026-01-01 17:40:24.
+        Current content will be backed up automatically before rollback.
+
+        Continue? (y/n):
+        ```
+    - **AC 5:** Rollback process:
+        - Create backup of current content (same as deploy command)
+        - Validate selected backup file before uploading
+        - Upload selected backup file to blob storage
+        - Verify upload succeeded
+    - **AC 6:** Success output:
+        ```
+        ✓ Backup created: content.backup.Production.2026-01-01-180530.json
+        ✓ Rolled back to backup from 2026-01-01 17:40:24
+        ```
+    - **AC 7:** Match PowerShell color-coded output style (yellow warning boxes, green success boxes)
+    - **Edge Cases:**
+        - No backups found: Error "No backups found for Production environment"
+        - Invalid backup file: Validate JSON before uploading (run validation internally)
+        - Backup file corrupted: Error "Backup file is not valid JSON"
+        - User cancels selection: Exit gracefully with code 0
+    - **Time Estimate:** 3 hours
+
+---
+
+### Feature CT-06: Unit Testing & Documentation
+*Comprehensive unit tests for all commands and testing documentation.*
+
+- [ ] **Story CT-1.6.1:** As a developer, I want unit tests for the validate command so that I can confidently refactor validation logic.
+    - **AC 1:** Create `src/Aurora.ContentTools.Tests/Commands/ValidateCommandTests.cs`
+    - **AC 2:** Test scenarios (minimum 8 tests):
+        - Valid content file passes validation
+        - Missing required field fails with specific error
+        - Invalid URL format fails validation
+        - Negative uplift_count fails validation
+        - Long snippet (>200 chars) shows warning
+        - Short snippet (<50 chars) shows warning
+        - Daily Picks count <5 shows warning
+        - Malformed JSON shows line number error
+    - **AC 3:** Use test fixtures in `src/Aurora.ContentTools.Tests/Fixtures/`:
+        - `valid-content.json` (passes all checks)
+        - `invalid-schema.json` (schema violations)
+        - `quality-warnings.json` (triggers quality warnings)
+    - **AC 4:** Mock `HttpClient` for image URL checks (use pattern from Aurora.Client.Core.Tests)
+    - **AC 5:** All tests pass; zero warnings
+    - **Time Estimate:** 4 hours
+
+- [ ] **Story CT-1.6.2:** As a developer, I want unit tests for the template, deploy, and rollback commands so that I can verify core functionality.
+    - **AC 1:** Create test files:
+        - `TemplateCommandTests.cs` (5+ tests)
+        - `DeployCommandTests.cs` (6+ tests)
+        - `RollbackCommandTests.cs` (5+ tests)
+    - **AC 2:** Template tests:
+        - Default parameters generate 1 Vibe + 7 Picks
+        - Custom counts work correctly
+        - Generated template passes validation
+        - Output file created at specified path
+        - Auto-numbered IDs are sequential
+    - **AC 3:** Deploy tests:
+        - Validation runs before deployment
+        - Backup created before upload
+        - Azure SDK BlobServiceClient called correctly (mocked)
+        - Deployment fails if validation fails
+        - Skip flags work correctly
+        - Old backups cleaned up (>5)
+    - **AC 4:** Rollback tests:
+        - Backup list filtered by environment
+        - Selected backup uploaded correctly
+        - Current content backed up before rollback
+        - Invalid backup file rejected
+        - No backups found shows error
+    - **AC 5:** Mock Azure SDK clients using Moq (pattern: create mock `BlobContainerClient`)
+    - **AC 6:** All 16+ tests pass; zero warnings
+    - **Time Estimate:** 6 hours
+
+- [ ] **Story CT-1.6.3:** As a developer, I want testing documentation that explains how to write and run content tools tests so that future contributors can maintain quality.
+    - **AC 1:** Create `docs/testing/CONTENT_TOOLS_TESTING.md` with sections:
+        - **Overview:** Purpose of Aurora.ContentTools.Tests project
+        - **Running Tests:** `dotnet test` command with filtering examples
+        - **Test Structure:** Fixtures, mocking patterns, naming conventions
+        - **Adding New Tests:** Step-by-step guide for new command tests
+        - **Mocking Azure SDK:** Example of BlobServiceClient mocking pattern
+        - **CI Integration:** How tests run in GitHub Actions
+    - **AC 2:** Include example test with detailed annotations:
+        ```csharp
+        [Fact]
+        public async Task ValidateCommand_ValidContent_ReturnsSuccess()
+        {
+            // Arrange: Set up test fixture and expected behavior
+            var contentPath = "Fixtures/valid-content.json";
+            var command = new ValidateCommand { FilePath = contentPath };
+
+            // Act: Execute the command
+            var result = await command.ExecuteAsync();
+
+            // Assert: Verify expected outcome
+            Assert.Equal(0, result.ExitCode);
+            Assert.Contains("✓", result.Output);
+        }
+        ```
+    - **AC 3:** Document test data management:
+        - Where to add fixtures (`Aurora.ContentTools.Tests/Fixtures/`)
+        - How to mark files as "Copy to Output Directory"
+        - When to use embedded resources vs file fixtures
+    - **AC 4:** Link to existing Aurora.Client.Core.Tests and Aurora.Api.Tests for cross-reference
+    - **Time Estimate:** 2 hours
+
+---
+
+## Milestone V-1: Integration Testing Infrastructure
+
+**Objective:** Establish HTTP-layer test coverage for Azure Functions endpoints to verify end-to-end request/response behavior, middleware pipeline, and runtime interactions.
+
+**Success Criteria:**
+- ~8-10 integration tests passing in CI for GetDailyContent and ReactToContent endpoints
+- Azurite service running in GitHub Actions workflow (npm-based, no Docker required)
+- Test-specific fixtures isolated from production samples
+- Testing documentation created in docs/testing/
+- Zero-warning build maintained
+
+**Estimated Effort:** 1-2 weeks
+
+**Priority:** MEDIUM (4/10 pain, future confidence building, no bugs encountered yet)
+
+---
+
+### Feature V-1.01: Integration Test Project Setup & Azurite Service
+*Establish test project infrastructure with Azure Functions in-process hosting and Azurite emulator.*
+
+- [ ] **Story V-1.1.1:** As a developer, I want an integration test project with Azure Functions hosting so that I can test HTTP endpoints without deploying to Azure.
+    - **AC 1:** Create `src/Aurora.Api.IntegrationTests/Aurora.Api.IntegrationTests.csproj` (xUnit, .NET 9)
+    - **AC 2:** Add NuGet packages:
+        - `Microsoft.AspNetCore.Mvc.Testing` (for WebApplicationFactory pattern)
+        - `Microsoft.Azure.Functions.Worker.Extensions.Http` (for HTTP trigger support)
+        - `Azure.Storage.Blobs` and `Azure.Data.Tables` (for Azurite interaction)
+        - `xUnit` and `FluentAssertions` (testing frameworks)
+    - **AC 3:** Create `TestWebApplicationFactory.cs` that:
+        - Hosts Aurora.Api functions in-process
+        - Configures Azurite connection strings (`UseDevelopmentStorage=true`)
+        - Overrides configuration for test environment
+    - **AC 4:** Create `IntegrationTestBase.cs` base class:
+        - Manages test server lifecycle
+        - Provides `HttpClient` for endpoint calls
+        - Provides `BlobServiceClient` and `TableServiceClient` for test data setup
+        - Implements `IAsyncLifetime` for setup/teardown
+    - **AC 5:** Add to `Project-Aurora.sln` under `tests/` solution folder
+    - **AC 6:** Verify empty test project builds with zero warnings
+    - **Edge Cases:**
+        - In-process hosting limitations: Document scenarios that require deployed testing
+        - Port conflicts: Use dynamic port allocation for test server
+    - **Time Estimate:** 4 hours
+
+- [ ] **Story V-1.1.2:** As a developer, I want Azurite installed and running in my local development environment so that integration tests can access emulated Azure Storage.
+    - **AC 1:** Document Azurite installation in `docs/testing/INTEGRATION_TESTING.md`:
+        ```bash
+        # Install Azurite via npm (global)
+        npm install -g azurite
+
+        # Start Azurite (runs until stopped)
+        azurite --silent --location ./azurite-data --debug ./azurite-debug.log
+        ```
+    - **AC 2:** Add `azurite-data/` and `azurite-debug.log` to `.gitignore`
+    - **AC 3:** Create `tools/start-azurite.ps1` helper script:
+        ```powershell
+        # Check if Azurite is running
+        # If not, start in background
+        # Output: "Azurite started" or "Azurite already running"
+        ```
+    - **AC 4:** Integration test setup checks Azurite availability:
+        - Attempt to connect to `http://127.0.0.1:10000` (Azurite blob endpoint)
+        - If unavailable, skip tests with clear message: "Azurite not running. Start with: azurite"
+    - **AC 5:** Document Windows, macOS, Linux installation differences
+    - **Edge Cases:**
+        - Azurite port conflicts (10000-10002): Document port configuration options
+        - npm not installed: Provide download link for Node.js in error message
+        - Azurite version compatibility: Specify minimum version (e.g., 3.30.0+)
+    - **Time Estimate:** 2 hours
+
+- [ ] **Story V-1.1.3:** As a developer, I want Azurite running in GitHub Actions CI so that integration tests execute automatically on every push.
+    - **AC 1:** Update `.github/workflows/dotnet.yml` to install and start Azurite:
+        ```yaml
+        - name: Install Azurite
+          run: npm install -g azurite
+
+        - name: Start Azurite
+          run: azurite --silent --location ./azurite-data &
+
+        - name: Wait for Azurite
+          run: npx wait-on http://127.0.0.1:10000
+        ```
+    - **AC 2:** Add integration test execution step:
+        ```yaml
+        - name: Run Integration Tests
+          run: dotnet test src/Aurora.Api.IntegrationTests --no-build --verbosity normal
+        ```
+    - **AC 3:** Ensure Azurite starts before integration tests run (use `wait-on` npm package)
+    - **AC 4:** Verify workflow succeeds with integration tests passing
+    - **Edge Cases:**
+        - Azurite startup timeout: Allow 10 seconds for startup, fail with timeout error if unavailable
+        - Port already in use (CI runner collision): Document retry mechanism or dynamic port allocation
+        - Workflow fails on Windows/Linux/macOS matrix: Test across all platforms if multi-platform CI configured
+    - **Time Estimate:** 2 hours
+
+- [ ] **Story V-1.1.4:** As a developer, I want test-specific content fixtures so that integration tests are isolated from production samples.
+    - **AC 1:** Create `src/Aurora.Api.IntegrationTests/Fixtures/` directory
+    - **AC 2:** Create test fixtures:
+        - `test-content.json`: Minimal valid content (1 Vibe + 3 Picks) for success scenarios
+        - `invalid-content.json`: Malformed JSON for error scenario testing
+        - `empty-content.json`: Empty object for edge case testing
+    - **AC 3:** Create `TestDataSeeder.cs` helper class:
+        - Method `SeedBlobStorageAsync()`: Uploads test-content.json to Azurite
+        - Method `SeedTableStorageAsync()`: Creates test reaction entities
+        - Method `CleanupAsync()`: Deletes all test data after test run
+    - **AC 4:** `IntegrationTestBase` calls seeder in setup/teardown:
+        ```csharp
+        public async Task InitializeAsync()
+        {
+            await TestDataSeeder.SeedBlobStorageAsync(BlobServiceClient);
+            await TestDataSeeder.SeedTableStorageAsync(TableServiceClient);
+        }
+
+        public async Task DisposeAsync()
+        {
+            await TestDataSeeder.CleanupAsync(BlobServiceClient, TableServiceClient);
+        }
+        ```
+    - **AC 5:** All fixtures marked as "Copy to Output Directory" in .csproj
+    - **Edge Cases:**
+        - Seeding fails mid-test: Cleanup runs even if test throws exception
+        - Multiple tests run in parallel: Each test uses unique container/table names (append random GUID)
+    - **Time Estimate:** 3 hours
+
+---
+
+### Feature V-1.02: GetDailyContent Integration Tests
+*Comprehensive HTTP-layer tests for content delivery endpoint covering success, error, and retry scenarios.*
+
+- [ ] **Story V-1.2.1:** As a developer, I want integration tests for GetDailyContent success scenarios so that I can verify correct content delivery.
+    - **AC 1:** Create `src/Aurora.Api.IntegrationTests/GetDailyContentTests.cs`
+    - **AC 2:** Test: `GetDailyContent_ValidBlob_Returns200WithContent`
+        - Seed test-content.json to Azurite
+        - Call `GET /api/GetDailyContent`
+        - Assert HTTP 200 status
+        - Assert Content-Type: application/json
+        - Assert response body deserializes to ContentFeed
+        - Assert Vibe and Picks counts match seeded data
+    - **AC 3:** Test: `GetDailyContent_ColdStart_ReturnsWithinTimeout`
+        - First call to endpoint (cold start scenario)
+        - Assert response time <5 seconds (generous timeout for Functions cold start)
+        - Note: This is functional, not performance benchmark (defer strict perf to separate feature)
+    - **AC 4:** Use FluentAssertions for readable assertions:
+        ```csharp
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        content.VibeOfTheDay.Should().NotBeNull();
+        content.DailyPicks.Should().HaveCount(3);
+        ```
+    - **Time Estimate:** 3 hours
+
+- [ ] **Story V-1.2.2:** As a developer, I want integration tests for GetDailyContent error scenarios so that I can verify correct error handling.
+    - **AC 1:** Test: `GetDailyContent_BlobNotFound_Returns404`
+        - Do NOT seed blob to Azurite (empty storage)
+        - Call `GET /api/GetDailyContent`
+        - Assert HTTP 404 status
+        - Assert response body contains "Content not yet published" message
+    - **AC 2:** Test: `GetDailyContent_InvalidConnectionString_Returns500`
+        - Configure function with invalid connection string (override in test factory)
+        - Call endpoint
+        - Assert HTTP 500 status
+        - Assert response body contains "Storage configuration error" message
+    - **AC 3:** Test: `GetDailyContent_MalformedJson_Returns500`
+        - Seed invalid-content.json (malformed JSON) to Azurite
+        - Call endpoint
+        - Assert HTTP 500 status
+        - Assert response indicates deserialization failure
+    - **AC 4:** All error tests verify correct error logging (check logs if accessible in test environment)
+    - **Time Estimate:** 3 hours
+
+- [ ] **Story V-1.2.3:** As a developer, I want integration tests for GetDailyContent retry scenarios so that I can verify Polly policy execution.
+    - **AC 1:** Test: `GetDailyContent_TransientFailure_RetriesAndSucceeds`
+        - Use fault injection or Azurite restart to simulate transient failure
+        - Verify Polly retries 3 times (check logs or custom telemetry)
+        - Assert eventual success (HTTP 200)
+        - Note: This may require custom middleware or Polly callback to verify retry attempts
+    - **AC 2:** Test: `GetDailyContent_PermanentFailure_RetriesExhausted_Returns500`
+        - Simulate permanent failure (e.g., Azurite stopped, not restarted)
+        - Verify 3 retry attempts
+        - Assert HTTP 500 after retries exhausted
+    - **AC 3:** Document retry testing limitations: "Integration tests verify retry logic executes; timing validation deferred to load testing"
+    - **Edge Cases:**
+        - Azurite restart timing: May need delays or polling to simulate transient failure accurately
+        - Retry timing verification: Integration tests focus on functional correctness, not precise timing
+    - **Time Estimate:** 4 hours
+
+---
+
+### Feature V-1.03: ReactToContent Integration Tests
+*Comprehensive HTTP-layer tests for reaction submission endpoint covering creation, increment, concurrency, and failure scenarios.*
+
+- [ ] **Story V-1.3.1:** As a developer, I want integration tests for ReactToContent success scenarios so that I can verify correct reaction persistence.
+    - **AC 1:** Create `src/Aurora.Api.IntegrationTests/ReactToContentTests.cs`
+    - **AC 2:** Test: `ReactToContent_NewReaction_CreatesEntityWithCount1`
+        - Do NOT seed reaction entity (fresh start)
+        - Call `POST /api/articles/{id}/react`
+        - Assert HTTP 200 status
+        - Assert response body contains count: 1
+        - Verify entity exists in Table Storage with count=1
+    - **AC 3:** Test: `ReactToContent_ExistingReaction_IncrementsCount`
+        - Seed reaction entity with count=10
+        - Call `POST /api/articles/{id}/react`
+        - Assert HTTP 200 status
+        - Assert response body contains count: 11
+        - Verify Table Storage entity updated to count=11
+    - **AC 4:** Test: `ReactToContent_MultipleSequentialCalls_IncrementsCorrectly`
+        - Seed reaction entity with count=5
+        - Call endpoint 3 times sequentially
+        - Assert final count=8
+        - Verify all 3 responses show incrementing values (6, 7, 8)
+    - **Time Estimate:** 3 hours
+
+- [ ] **Story V-1.3.2:** As a developer, I want integration tests for ReactToContent concurrency scenarios so that I can verify atomic operations.
+    - **AC 1:** Test: `ReactToContent_ConcurrentCalls_AllIncrementsApplied`
+        - Seed reaction entity with count=0
+        - Make 10 parallel calls using `Task.WhenAll()`
+        - Assert final count=10 in Table Storage
+        - Verify no increments were lost due to race conditions
+    - **AC 2:** Note: Azure Table Storage uses optimistic concurrency (ETags); test verifies Azure SDK handles retries correctly
+    - **AC 3:** Document concurrency testing limitations: "Integration tests verify functional correctness; load testing with 100+ concurrent users deferred to separate performance milestone"
+    - **Edge Cases:**
+        - Concurrency conflicts: Azure SDK retries automatically; test verifies all increments eventually succeed
+        - Timing variations: Test may take 2-5 seconds due to retries; use generous timeout
+    - **Time Estimate:** 3 hours
+
+- [ ] **Story V-1.3.3:** As a developer, I want integration tests for ReactToContent error scenarios so that I can verify correct error handling.
+    - **AC 1:** Test: `ReactToContent_InvalidArticleId_Returns400`
+        - Call endpoint with malformed ID (e.g., empty string, invalid format)
+        - Assert HTTP 400 status (if validation implemented) or HTTP 500 (if not)
+        - Document current behavior
+    - **AC 2:** Test: `ReactToContent_TableStorageUnavailable_Returns500`
+        - Stop Azurite or configure invalid connection string
+        - Call endpoint
+        - Assert HTTP 500 status
+        - Assert error message indicates storage failure
+    - **AC 3:** Test: `ReactToContent_MissingArticleId_Returns400Or404`
+        - Call endpoint without article ID in route (if possible)
+        - Assert appropriate error response
+    - **Time Estimate:** 2 hours
+
+---
+
+### Feature V-1.05: Testing Documentation
+*Comprehensive documentation for integration testing architecture, setup, and best practices.*
+
+- [ ] **Story V-1.5.1:** As a developer, I want comprehensive integration testing documentation so that I can understand the test infrastructure and add new tests confidently.
+    - **AC 1:** Create `docs/testing/INTEGRATION_TESTING.md` with sections:
+        - **Overview:** Purpose and scope of integration tests vs unit tests
+        - **Architecture:** How Aurora.Api.IntegrationTests hosts functions in-process
+        - **Prerequisites:** Azurite installation, Node.js/npm, .NET 9 SDK
+        - **Running Tests Locally:** Step-by-step commands with screenshots/examples
+        - **Running Tests in CI:** How GitHub Actions workflow executes tests
+        - **Adding New Tests:** Template and best practices for new endpoint tests
+        - **Test Data Management:** Using TestDataSeeder, fixtures, cleanup strategies
+        - **Troubleshooting:** Common errors and solutions
+    - **AC 2:** Include architecture diagram showing test flow:
+        ```
+        Integration Test → HttpClient → TestWebApplicationFactory → Aurora.Api Function → Azurite
+        ```
+    - **AC 3:** Document what integration tests DO cover vs DO NOT cover:
+        - ✅ DO: HTTP request/response, middleware, actual storage operations, retry logic
+        - ❌ DO NOT: Load testing, performance benchmarks (separate milestone), security testing
+    - **AC 4:** Provide example test with detailed annotations (similar to CT-1.6.3 pattern)
+    - **AC 5:** Link to official Microsoft docs for `WebApplicationFactory` and Azurite
+    - **Time Estimate:** 3 hours
+
+---
+
+**Milestones Last Updated:** 2026-01-01
