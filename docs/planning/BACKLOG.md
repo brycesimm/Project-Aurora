@@ -2,22 +2,9 @@
 
 This document tracks the features, user stories, and tasks for Project Aurora. It is organized by milestones defined in `PLANNING.md`.
 
-**Note:** Completed milestones have been archived to keep this document focused on active and planned work. See [Completed Milestones](#completed-milestones-archive) below for navigation to historical work.
+**Completed Milestones:** See [backlog/completed/](backlog/completed/) for historical milestones (A, B, C, D, E, V-0).
 
----
-
-## Completed Milestones (Archive)
-
-The following milestones have been completed and archived for reference:
-
-| Milestone | Status | Completion Date | Archive Location |
-|-----------|--------|-----------------|------------------|
-| **Milestone A:** MAUI Onboarding + Shell with Mock Data | ✅ Complete | 2025-12-07 | [backlog/completed/milestone-a-maui-onboarding.md](backlog/completed/milestone-a-maui-onboarding.md) |
-| **Milestone B:** Backend/API + Curation Workflow | ✅ Complete | 2025-12-12 | [backlog/completed/milestone-b-backend-api.md](backlog/completed/milestone-b-backend-api.md) |
-| **Milestone C:** Live Data Integration & Core Features | ✅ Complete | 2025-12-21 | [backlog/completed/milestone-c-live-data.md](backlog/completed/milestone-c-live-data.md) |
-| **Milestone D:** Robust Testing Framework & Service Testability | ✅ Complete | 2025-12-23 | [backlog/completed/milestone-d-testing-framework.md](backlog/completed/milestone-d-testing-framework.md) |
-| **Milestone E:** Core Interactions & Polish | ✅ Complete | 2025-12-25 | [backlog/completed/milestone-e-core-interactions.md](backlog/completed/milestone-e-core-interactions.md) |
-| **Milestone V-0:** Beta Readiness | ✅ Complete | 2025-12-28 | [backlog/completed/milestone-v-0-beta-readiness.md](backlog/completed/milestone-v-0-beta-readiness.md) |
+**Planned Milestones:** See [backlog/planned/](backlog/planned/) for future milestones not yet scheduled.
 
 ---
 
