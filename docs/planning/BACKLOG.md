@@ -22,7 +22,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
 - ✅ Improvement backlog documented with prioritization (Critical/High/Medium/Low)
 - ✅ Go/No-Go decision made: Continue refining Aurora OR Pivot substantially
 
-**Platform Scope:** Android-only (iOS explicitly deferred pending Mac/device acquisition)
+**Platform Scope:** Android-only for Beta Round 1 (iOS hardware acquired 2026-01-02; iOS testing enabled after setup, estimated 1-2 weeks)
 
 **Testing Philosophy:** This is early-stage beta testing (alpha quality) focused on discovering critical gaps and validating core value proposition with controlled audience before broader distribution.
 
@@ -336,7 +336,7 @@ This document tracks the features, user stories, and tasks for Project Aurora. I
     - **Time Estimate:** Variable (target ≤45 min, could be 30-60 min for first update)
 
 - [~] **Story V-2.4.3:** As a project owner, I want to synthesize self-validation findings and make Go/No-Go decision for Beta Round 2.
-    - **NOTE:** External tester recruitment (AC 3) is OPTIONAL and DEFERRED for Beta Round 1. Self-validation alone is sufficient for Go/No-Go decision (2026-01-04). iOS hardware investment ($1,000+) deferred until Aurora proves value proposition on Android first.
+    - **NOTE:** External tester recruitment (AC 3) is OPTIONAL and DEFERRED for Beta Round 1. Self-validation alone is sufficient for Go/No-Go decision (2026-01-04). iOS hardware (Mac Mini M4, iPhone 13) acquired 2026-01-02 at favorable pricing; iOS testing will be enabled after hardware arrival and setup (1-2 weeks).
     - **Status:** In Progress (AC 1-2, 4-5 required; AC 3 optional if testers become available)
     - **Recruitment Guide:** See `docs/beta/TESTER_RECRUITMENT_GUIDE.md` for complete onboarding workflow (if needed in future)
     - **AC 1:** Create `docs/beta/BETA_ROUND_1_FINDINGS.md` with the following sections:

@@ -260,6 +260,7 @@
 | 2025-12-27 | Implemented Polly retry policy for blob storage | Added exponential backoff with jitter (3 retries, 1s/2s/4s delays) to prevent transient blob storage failures from affecting users. |
 | 2025-12-28 | PowerShell chosen for content management tooling | Selected PowerShell over .NET console apps for V-0 to minimize dependencies (Windows-native, no install required); deferred .NET migration to CT-1 based on beta workflow feedback. |
 | 2025-12-29 | Milestone V-2 defined for Phase 5 validation | Created structured beta testing milestone with 10 stories across feedback infrastructure, Google Play setup, and self-validation. Scope: Android-only, self + 1-4 trusted testers, 2-week timeline. Package name: `com.projectaurora.app` (permanent), App Title: "Aurora - Positive News" (changeable). Using "beta" terminology for consistency with Azure naming despite alpha-quality testing. Go/No-Go thresholds: ≥50% first-app-opened, ≥3 resonant stories, positive sentiment, ≤45 min curation time. |
+| 2026-01-02 | Acquired iOS testing hardware (Mac Mini M4, iPhone 13) | Favorable pricing on refurbished hardware made iOS support economically viable; enables cross-platform testing and broader tester recruitment beyond Android-only limitation. Hardware expected to arrive within 1-2 weeks. |
 
 ---
 
