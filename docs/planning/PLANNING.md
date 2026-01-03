@@ -229,7 +229,7 @@ Completed milestones retain their original names for historical consistency. Fut
 - **Milestone CT-1 (Future Enhancement): Content Management Tooling Refactor**
   *Migrate PowerShell-based content management scripts to .NET console applications for better development experience, testability, and solution integration.*
   - **Objective:** Eliminate PowerShell dependency for content management workflows; provide strongly-typed, unit-tested tooling that integrates with the Aurora solution and CI/CD pipelines.
-  - **Current State:** PowerShell scripts (Validate-Content.ps1, Deploy-Content.ps1, Rollback-Content.ps1, New-ContentTemplate.ps1) functional but lack IDE support, unit testing, and cross-platform consistency.
+  - **Current State:** PowerShell scripts (Validate-Content.ps1, Deploy-Content.ps1, Rollback-Content.ps1, New-ContentTemplate.ps1) functional but lack IDE support, unit testing, cross-platform consistency, and image URL validation.
   - **Proposed Architecture:**
     - **Aurora.ContentTools** (.NET 9 console application) - Unified CLI for all content management commands
     - **Aurora.ContentTools.Tests** (xUnit test project) - Unit tests for validation, deployment, template generation logic
@@ -237,12 +237,13 @@ Completed milestones retain their original names for historical consistency. Fut
   - **Scope:**
     1. Create `Aurora.ContentTools` console application with CommandLineParser for CLI interface.
     2. Migrate validation logic from PowerShell to `ValidateCommand.cs` (reuse schema from `Aurora.Shared`).
-    3. Migrate deployment logic from PowerShell to `DeployCommand.cs` (share Azure SDK with `Aurora.Api`).
-    4. Migrate rollback logic to `RollbackCommand.cs` with interactive backup selection.
-    5. Migrate template generation logic to `TemplateCommand.cs`.
-    6. Create comprehensive unit tests for all commands (validation rules, deployment workflow, error handling).
-    7. Configure tool as .NET global tool with NuGet packaging.
-    8. Update documentation with migration guide and deprecation notices for PowerShell scripts.
+    3. **Add image URL validation** (HTTP HEAD requests with timeout, 404/403/timeout detection, default on with `--skip-image-check` flag).
+    4. Migrate deployment logic from PowerShell to `DeployCommand.cs` (share Azure SDK with `Aurora.Api`).
+    5. Migrate rollback logic to `RollbackCommand.cs` with interactive backup selection.
+    6. Migrate template generation logic to `TemplateCommand.cs`.
+    7. Create comprehensive unit tests for all commands (validation rules, deployment workflow, error handling, image URL checking).
+    8. Configure tool as .NET global tool with NuGet packaging.
+    9. Update documentation with migration guide and deprecation notices for PowerShell scripts.
   - **Benefits:**
     - Full Visual Studio IntelliSense, debugging, and refactoring support
     - Unit testing with xUnit (TDD-enabled workflow)
