@@ -167,17 +167,17 @@ Completed milestones retain their original names for historical consistency. Fut
     - **Feature V-2.1:** Feedback Collection Infrastructure (3 stories)
       1. ✅ Create baseline survey (Google Form) with 14 questions (expanded) covering contact info, social media context, app usage patterns, positivity definition, and value proposition validation
       2. ✅ Create weekly feedback survey (Google Form) with 12 questions (expanded) tracking usage, sentiment, friction, and continuation intent
-      3. ⏳ Integrate "Share Feedback" button in app (opens weekly survey in browser via Chrome Custom Tabs)
+      3. ✅ Integrate "Share Feedback" button in app (opens weekly survey in browser via Chrome Custom Tabs)
     - **Feature V-2.2:** Beta Tester Onboarding Documentation (2 stories)
-      4. ⏳ Write Beta Tester Guide (warm, conversational tone; 300-500 words; PDF export for email distribution)
-      5. ⏳ Document AAB signing and Google Play distribution process (captures lessons learned from first deployment)
+      4. ✅ Write Beta Tester Guide (warm, conversational tone; 300-500 words; PDF export for email distribution)
+      5. ✅ Document AAB signing and Google Play distribution process (captures lessons learned from first deployment)
     - **Feature V-2.3:** Google Play Internal Testing Setup (2 stories)
-      6. ⏳ Create Google Play Console Developer account ($25 one-time fee; execute early to mitigate 24-48hr approval wait)
-      7. ⏳ Deploy Aurora to Internal Testing track (AAB upload, opt-in URL generation, self-verification on S24 Ultra)
+      6. ✅ Create Google Play Console Developer account ($25 one-time fee; execute early to mitigate 24-48hr approval wait)
+      7. ✅ Deploy Aurora to Internal Testing track (AAB upload, opt-in URL generation, self-verification on S24 Ultra)
     - **Feature V-2.4:** Self-Validation & External Tester Execution (3 stories)
-      8. ⏳ Execute 7-14 day self-validation period (end-of-week recap tracking, weekly survey submission, document findings)
-      9. ⏳ Curate and deploy at least one full content update (1 Vibe + 10 Picks; track total curation time; ≤45 min target)
-      10. ⏳ Synthesize findings, recruit 1-4 external testers (if self-validation positive), make Go/No-Go decision
+      8. ✅ Execute 7-14 day self-validation period (end-of-week recap tracking, weekly survey submission, document findings)
+      9. ✅ Curate and deploy at least one full content update (1 Vibe + 10 Picks; track total curation time; ≤45 min target)
+      10. ✅ Synthesize findings, recruit 1-4 external testers (if self-validation positive), make Go/No-Go decision
   - **Success Criteria:**
     - ✅ Google Forms operational and integrated into app
     - ✅ Google Play Internal Testing track deployed
@@ -191,20 +191,11 @@ Completed milestones retain their original names for historical consistency. Fut
     - Curation time ≤45 min OR clear automation path (sustainability)
     - No critical bugs (app stability)
 
-- **Milestone V-3 (Planned): Beta UX Improvements**
-  *Address critical UX friction points identified in Beta Round 1 self-validation before expanding external testing.*
-  - **Objective:** Implement 3 High-Priority improvements (pull-to-refresh, Uplift state persistence, bottom navigation bar) to prevent negative first impressions and establish foundation for future features.
-  - **Priority:** HIGH - Recommended before Beta Round 2 expansion
-  - **Rationale:** Beta Round 1 self-validation identified UX gaps ("missing refresh," "Uplift doesn't track state," "single-page feels incomplete") that degrade user experience. External Android tester already recruited; iOS hardware arriving in 1-2 weeks.
-  - **Scope:** Pull-to-refresh functionality, local Uplift state tracking, bottom navigation with placeholder tabs (Home/Discover/Profile).
-  - **Reference:** See `docs/planning/backlog/planned/POST-BETA-IMPROVEMENTS.md` items #1-3 for detailed requirements.
-  - **Estimated Effort:** 9-12 hours (2-3 development sessions)
-
 - **Milestone V-4 (Planned): Content Scalability - Dynamic Feed Architecture**
   *Migrate from static JSON files to database-backed API with pagination to resolve content curation bottleneck.*
+  - **Execution Priority:** 🔴 **NEXT UP** (Execution Order: 1st)
   - **Objective:** Enable unlimited story storage, "Load More" pagination, and decouple content updates from app deployments.
-  - **Priority:** HIGH - Critical for sustainable daily curation
-  - **Rationale:** Manual curation of 11 fresh stories daily is unsustainable (45 min/session, 7x/week). Current static JSON supports exactly 11 stories; users consume all content in 2 sessions with nothing new. Database-backed API allows curator to add 20-30 stories 2-3x/week instead of 11 stories 7x/week.
+  - **Rationale:** **Curator sustainability is the critical blocker.** Manual curation of 11 fresh stories daily is unsustainable (45 min/session, 7x/week). Current static JSON supports exactly 11 stories; users consume all content in 2 sessions with nothing new. Without resolving this bottleneck, content quality and consistency will degrade regardless of UX polish. Database-backed API allows curator to add 20-30 stories 2-3x/week instead of 11 stories 7x/week.
   - **Scope:**
     - Database migration (Azure Table Storage or Cosmos DB for story persistence)
     - API pagination endpoints (`/api/content?skip=0&take=10`)
@@ -214,7 +205,24 @@ Completed milestones retain their original names for historical consistency. Fut
   - **Reference:** See `docs/planning/backlog/planned/POST-BETA-IMPROVEMENTS.md` for detailed scalability analysis.
   - **Estimated Effort:** 1-2 weeks
 
-- **Milestone V-1 (Future Enhancement): Integration Testing Infrastructure**
+- **Milestone CT-1 (Planned): Content Management Tooling Refactor**
+  *Migrate PowerShell-based content management scripts to .NET console applications for better development experience, testability, and solution integration.*
+  - **Execution Priority:** 🟡 **QUEUED** (Execution Order: 2nd, after V-4)
+  - **Objective:** Eliminate PowerShell dependency for content management workflows; provide strongly-typed, unit-tested tooling that integrates with the Aurora solution and CI/CD pipelines. Image URL validation becomes default behavior.
+  - **Rationale:** After V-4 database migration, improved tooling with image validation, schema checking, and deployment automation will be essential for managing larger content volumes efficiently.
+  - **Estimated Effort:** 2-3 weeks
+  - **Reference:** See full milestone definition below for detailed scope
+
+- **Milestone V-3 (Planned): Beta UX Improvements**
+  *Address critical UX friction points identified in Beta Round 1 self-validation before expanding external testing.*
+  - **Execution Priority:** 🟢 **QUEUED** (Execution Order: 3rd, after CT-1)
+  - **Objective:** Implement 3 High-Priority improvements (pull-to-refresh, Uplift state persistence, bottom navigation bar) to prevent negative first impressions and establish foundation for future features.
+  - **Rationale:** Beta Round 1 self-validation identified UX gaps ("missing refresh," "Uplift doesn't track state," "single-page feels incomplete") that degrade user experience. However, external tester feedback is still minimal (1 tester just started). UX improvements have higher ROI after curator sustainability and tooling are resolved.
+  - **Scope:** Pull-to-refresh functionality, local Uplift state tracking, bottom navigation with placeholder tabs (Home/Discover/Profile).
+  - **Reference:** See `docs/planning/backlog/planned/POST-BETA-IMPROVEMENTS.md` items #1-3 for detailed requirements.
+  - **Estimated Effort:** 9-12 hours (2-3 development sessions)
+
+- **Milestone V-1 (Deferred): Integration Testing Infrastructure**
   *Establish comprehensive HTTP-layer test coverage for Azure Functions API to complement existing unit tests.*
   - **Objective:** Verify end-to-end request/response behavior, middleware pipeline, and runtime interactions that unit tests cannot cover (HTTP trigger binding, CORS headers, actual storage operations, Polly retry execution).
   - **Priority:** Deferred until post-beta (V-2 completion); not blocking Phase 5 validation.
@@ -226,8 +234,9 @@ Completed milestones retain their original names for historical consistency. Fut
     5. Document integration testing architecture and best practices (`docs/testing/INTEGRATION_TESTING.md`).
   - **Success Criteria:** ~8-10 integration tests passing in CI, clear documentation for adding future endpoint tests, maintained zero-warning build discipline.
 
-- **Milestone CT-1 (Future Enhancement): Content Management Tooling Refactor**
+- **Milestone CT-1 (Planned): Content Management Tooling Refactor**
   *Migrate PowerShell-based content management scripts to .NET console applications for better development experience, testability, and solution integration.*
+  - **Execution Priority:** 🟡 **QUEUED** (Execution Order: 2nd, after V-4)
   - **Objective:** Eliminate PowerShell dependency for content management workflows; provide strongly-typed, unit-tested tooling that integrates with the Aurora solution and CI/CD pipelines.
   - **Current State:** PowerShell scripts (Validate-Content.ps1, Deploy-Content.ps1, Rollback-Content.ps1, New-ContentTemplate.ps1) functional but lack IDE support, unit testing, cross-platform consistency, and image URL validation.
   - **Proposed Architecture:**
@@ -257,7 +266,6 @@ Completed milestones retain their original names for historical consistency. Fut
     - Zero-warning build maintained
     - Installation via `dotnet tool install` documented and verified
     - PowerShell scripts deprecated with migration guide in README.md
-  - **Priority:** Low (defer until post-beta or when adding new content management features)
   - **Estimated Effort:** 2-3 weeks
 
 ### Phase 5: Validation Strategy
