@@ -163,7 +163,7 @@ Completed milestones retain their original names for historical consistency. Fut
     6. **(Completed)** PowerShell deployment script (`Deploy-Content.ps1`) with rollback capability and backup management.
     7. **(Completed)** PowerShell template generator (`New-ContentTemplate.ps1`) for content.json scaffolding.
 
-- **Milestone V-2 (In Progress as of 2025-12-29): Beta Testing Round 1 (Early Alpha Quality)**
+- **Milestone V-2 (Completed as of 2026-01-03): Beta Testing Round 1 (Early Alpha Quality)**
   *Establish beta testing infrastructure and execute first validation round (self-testing + 1-4 trusted testers) to identify improvements and validate core value proposition.*
   - **Objective:** Enable structured feedback collection, deploy to Google Play Internal Testing, and validate Aurora's impact through personal use before broader distribution.
   - **Target Timeline:** 2 weeks
