@@ -53,6 +53,58 @@ This journal tracks recent development sessions, key decisions, and project traj
 
 ## 📅 Recent Sessions (Last 7)
 
+### 2026-01-02: Story V-2.4.2 Complete - Second Content Update + iOS Hardware Acquisition
+
+**Summary:**
+- Completed second content curation and deployment (Story V-2.4.2)
+- Deployed ethical social media alternatives as Vibe + 10 diverse Daily Picks
+- Acquired iOS testing hardware (Mac Mini M4, iPhone 13) enabling cross-platform development
+- Documented curation workflow and bottlenecks in self-validation log
+
+**Key Decisions:**
+- **iOS hardware acquisition:** Mac Mini M4 and iPhone 13 acquired at favorable pricing; enables iOS testing after 1-2 week delivery/setup
+- **Vibe selection:** Chose ethical social media alternatives story for counter-narrative appeal (Aurora fighting toxic feeds)
+- **Image validation:** Discovered need for pre-deployment image URL checking after broken Vibe image required redeployment
+
+**Work Completed:**
+1. **Content Curation:**
+   - Curated 11 stories: 1 Vibe (ethical social media) + 10 Daily Picks
+   - Source mix: 2 from future-stories-queue.md + 9 from fresh web searches
+   - Avoided problematic sources (The Guardian, KTLA) per known access issues
+   - Themes: medical breakthroughs, renewable energy, conservation, community heroism
+
+2. **Content Deployment:**
+   - Validated with zero errors, 11 snippet length warnings (acceptable)
+   - Deployed to Production: 2026-01-02 20:44:10
+   - Fixed Vibe image URL post-deployment (Best-of-2025.png → 9-4.png)
+   - Verified on S24 Ultra device
+
+3. **Documentation:**
+   - Added Update #2 to `BETA_ROUND_1_SELF_VALIDATION.md`
+   - Documented workflow insights, bottlenecks, automation opportunities
+   - Archived content files: content.2026-01-01.json, content.2026-01-02.json
+   - Updated PLANNING.md and BACKLOG.md with iOS hardware acquisition notes
+
+4. **iOS Platform Support:**
+   - Ordered Mac Mini M4 (16GB RAM, 512GB SSD) - refurbished
+   - Ordered iPhone 13 (128GB) - refurbished
+   - Expected delivery: 1-2 weeks
+   - Updates platform scope from Android-only to cross-platform capable
+
+**Bottlenecks Identified:**
+- Web search CLI glitch requires serial searches (slower than parallel)
+- Manual image validation (need `--check-images` flag in validation script)
+- Story diversity balancing time-intensive (need theme tagging system)
+
+**Progress:** Milestone V-2 at 70% complete (7/10 stories - V-2.4.2 complete)
+
+**Next Focus:**
+1. Story V-2.4.1: Complete Week 1 recap (2026-01-04 end of testing period)
+2. Story V-2.4.3: Synthesize findings and make Go/No-Go decision
+3. iOS setup and first build (after hardware arrival)
+
+---
+
 ### 2025-12-31 (Session 2): Story V-2.3.2 Complete - Aurora Deployed to Google Play Internal Testing
 
 **Summary:**

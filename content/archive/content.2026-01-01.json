@@ -1,0 +1,92 @@
+{
+  "VibeOfTheDay": {
+    "id": "stardew-valley-creator-monogame-donation",
+    "title": "Stardew Valley Creator Makes $125,000 Donation to Open-Source Framework",
+    "snippet": "Eric Barone committed $125,000 plus ongoing monthly support to MonoGame, the C# framework powering his acclaimed indie game. The MonoGame team called it 'an extraordinary show of support' for the open-source tool that has enabled beloved titles like Celeste and Bastion.",
+    "image_url": "https://cdn.mos.cms.futurecdn.net/zVwRc8z89A58oi4ucNCdqL-1920-80.jpg",
+    "article_url": "https://www.pcgamer.com/games/eric-barone-makes-usd125-000-donation-to-the-c-framework-stardew-valley-uses-as-well-as-an-ongoing-monthly-commitment-in-what-the-team-behind-it-calls-an-extraordinary-show-of-support/",
+    "uplift_count": 0
+  },
+  "DailyPicks": [
+    {
+      "id": "japan-tooth-regrowth-trials",
+      "title": "Humans May Be Able to Grow New Teeth Within Just 4 Years",
+      "snippet": "Japanese researchers are advancing an experimental drug into human trials that could enable tooth regeneration by 2030. The treatment suppresses a protein that inhibits tooth growth, offering hope to millions suffering from tooth loss who currently lack effective permanent solutions.",
+      "image_url": "https://hips.hearstapps.com/hmg-prod/images/toothache-pain-royalty-free-image-1717364963.jpg?crop=0.58135xw:1xh;center,top&resize=1200:*",
+      "article_url": "https://www.popularmechanics.com/science/health/a69878870/human-new-tooth-regrowth-trials-japan-timeline/",
+      "uplift_count": 0
+    },
+    {
+      "id": "vagus-nerve-ptsd-treatment",
+      "title": "New Vagus Nerve Stimulation Shows 100% PTSD Recovery in Early Trial",
+      "snippet": "University of Texas researchers developed a breakthrough therapy combining vagus nerve stimulation with prolonged exposure therapy. In a Phase 1 trial, all nine participants achieved complete symptom-free status six months after treatment, representing an unprecedented recovery rate that could transform mental health care.",
+      "image_url": "https://www.optimistdaily.com/wp-content/uploads/13.png",
+      "article_url": "https://www.optimistdaily.com/2025/12/new-vagus-nerve-stimulation-treatment-shows-100-percent-ptsd-recovery-in-early-trial-2/",
+      "uplift_count": 0
+    },
+    {
+      "id": "okra-fenugreek-microplastics",
+      "title": "Okra and Fenugreek Extracts Remove Up to 90% of Microplastics From Water",
+      "snippet": "Tarleton State University researchers discovered that natural plant polymers from okra and fenugreek can effectively capture microplastics from water sources. This biodegradable, nontoxic alternative to synthetic chemicals offers a sustainable solution to persistent microplastic pollution while reducing long-term health risks.",
+      "image_url": "https://www.optimistdaily.com/wp-content/uploads/15.png",
+      "article_url": "https://www.optimistdaily.com/2025/12/okra-and-fenugreek-extracts-remove-up-to-90-percent-of-microplastics-from-water-2/",
+      "uplift_count": 0
+    },
+    {
+      "id": "dolphins-language-communication",
+      "title": "Could Dolphins Be Speaking a Language? New Research Hints at Word-Like Communication",
+      "snippet": "Woods Hole researchers analyzed 50 years of acoustic data and found at least 22 distinct whistle types used by multiple bottlenose dolphins. Some whistles appear to serve alarm or query functions, suggesting dolphins possess a communication system more complex than previously understood and potentially rivaling human linguistic structures.",
+      "image_url": "https://www.optimistdaily.com/wp-content/uploads/12.png",
+      "article_url": "https://www.optimistdaily.com/2025/12/could-dolphins-be-speaking-a-language-new-research-hints-at-word-like-communication-2/",
+      "uplift_count": 0
+    },
+    {
+      "id": "bondi-beach-hero-fundraiser",
+      "title": "Bondi Beach Hero Raises $700,000 After Disarming Gunman",
+      "snippet": "Over $700,000 has been crowdfunded for Ahmed al Ahmed, a fruit shop owner who heroically wrestled a rifle from an attacker during the Bondi Beach shooting. Despite being shot twice, his selfless actions prevented additional loss of life, and the community's outpouring demonstrates extraordinary gratitude for his courage.",
+      "image_url": "https://images.thenightly.com.au/publication/C-21007416/fe6be2dbb00045a139857ec4705fe7f68664302d-16x9-x20y0w1349h759.jpg",
+      "article_url": "https://thenightly.com.au/australia/nsw/bondi-beach-massacre-300000-raised-via-gofundme-for-hero-ahmed-al-ahmed-who-disarmed-gunman--c-21007416",
+      "uplift_count": 0
+    },
+    {
+      "id": "ireland-basic-income-artists",
+      "title": "Ireland Makes Basic Income for Artists Permanent",
+      "snippet": "Ireland's Basic Income for the Arts program will become permanent in 2026, providing 2,000 artists with approximately $1,500 monthly. The pilot generated nearly €80 million in economic benefits against a €72 million investment while enabling artists to increase creative output by focusing less on supplementary income sources.",
+      "image_url": "https://www.optimistdaily.com/wp-content/uploads/7-4.png",
+      "article_url": "https://www.optimistdaily.com/2025/12/ireland-makes-basic-income-for-artists-permanent-signaling-support-for-creative-economy-2/",
+      "uplift_count": 0
+    },
+    {
+      "id": "tokyo-four-day-workweek",
+      "title": "Tokyo's Four-Day Workweek Tackles Japan's Fertility Crisis",
+      "snippet": "Tokyo is implementing a four-day workweek for government employees beginning in April to combat Japan's record-low fertility rate of 1.2. The policy provides more time for childcare and family responsibilities, with Governor Yuriko Koike ensuring 'no one has to give up their career due to life events such as childbirth.'",
+      "image_url": "https://www.optimistdaily.com/wp-content/uploads/6-4.png",
+      "article_url": "https://www.optimistdaily.com/2025/12/tokyos-four-day-workweek-is-a-radical-step-to-address-japans-fertility-crisis-2/",
+      "uplift_count": 0
+    },
+    {
+      "id": "white-hat-hacker-mentorship",
+      "title": "White-Hat Hacker Rewriting the Cybersecurity Rulebook",
+      "snippet": "Ethical hacker Betta Lyon Delsordo challenges gender stereotypes in tech by defending organizations from cyber-attacks while mentoring young girls in programming. Her mission demonstrates that cybersecurity careers can be 'smart, collaborative, and seriously fun,' inspiring the next generation of female tech professionals.",
+      "image_url": "https://www.positive.news/wp-content/uploads/2025/12/250619_GK_betta279.jpg",
+      "article_url": "https://www.positive.news/science/technology/ctrlaltdefy-the-white-hat-hacker-rewriting-the-cybersecurity-rulebook/",
+      "uplift_count": 0
+    },
+    {
+      "id": "bloomberg-un-climate-funding",
+      "title": "Michael Bloomberg Steps Up to Fund UN Climate Body After U.S. Withdrawal",
+      "snippet": "Bloomberg's philanthropic organization committed to covering the U.S. financial contribution to the UN Framework Convention on Climate Change following federal withdrawal from the Paris Agreement. This intervention ensures critical global climate negotiations can continue, demonstrating how private sector leadership can bridge gaps when government funding lapses.",
+      "image_url": "https://www.optimistdaily.com/wp-content/uploads/Best-of-2025.png",
+      "article_url": "https://www.optimistdaily.com/2025/12/michael-bloomberg-steps-up-to-fund-un-climate-body-after-u-s-withdrawal-2/",
+      "uplift_count": 0
+    },
+    {
+      "id": "sound-waves-soil-health",
+      "title": "New Method Uses Sound Waves to Map Soil Health and Restore Farmlands",
+      "snippet": "Researchers are using 'soilsmology'—striking ground with a hammer and monitoring sound wave patterns—to assess soil health non-invasively. A smartphone app being developed aims to democratize soil testing for farming communities worldwide, potentially addressing food security challenges as crop yields face climate pressures.",
+      "image_url": "https://www.optimistdaily.com/wp-content/uploads/240762060_m.jpg",
+      "article_url": "https://www.optimistdaily.com/2025/12/new-method-uses-sound-waves-to-map-soil-health-stop-famine-and-restore-farmlands/",
+      "uplift_count": 0
+    }
+  ]
+}

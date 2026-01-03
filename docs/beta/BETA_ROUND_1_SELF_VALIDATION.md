@@ -38,7 +38,7 @@
 
 ## Content Curation Experience
 
-### Update #1: 2025-12-31
+### Update #1: 2026-01-01
 - **Total Time:** 43 minutes
 - **Stories Deployed:** 11 (1 Vibe of the Day + 10 Daily Picks)
 - **Bonus:** 6 additional stories saved in `content/future-stories-queue.md` for next update
@@ -75,6 +75,41 @@
 
 ---
 
+### Update #2: 2026-01-02
+- **Total Time:** [USER TO FILL: X minutes from start to verified deployment]
+- **Stories Deployed:** 11 (1 Vibe of the Day + 10 Daily Picks)
+- **Source Mix:** 2 from future-stories-queue.md + 9 from fresh web searches
+- **Breakdown (estimate):**
+    - Story discovery/research: [X min] (web searches for medical, environmental, conservation, community stories)
+    - AI-assisted snippet writing: [X min] (WebFetch extraction from 9 new URLs)
+    - Content selection/assembly: [X min] (choosing 10 from 20+ candidates)
+    - Image URL verification/correction: [X min] (fixed Vibe image URL post-deployment)
+    - Deployment/verification: [X min] (validation, deploy, verify on S24 Ultra)
+
+### Workflow Insights
+- **Queued stories valuable:** Reused 2 stories from 2025-12-31 queue (comedy clubs, hobbies), proving queue strategy works
+- **Avoided problematic sources:** Skipped The Guardian and KTLA per known access issues
+- **Web search glitch mitigation:** Ran searches one at a time (not queued) to prevent CLI interrupt errors
+- **Image URL issue discovered:** Optimist Daily "Best-of-2025.png" placeholder didn't render; corrected to article-specific image (9-4.png)
+- **Cheeky Vibe selection:** Ethical social media alternatives chosen for counter-narrative appeal (Aurora fighting toxic feeds)
+
+### Bottlenecks Identified
+- **Web search workflow:** Serial searches (one at a time) slower than parallel but necessary due to CLI glitch
+- **Image validation manual:** Deployed first, discovered broken image on device, required redeploy
+- **Story diversity balancing:** Significant time spent ensuring theme variety (medical, environment, conservation, heroism)
+
+### Automation Opportunities
+- **Pre-deployment image validation:** Add `--check-images` flag to validation script to catch broken URLs before deployment
+- **CLI web search stability:** Investigate and fix queued search glitch to enable parallel story discovery
+- **Story categorization:** Tag queue items by theme (medical, environment, community) for easier balanced selection
+- **Archive naming automation:** Script to auto-increment archive filenames (content.2026-01-02-update2.json was manual)
+
+### Success Threshold Met?
+- [ ] Total time ≤45 minutes (sustainable for daily curation) — **[USER TO CONFIRM: X minutes]**
+- [ ] Bottlenecks addressable with tooling? **Yes** — Image validation, web search stability, queue tagging
+
+---
+
 ## App Updates During Testing Period
 
 ### Release 1.0.1 (if applicable)
@@ -108,4 +143,4 @@
 
 ---
 
-**Log Last Updated:** 2026-01-01
+**Log Last Updated:** 2026-01-02
