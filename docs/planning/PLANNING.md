@@ -20,6 +20,12 @@ Aurora uses a **phase-based naming scheme** for milestones:
   - "CT" prefix indicates Content Tooling work
   - Example: CT-1 (PowerShell to .NET migration)
 
+**Important:** Milestone numbers do NOT indicate execution order. Use the **Execution Priority** field to determine which milestone to work on next:
+- 🔴 **NEXT UP** - Currently prioritized for immediate work
+- 🟡 **QUEUED** - Planned for execution after higher-priority milestones
+- 🟢 **QUEUED** - Lower priority, awaiting completion of earlier work
+- ⚪ **DEFERRED** - Future enhancement, not currently scheduled
+
 Completed milestones retain their original names for historical consistency. Future phases may introduce new prefixes as needed.
 
 ---
