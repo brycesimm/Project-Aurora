@@ -173,6 +173,29 @@
     - Curation time ≤45 min OR clear automation path (sustainability)
     - No critical bugs (app stability)
 
+- **Milestone V-3 (Planned): Beta UX Improvements**
+  *Address critical UX friction points identified in Beta Round 1 self-validation before expanding external testing.*
+  - **Objective:** Implement 3 High-Priority improvements (pull-to-refresh, Uplift state persistence, bottom navigation bar) to prevent negative first impressions and establish foundation for future features.
+  - **Priority:** HIGH - Recommended before Beta Round 2 expansion
+  - **Rationale:** Beta Round 1 self-validation identified UX gaps ("missing refresh," "Uplift doesn't track state," "single-page feels incomplete") that degrade user experience. External Android tester already recruited; iOS hardware arriving in 1-2 weeks.
+  - **Scope:** Pull-to-refresh functionality, local Uplift state tracking, bottom navigation with placeholder tabs (Home/Discover/Profile).
+  - **Reference:** See `docs/planning/backlog/planned/POST-BETA-IMPROVEMENTS.md` items #1-3 for detailed requirements.
+  - **Estimated Effort:** 9-12 hours (2-3 development sessions)
+
+- **Milestone V-4 (Planned): Content Scalability - Dynamic Feed Architecture**
+  *Migrate from static JSON files to database-backed API with pagination to resolve content curation bottleneck.*
+  - **Objective:** Enable unlimited story storage, "Load More" pagination, and decouple content updates from app deployments.
+  - **Priority:** HIGH - Critical for sustainable daily curation
+  - **Rationale:** Manual curation of 11 fresh stories daily is unsustainable (45 min/session, 7x/week). Current static JSON supports exactly 11 stories; users consume all content in 2 sessions with nothing new. Database-backed API allows curator to add 20-30 stories 2-3x/week instead of 11 stories 7x/week.
+  - **Scope:**
+    - Database migration (Azure Table Storage or Cosmos DB for story persistence)
+    - API pagination endpoints (`/api/content?skip=0&take=10`)
+    - Client "Load More" button (infinite scroll deferred)
+    - Content migration tooling for existing archived stories
+  - **Long-Term Vision:** RSS aggregation + manual approval queue (automated discovery, human curation quality gate)
+  - **Reference:** See `docs/planning/backlog/planned/POST-BETA-IMPROVEMENTS.md` for detailed scalability analysis.
+  - **Estimated Effort:** 1-2 weeks
+
 - **Milestone V-1 (Future Enhancement): Integration Testing Infrastructure**
   *Establish comprehensive HTTP-layer test coverage for Azure Functions API to complement existing unit tests.*
   - **Objective:** Verify end-to-end request/response behavior, middleware pipeline, and runtime interactions that unit tests cannot cover (HTTP trigger binding, CORS headers, actual storage operations, Polly retry execution).
