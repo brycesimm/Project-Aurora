@@ -6,6 +6,24 @@
 
 ---
 
+## Milestone Naming Convention
+
+Aurora uses a **phase-based naming scheme** for milestones:
+
+- **A-E:** Phase 4 Development Roadmap milestones (initial MVP build)
+  - Example: Milestone A (MAUI onboarding), Milestone B (Backend/API)
+- **V-*:** Phase 5 Validation Strategy milestones (beta testing & user validation)
+  - "V" prefix indicates Validation phase work
+  - Example: V-0 (Beta Readiness), V-2 (Beta Testing Round 1)
+  - Note: V-1 exists but was deferred, so V-2 came first chronologically
+- **CT-*:** Content Tools milestones (content management infrastructure)
+  - "CT" prefix indicates Content Tooling work
+  - Example: CT-1 (PowerShell to .NET migration)
+
+Completed milestones retain their original names for historical consistency. Future phases may introduce new prefixes as needed.
+
+---
+
 ## Planning Phases
 
 ### Phase 1: Vision & Core Definition
