@@ -230,15 +230,12 @@ Completed milestones retain their original names for historical consistency. Fut
 
 - **Milestone V-1 (Deferred): Integration Testing Infrastructure**
   *Establish comprehensive HTTP-layer test coverage for Azure Functions API to complement existing unit tests.*
+  - **Execution Priority:** ⚪ **DEFERRED** (Execution Order: 4th, after V-3)
   - **Objective:** Verify end-to-end request/response behavior, middleware pipeline, and runtime interactions that unit tests cannot cover (HTTP trigger binding, CORS headers, actual storage operations, Polly retry execution).
-  - **Priority:** Deferred until post-beta (V-2 completion); not blocking Phase 5 validation.
-  - **Scope:**
-    1. Create `Aurora.Api.IntegrationTests` project with Azure Functions in-process hosting.
-    2. Implement integration tests for `GetDailyContent` endpoint (success, 404, 500, retry scenarios).
-    3. Implement integration tests for `ReactToContent` endpoint (increment, creation, failure, concurrency).
-    4. Configure CI pipeline to run integration tests with Azurite service container.
-    5. Document integration testing architecture and best practices (`docs/testing/INTEGRATION_TESTING.md`).
-  - **Success Criteria:** ~8-10 integration tests passing in CI, clear documentation for adding future endpoint tests, maintained zero-warning build discipline.
+  - **Rationale:** Not blocking beta testing or content scalability. Deferred until higher-priority milestones (V-4, CT-1, V-3) are complete.
+  - **Success Criteria:** ~8-10 integration tests passing in CI, Azurite running in GitHub Actions, clear documentation for adding future endpoint tests, maintained zero-warning build discipline.
+  - **Estimated Effort:** 1-2 weeks
+  - **Reference:** See `docs/planning/backlog/planned/milestone-v-1-integration-testing.md` for detailed story breakdown (9 stories across 4 features).
 
 - **Milestone CT-1 (Planned): Content Management Tooling Refactor**
   *Migrate PowerShell-based content management scripts to .NET console applications for better development experience, testability, and solution integration.*
