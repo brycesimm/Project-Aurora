@@ -240,23 +240,33 @@ Queuing multiple web searches causes glitch where hitting Escape only cancels fi
 ### 10. Pre-Deployment Image URL Validation
 
 **Problem:**
-Deployed content first, discovered broken Vibe image URL on device, required second deployment during Update #2.
+Deployed content first, discovered broken Vibe image URL on device, required second deployment during Update #2. During 2026-01-03 curation, discovered URL-encoding issue with en-dash character in Good News Network image URL (required manual `curl` testing to identify).
 
 **Why It Matters:**
 - Wastes deployment time (2 deployments instead of 1)
 - Poor user experience if broken images reach production
 - Preventable with automated validation
+- Manual `curl` testing is inefficient and error-prone
 
 **Requirements:**
-- Add `--check-images` flag to `Validate-Content.ps1`
-- Perform HEAD requests to all image URLs during validation
+- Add `--check-images` flag to `Validate-Content.ps1` (PowerShell short-term solution)
+- **Integrate into Milestone CT-1** (.NET Content Tools migration - default behavior with `--skip-image-check` opt-out)
+- Perform HTTP HEAD requests to all image URLs during validation
 - Fail validation if any images return 404, timeout, or 403
+- Handle special characters (en-dashes, Unicode) correctly in URLs
+- Display clear error messages with specific image URL and HTTP status code
 - Optional: Download and verify image file integrity (not just URL accessibility)
 
+**Implementation Notes:**
+- PowerShell: Use `Invoke-WebRequest -Method Head` with timeout
+- .NET: Use `HttpClient` with `SendAsync(HttpMethod.Head)` and configurable timeout
+- Default timeout: 5 seconds per image URL
+- Unit tests: Mock HttpClient responses for 200, 404, 403, timeout scenarios
+
 **Open Questions:**
-- Should image validation be default behavior or opt-in?
-- Timeout threshold for slow-loading images?
-- Handling of redirect chains (e.g., URL shorteners)?
+- Should image validation be default behavior or opt-in? **Decision (2026-01-03): Default on in .NET version, opt-in for PowerShell (backward compatibility)**
+- Timeout threshold for slow-loading images? **Recommendation: 5 seconds**
+- Handling of redirect chains (e.g., URL shorteners)? **Recommendation: Follow redirects, fail if final destination is 404**
 
 ---
 
